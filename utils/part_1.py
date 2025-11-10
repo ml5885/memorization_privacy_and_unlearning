@@ -28,8 +28,9 @@ def plot_memorization(sizes, trait2acc, out_png):
             color=colors[i % len(colors)],
             label=label,
         )
-
-    plt.xlabel("Model size (B parameters)")
+        
+    plt.xscale("log")
+    plt.xlabel("Parameters (in billions)")
     plt.ylabel("Accuracy")
     plt.ylim(0.0, 1.0)
     plt.xticks(list(sizes), [str(s) for s in sizes])

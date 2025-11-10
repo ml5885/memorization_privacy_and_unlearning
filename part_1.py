@@ -14,6 +14,7 @@ from data.pokemon import (
     TRAIT_COLUMN_MAP,
     TRAIT_PLOT_LABELS,
 )
+from data.ifeval import run_ifeval_eval
 from models.gemma import load_gemma_model, generate_batch
 from utils.part_1 import (
     ensure_dir,
@@ -23,6 +24,7 @@ from utils.part_1 import (
     open_jsonl,
     write_jsonl,
 )
+
 
 def _strip_punct(text: str) -> str:
     table = str.maketrans({c: " " for c in string.punctuation})
@@ -231,52 +233,43 @@ def run_triviaqa_eval(tokenizer, model, model_id, batch_size, limit, save_path=N
     print(f"\nTriviaQA results for {model_id}: {accuracy:.4f} ({correct}/{total})")
     return accuracy
 
-def run_ifeval_eval(tokenizer, model, model_id, batch_size, limit, save_path=None):
-    print(f"\n{'='*80}")
-    print(f"Running IFEval evaluation for {model_id}")
-    print(f"{'='*80}")
-    ds = load_dataset("google/IFEval", split="train")
-
-    prompts = []
-    for item in ds:
-        inst = item.get("prompt")
-        inst = str(inst).strip()
-        if not inst:
-            continue
-
-        prompt = f"{inst}\nFollow the instruction precisely.\n"
-        prompts.append(prompt)
-        if limit > 0 and len(prompts) >= limit:
-            break
-    print(f"Total examples: {len(prompts)}")
-
-    outs = []
-    for i in tqdm(range(0, len(prompts), batch_size), desc=f"IFEval eval ({model_id})"):
-        outs.extend(generate_batch(tokenizer, model, prompts[i : i + batch_size]))
-
-    good = 0
-    log_f = open_jsonl(save_path) if save_path else None
-    for idx, o in enumerate(outs):
-        first = o.strip().splitlines()[0] if o.strip() else ""
-        good += 1 if first else 0
-        if log_f:
-            write_jsonl(
-                log_f,
-                {
-                    "dataset": "ifeval",
-                    "model": model_id,
-                    "prompt": prompts[idx],
-                    "prediction": o,
-                    "non_empty_first_line": int(bool(first)),
-                },
-            )
-
-    if log_f:
-        log_f.close()
-
-    accuracy = good / max(1, len(outs))
-    print(f"\nIFEval results for {model_id}: {accuracy:.4f} ({good}/{len(outs)})")
-    return accuracy
+def print_table(all_results):
+    model_col_width = max(len("Model"), max(len(r["model"]) for r in all_results)) + 2
+    size_col_width = 8
+    metric_col_width = 10
+    
+    # Print accuracy table (Pokemon traits + TriviaQA)
+    print("\nAccuracy Metrics:")
+    header = f"{'Model':<{model_col_width}} {'Size(B)':<{size_col_width}}"
+    for label in TRAIT_PLOT_LABELS.values():
+        header += f" {label:<{metric_col_width}}"
+    header += f" {'TriviaQA':<{metric_col_width}}"
+    print(header)
+    print("-" * len(header))
+    
+    for result in all_results:
+        row = f"{result['model']:<{model_col_width}} {result['size_b']:<{size_col_width}.1f}"
+        for label in TRAIT_PLOT_LABELS.values():
+            acc = result.get(label, 0.0)
+            row += f" {acc:<{metric_col_width}.4f}"
+        row += f" {result.get('TriviaQA', 0.0):<{metric_col_width}.4f}"
+        print(row)
+    
+    print("\nIFEval Metrics:")
+    ifeval_col_width = 15
+    ifeval_header = f"{'Model':<{model_col_width}} {'Size(B)':<{size_col_width}}"
+    ifeval_header += f" {'Prompt Strict':<{ifeval_col_width}} {'Inst Strict':<{ifeval_col_width}}"
+    ifeval_header += f" {'Prompt Loose':<{ifeval_col_width}} {'Inst Loose':<{ifeval_col_width}}"
+    print(ifeval_header)
+    print("-" * len(ifeval_header))
+    
+    for result in all_results:
+        row = f"{result['model']:<{model_col_width}} {result['size_b']:<{size_col_width}.1f}"
+        row += f" {result.get('IFEval_prompt_strict', 0.0):<{ifeval_col_width}.4f}"
+        row += f" {result.get('IFEval_inst_strict', 0.0):<{ifeval_col_width}.4f}"
+        row += f" {result.get('IFEval_prompt_loose', 0.0):<{ifeval_col_width}.4f}"
+        row += f" {result.get('IFEval_inst_loose', 0.0):<{ifeval_col_width}.4f}"
+        print(row)
 
 def main():
     ap = argparse.ArgumentParser()
@@ -284,6 +277,8 @@ def main():
     ap.add_argument("--analysis", action="store_true", help="Run analysis only (plot results from existing model outputs)")
     ap.add_argument("--model", type=str, default=None, help="Model ID to evaluate (e.g., google/gemma-3-1b-it)")
     ap.add_argument("--model_size", type=float, default=None, help="Model size in billions of parameters (e.g., 1, 4, 12)")
+    ap.add_argument("--dataset", type=str, default="all", choices=["all", "pokemon", "triviaqa", "ifeval"], 
+                    help="Which dataset(s) to evaluate on (default: all)")
     ap.add_argument("--batch_size", type=int, default=32)
     ap.add_argument("--limit_pokemon", type=int, default=0)
     ap.add_argument("--limit_triviaqa", type=int, default=0)
@@ -334,12 +329,22 @@ def main():
         )
         print(f"\nCombined results saved to {args.outdir}/part1_results.csv and part1_results.json")
         
-        print(f"\nGenerating memorization plot...")
+        print(f"\n{'='*80}")
+        print("Results Summary")
+        print(f"{'='*80}")
+        
+        print_table(all_results)
+        
+        print(f"\n{'='*80}\n")
+        
+        print(f"Generating memorization plot...")
+        
         sizes = [r["size_b"] for r in all_results]
         trait2acc = {
             label: [r.get(label, 0.0) for r in all_results] 
             for label in TRAIT_PLOT_LABELS.values()
         }
+        
         plot_path = os.path.join(args.outdir, "part1_memorization.png")
         plot_memorization(
             sizes,
@@ -387,41 +392,61 @@ def main():
         
         mid_safe = sanitize_filename(model_id)
         
-        trait_acc = run_pokemon_eval(
-            tokenizer,
-            model,
-            model_id,
-            bench_path,
-            args.batch_size,
-            args.limit_pokemon,
-            save_path=os.path.join(responses_dir, f"pokemon_{mid_safe}.jsonl"),
-            eval_mode="auto",
-        )
+        trait_acc = {}
+        tqa = 0.0
+        ife_scores = {
+            "prompt_strict": 0.0,
+            "inst_strict": 0.0,
+            "prompt_loose": 0.0,
+            "inst_loose": 0.0
+        }
         
-        tqa = run_triviaqa_eval(
-            tokenizer,
-            model,
-            model_id,
-            batch_size=args.batch_size,
-            limit=args.limit_triviaqa,
-            save_path=os.path.join(responses_dir, f"triviaqa_rc_{mid_safe}.jsonl"),
-            eval_mode="contains",
-        )
+        if args.dataset in ["all", "pokemon"]:
+            trait_acc = run_pokemon_eval(
+                tokenizer,
+                model,
+                model_id,
+                bench_path,
+                args.batch_size,
+                args.limit_pokemon,
+                save_path=os.path.join(responses_dir, f"pokemon_{mid_safe}.jsonl"),
+                eval_mode="auto",
+            )
         
-        ife = run_ifeval_eval(
-            tokenizer,
-            model,
-            model_id,
-            batch_size=args.batch_size,
-            limit=args.limit_ifeval,
-            save_path=os.path.join(responses_dir, f"ifeval_{mid_safe}.jsonl"),
-        )
+        if args.dataset in ["all", "triviaqa"]:
+            tqa = run_triviaqa_eval(
+                tokenizer,
+                model,
+                model_id,
+                batch_size=args.batch_size,
+                limit=args.limit_triviaqa,
+                save_path=os.path.join(responses_dir, f"triviaqa_rc_{mid_safe}.jsonl"),
+                eval_mode="contains",
+            )
+        
+        if args.dataset in ["all", "ifeval"]:
+            ife_scores = run_ifeval_eval(
+                tokenizer,
+                model,
+                model_id,
+                batch_size=args.batch_size,
+                limit=args.limit_ifeval,
+                save_path=os.path.join(responses_dir, f"ifeval_{mid_safe}.jsonl"),
+            )
+
         
         result = {"model": model_id, "size_b": model_size}
         for trait_key, label in TRAIT_PLOT_LABELS.items():
             result[label] = round(trait_acc.get(trait_key, 0.0), 4)
         result["TriviaQA"] = round(tqa, 4)
-        result["IFEval"] = round(ife, 4)
+
+        result["IFEval"] = round(ife_scores["prompt_strict"], 4)
+
+        result["IFEval_prompt_strict"] = round(ife_scores["prompt_strict"], 4)
+        result["IFEval_inst_strict"] = round(ife_scores["inst_strict"], 4)
+        result["IFEval_prompt_loose"] = round(ife_scores["prompt_loose"], 4)
+        result["IFEval_inst_loose"] = round(ife_scores["inst_loose"], 4)
+
         
         model_result_path = os.path.join(args.outdir, f"model_{mid_safe}.json")
         with open(model_result_path, "w") as f:
@@ -429,11 +454,21 @@ def main():
         
         print(f"\n{'#'*80}")
         print(f"Evaluation completed for {model_id}")
+        print(f"Dataset(s) evaluated: {args.dataset}")
         print(f"{'#'*80}")
-        print(f"Summary: TriviaQA={tqa:.4f}, IFEval={ife:.4f}")
-        print(f"Results saved to {model_result_path}")
-        print(f"\nTo generate plots after all models complete, run:")
-        print(f"  python part_1.py --analysis")
+        summary_parts = []
+        if args.dataset in ["all", "triviaqa"]:
+            summary_parts.append(f"TriviaQA={tqa:.4f}")
+        if args.dataset in ["all", "ifeval"]:
+            summary_parts.append(
+                f"IFEval[prompt_strict]={ife_scores['prompt_strict']:.4f}, "
+                f"IFEval[inst_strict]={ife_scores['inst_strict']:.4f}, "
+                f"IFEval[prompt_loose]={ife_scores['prompt_loose']:.4f}, "
+                f"IFEval[inst_loose]={ife_scores['inst_loose']:.4f}"
+            )
+        if summary_parts:
+            print("Summary: " + ", ".join(summary_parts))
+
 
 if __name__ == "__main__":
     main()

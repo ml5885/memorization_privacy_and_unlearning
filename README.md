@@ -4,8 +4,6 @@ Project code for Programming Assignment 2 for 15-783: Trustworthy AI - Theory & 
 
 ## Repository Structure
 
-Simple overview of the main folders and files:
-
 - `part_1.py` – Runs Part 1 experiments (see below).
   - `data/pokemon.csv` – Original Kaggle Pokémon dataset.
   - `data/pokemon_benchmark.csv` – Generated evaluation benchmark.
@@ -18,23 +16,30 @@ Simple overview of the main folders and files:
 
 Make sure that the [Pokemon dataset](https://www.kaggle.com/datasets/rounakbanik/pokemon) from Kaggle is saved at `data/pokemon.csv`.
 
-Run the full experiments with all three Gemma-3 model sizes (1B, 4B, and 12B) by executing:
+To run evaluations for the three Gemma-3 models on the Pokemon, TriviaQA, and IFEval datasets, run the following commands:
 
 ```bash
-python part_1.py --model google/gemma-3-1b-it --size 1
+python part_1.py --model google/gemma-3-1b-it --model_size 1
 
-python part_1.py --model google/gemma-3-4b-it --size 4
+python part_1.py --model google/gemma-3-4b-it --model_size 4
 
-python part_1.py --model google/gemma-3-12b-it --size 12
+python part_1.py --model google/gemma-3-12b-it --model_size 12
 ```
 
 This will:
 
 - Build the Pokemon benchmark from the CSV (if it doesn't already exist)
-- Run evaluations with the specified model.
-- Evaluate on TriviaQA and IFEval
-- Save results to `results/part1_results.csv` and `results/part1_results.json`
-- Generate the memorization-vs-scale plot at `results/part1_memorization.png`
+- Run evaluations with the specified model on the specified dataset(s)
+- Evaluate on TriviaQA and IFEval (if included)
+- Save results to `results/part1/` directory
+
+### Generating Analysis
+
+To generate the memorization vs. model size plot and accuracy table from existing results, run:
+
+```bash
+python part_1.py --analysis
+```
 
 ## Part 2: Targeted Unlearning
 
