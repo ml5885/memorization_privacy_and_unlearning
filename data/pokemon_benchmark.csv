@@ -1,0 +1,4001 @@
+trait,name,format,prompt,answer
+Type 1,Bulbasaur,short,"What is the Type 1 of Bulbasaur?
+Answer:",grass
+Type 1,Ivysaur,short,"What is the Type 1 of Ivysaur?
+Answer:",grass
+Type 1,Venusaur,short,"What is the Type 1 of Venusaur?
+Answer:",grass
+Type 1,Charmander,short,"What is the Type 1 of Charmander?
+Answer:",fire
+Type 1,Charmeleon,short,"What is the Type 1 of Charmeleon?
+Answer:",fire
+Type 1,Charizard,short,"What is the Type 1 of Charizard?
+Answer:",fire
+Type 1,Squirtle,short,"What is the Type 1 of Squirtle?
+Answer:",water
+Type 1,Wartortle,short,"What is the Type 1 of Wartortle?
+Answer:",water
+Type 1,Blastoise,short,"What is the Type 1 of Blastoise?
+Answer:",water
+Type 1,Caterpie,short,"What is the Type 1 of Caterpie?
+Answer:",bug
+Type 1,Metapod,short,"What is the Type 1 of Metapod?
+Answer:",bug
+Type 1,Butterfree,short,"What is the Type 1 of Butterfree?
+Answer:",bug
+Type 1,Weedle,short,"What is the Type 1 of Weedle?
+Answer:",bug
+Type 1,Kakuna,short,"What is the Type 1 of Kakuna?
+Answer:",bug
+Type 1,Beedrill,short,"What is the Type 1 of Beedrill?
+Answer:",bug
+Type 1,Pidgey,short,"What is the Type 1 of Pidgey?
+Answer:",normal
+Type 1,Pidgeotto,short,"What is the Type 1 of Pidgeotto?
+Answer:",normal
+Type 1,Pidgeot,short,"What is the Type 1 of Pidgeot?
+Answer:",normal
+Type 1,Rattata,short,"What is the Type 1 of Rattata?
+Answer:",normal
+Type 1,Raticate,short,"What is the Type 1 of Raticate?
+Answer:",normal
+Type 1,Spearow,short,"What is the Type 1 of Spearow?
+Answer:",normal
+Type 1,Fearow,short,"What is the Type 1 of Fearow?
+Answer:",normal
+Type 1,Ekans,short,"What is the Type 1 of Ekans?
+Answer:",poison
+Type 1,Arbok,short,"What is the Type 1 of Arbok?
+Answer:",poison
+Type 1,Pikachu,short,"What is the Type 1 of Pikachu?
+Answer:",electric
+Type 1,Raichu,short,"What is the Type 1 of Raichu?
+Answer:",electric
+Type 1,Sandshrew,short,"What is the Type 1 of Sandshrew?
+Answer:",ground
+Type 1,Sandslash,short,"What is the Type 1 of Sandslash?
+Answer:",ground
+Type 1,Nidoran♀,short,"What is the Type 1 of Nidoran♀?
+Answer:",poison
+Type 1,Nidorina,short,"What is the Type 1 of Nidorina?
+Answer:",poison
+Type 1,Nidoqueen,short,"What is the Type 1 of Nidoqueen?
+Answer:",poison
+Type 1,Nidoran♂,short,"What is the Type 1 of Nidoran♂?
+Answer:",poison
+Type 1,Nidorino,short,"What is the Type 1 of Nidorino?
+Answer:",poison
+Type 1,Nidoking,short,"What is the Type 1 of Nidoking?
+Answer:",poison
+Type 1,Clefairy,short,"What is the Type 1 of Clefairy?
+Answer:",fairy
+Type 1,Clefable,short,"What is the Type 1 of Clefable?
+Answer:",fairy
+Type 1,Vulpix,short,"What is the Type 1 of Vulpix?
+Answer:",fire
+Type 1,Ninetales,short,"What is the Type 1 of Ninetales?
+Answer:",fire
+Type 1,Jigglypuff,short,"What is the Type 1 of Jigglypuff?
+Answer:",normal
+Type 1,Wigglytuff,short,"What is the Type 1 of Wigglytuff?
+Answer:",normal
+Type 1,Zubat,short,"What is the Type 1 of Zubat?
+Answer:",poison
+Type 1,Golbat,short,"What is the Type 1 of Golbat?
+Answer:",poison
+Type 1,Oddish,short,"What is the Type 1 of Oddish?
+Answer:",grass
+Type 1,Gloom,short,"What is the Type 1 of Gloom?
+Answer:",grass
+Type 1,Vileplume,short,"What is the Type 1 of Vileplume?
+Answer:",grass
+Type 1,Paras,short,"What is the Type 1 of Paras?
+Answer:",bug
+Type 1,Parasect,short,"What is the Type 1 of Parasect?
+Answer:",bug
+Type 1,Venonat,short,"What is the Type 1 of Venonat?
+Answer:",bug
+Type 1,Venomoth,short,"What is the Type 1 of Venomoth?
+Answer:",bug
+Type 1,Diglett,short,"What is the Type 1 of Diglett?
+Answer:",ground
+Type 1,Dugtrio,short,"What is the Type 1 of Dugtrio?
+Answer:",ground
+Type 1,Meowth,short,"What is the Type 1 of Meowth?
+Answer:",normal
+Type 1,Persian,short,"What is the Type 1 of Persian?
+Answer:",normal
+Type 1,Psyduck,short,"What is the Type 1 of Psyduck?
+Answer:",water
+Type 1,Golduck,short,"What is the Type 1 of Golduck?
+Answer:",water
+Type 1,Mankey,short,"What is the Type 1 of Mankey?
+Answer:",fighting
+Type 1,Primeape,short,"What is the Type 1 of Primeape?
+Answer:",fighting
+Type 1,Growlithe,short,"What is the Type 1 of Growlithe?
+Answer:",fire
+Type 1,Arcanine,short,"What is the Type 1 of Arcanine?
+Answer:",fire
+Type 1,Poliwag,short,"What is the Type 1 of Poliwag?
+Answer:",water
+Type 1,Poliwhirl,short,"What is the Type 1 of Poliwhirl?
+Answer:",water
+Type 1,Poliwrath,short,"What is the Type 1 of Poliwrath?
+Answer:",water
+Type 1,Abra,short,"What is the Type 1 of Abra?
+Answer:",psychic
+Type 1,Kadabra,short,"What is the Type 1 of Kadabra?
+Answer:",psychic
+Type 1,Alakazam,short,"What is the Type 1 of Alakazam?
+Answer:",psychic
+Type 1,Machop,short,"What is the Type 1 of Machop?
+Answer:",fighting
+Type 1,Machoke,short,"What is the Type 1 of Machoke?
+Answer:",fighting
+Type 1,Machamp,short,"What is the Type 1 of Machamp?
+Answer:",fighting
+Type 1,Bellsprout,short,"What is the Type 1 of Bellsprout?
+Answer:",grass
+Type 1,Weepinbell,short,"What is the Type 1 of Weepinbell?
+Answer:",grass
+Type 1,Victreebel,short,"What is the Type 1 of Victreebel?
+Answer:",grass
+Type 1,Tentacool,short,"What is the Type 1 of Tentacool?
+Answer:",water
+Type 1,Tentacruel,short,"What is the Type 1 of Tentacruel?
+Answer:",water
+Type 1,Geodude,short,"What is the Type 1 of Geodude?
+Answer:",rock
+Type 1,Graveler,short,"What is the Type 1 of Graveler?
+Answer:",rock
+Type 1,Golem,short,"What is the Type 1 of Golem?
+Answer:",rock
+Type 1,Ponyta,short,"What is the Type 1 of Ponyta?
+Answer:",fire
+Type 1,Rapidash,short,"What is the Type 1 of Rapidash?
+Answer:",fire
+Type 1,Slowpoke,short,"What is the Type 1 of Slowpoke?
+Answer:",water
+Type 1,Slowbro,short,"What is the Type 1 of Slowbro?
+Answer:",water
+Type 1,Magnemite,short,"What is the Type 1 of Magnemite?
+Answer:",electric
+Type 1,Magneton,short,"What is the Type 1 of Magneton?
+Answer:",electric
+Type 1,Farfetch'd,short,"What is the Type 1 of Farfetch'd?
+Answer:",normal
+Type 1,Doduo,short,"What is the Type 1 of Doduo?
+Answer:",normal
+Type 1,Dodrio,short,"What is the Type 1 of Dodrio?
+Answer:",normal
+Type 1,Seel,short,"What is the Type 1 of Seel?
+Answer:",water
+Type 1,Dewgong,short,"What is the Type 1 of Dewgong?
+Answer:",water
+Type 1,Grimer,short,"What is the Type 1 of Grimer?
+Answer:",poison
+Type 1,Muk,short,"What is the Type 1 of Muk?
+Answer:",poison
+Type 1,Shellder,short,"What is the Type 1 of Shellder?
+Answer:",water
+Type 1,Cloyster,short,"What is the Type 1 of Cloyster?
+Answer:",water
+Type 1,Gastly,short,"What is the Type 1 of Gastly?
+Answer:",ghost
+Type 1,Haunter,short,"What is the Type 1 of Haunter?
+Answer:",ghost
+Type 1,Gengar,short,"What is the Type 1 of Gengar?
+Answer:",ghost
+Type 1,Onix,short,"What is the Type 1 of Onix?
+Answer:",rock
+Type 1,Drowzee,short,"What is the Type 1 of Drowzee?
+Answer:",psychic
+Type 1,Hypno,short,"What is the Type 1 of Hypno?
+Answer:",psychic
+Type 1,Krabby,short,"What is the Type 1 of Krabby?
+Answer:",water
+Type 1,Kingler,short,"What is the Type 1 of Kingler?
+Answer:",water
+Type 1,Voltorb,short,"What is the Type 1 of Voltorb?
+Answer:",electric
+Type 1,Electrode,short,"What is the Type 1 of Electrode?
+Answer:",electric
+Type 1,Exeggcute,short,"What is the Type 1 of Exeggcute?
+Answer:",grass
+Type 1,Exeggutor,short,"What is the Type 1 of Exeggutor?
+Answer:",grass
+Type 1,Cubone,short,"What is the Type 1 of Cubone?
+Answer:",ground
+Type 1,Marowak,short,"What is the Type 1 of Marowak?
+Answer:",ground
+Type 1,Hitmonlee,short,"What is the Type 1 of Hitmonlee?
+Answer:",fighting
+Type 1,Hitmonchan,short,"What is the Type 1 of Hitmonchan?
+Answer:",fighting
+Type 1,Lickitung,short,"What is the Type 1 of Lickitung?
+Answer:",normal
+Type 1,Koffing,short,"What is the Type 1 of Koffing?
+Answer:",poison
+Type 1,Weezing,short,"What is the Type 1 of Weezing?
+Answer:",poison
+Type 1,Rhyhorn,short,"What is the Type 1 of Rhyhorn?
+Answer:",ground
+Type 1,Rhydon,short,"What is the Type 1 of Rhydon?
+Answer:",ground
+Type 1,Chansey,short,"What is the Type 1 of Chansey?
+Answer:",normal
+Type 1,Tangela,short,"What is the Type 1 of Tangela?
+Answer:",grass
+Type 1,Kangaskhan,short,"What is the Type 1 of Kangaskhan?
+Answer:",normal
+Type 1,Horsea,short,"What is the Type 1 of Horsea?
+Answer:",water
+Type 1,Seadra,short,"What is the Type 1 of Seadra?
+Answer:",water
+Type 1,Goldeen,short,"What is the Type 1 of Goldeen?
+Answer:",water
+Type 1,Seaking,short,"What is the Type 1 of Seaking?
+Answer:",water
+Type 1,Staryu,short,"What is the Type 1 of Staryu?
+Answer:",water
+Type 1,Starmie,short,"What is the Type 1 of Starmie?
+Answer:",water
+Type 1,Mr. Mime,short,"What is the Type 1 of Mr. Mime?
+Answer:",psychic
+Type 1,Scyther,short,"What is the Type 1 of Scyther?
+Answer:",bug
+Type 1,Jynx,short,"What is the Type 1 of Jynx?
+Answer:",ice
+Type 1,Electabuzz,short,"What is the Type 1 of Electabuzz?
+Answer:",electric
+Type 1,Magmar,short,"What is the Type 1 of Magmar?
+Answer:",fire
+Type 1,Pinsir,short,"What is the Type 1 of Pinsir?
+Answer:",bug
+Type 1,Tauros,short,"What is the Type 1 of Tauros?
+Answer:",normal
+Type 1,Magikarp,short,"What is the Type 1 of Magikarp?
+Answer:",water
+Type 1,Gyarados,short,"What is the Type 1 of Gyarados?
+Answer:",water
+Type 1,Lapras,short,"What is the Type 1 of Lapras?
+Answer:",water
+Type 1,Ditto,short,"What is the Type 1 of Ditto?
+Answer:",normal
+Type 1,Eevee,short,"What is the Type 1 of Eevee?
+Answer:",normal
+Type 1,Vaporeon,short,"What is the Type 1 of Vaporeon?
+Answer:",water
+Type 1,Jolteon,short,"What is the Type 1 of Jolteon?
+Answer:",electric
+Type 1,Flareon,short,"What is the Type 1 of Flareon?
+Answer:",fire
+Type 1,Porygon,short,"What is the Type 1 of Porygon?
+Answer:",normal
+Type 1,Omanyte,short,"What is the Type 1 of Omanyte?
+Answer:",rock
+Type 1,Omastar,short,"What is the Type 1 of Omastar?
+Answer:",rock
+Type 1,Kabuto,short,"What is the Type 1 of Kabuto?
+Answer:",rock
+Type 1,Kabutops,short,"What is the Type 1 of Kabutops?
+Answer:",rock
+Type 1,Aerodactyl,short,"What is the Type 1 of Aerodactyl?
+Answer:",rock
+Type 1,Snorlax,short,"What is the Type 1 of Snorlax?
+Answer:",normal
+Type 1,Articuno,short,"What is the Type 1 of Articuno?
+Answer:",ice
+Type 1,Zapdos,short,"What is the Type 1 of Zapdos?
+Answer:",electric
+Type 1,Moltres,short,"What is the Type 1 of Moltres?
+Answer:",fire
+Type 1,Dratini,short,"What is the Type 1 of Dratini?
+Answer:",dragon
+Type 1,Dragonair,short,"What is the Type 1 of Dragonair?
+Answer:",dragon
+Type 1,Dragonite,short,"What is the Type 1 of Dragonite?
+Answer:",dragon
+Type 1,Mewtwo,short,"What is the Type 1 of Mewtwo?
+Answer:",psychic
+Type 1,Mew,short,"What is the Type 1 of Mew?
+Answer:",psychic
+Type 1,Chikorita,short,"What is the Type 1 of Chikorita?
+Answer:",grass
+Type 1,Bayleef,short,"What is the Type 1 of Bayleef?
+Answer:",grass
+Type 1,Meganium,short,"What is the Type 1 of Meganium?
+Answer:",grass
+Type 1,Cyndaquil,short,"What is the Type 1 of Cyndaquil?
+Answer:",fire
+Type 1,Quilava,short,"What is the Type 1 of Quilava?
+Answer:",fire
+Type 1,Typhlosion,short,"What is the Type 1 of Typhlosion?
+Answer:",fire
+Type 1,Totodile,short,"What is the Type 1 of Totodile?
+Answer:",water
+Type 1,Croconaw,short,"What is the Type 1 of Croconaw?
+Answer:",water
+Type 1,Feraligatr,short,"What is the Type 1 of Feraligatr?
+Answer:",water
+Type 1,Sentret,short,"What is the Type 1 of Sentret?
+Answer:",normal
+Type 1,Furret,short,"What is the Type 1 of Furret?
+Answer:",normal
+Type 1,Hoothoot,short,"What is the Type 1 of Hoothoot?
+Answer:",normal
+Type 1,Noctowl,short,"What is the Type 1 of Noctowl?
+Answer:",normal
+Type 1,Ledyba,short,"What is the Type 1 of Ledyba?
+Answer:",bug
+Type 1,Ledian,short,"What is the Type 1 of Ledian?
+Answer:",bug
+Type 1,Spinarak,short,"What is the Type 1 of Spinarak?
+Answer:",bug
+Type 1,Ariados,short,"What is the Type 1 of Ariados?
+Answer:",bug
+Type 1,Crobat,short,"What is the Type 1 of Crobat?
+Answer:",poison
+Type 1,Chinchou,short,"What is the Type 1 of Chinchou?
+Answer:",water
+Type 1,Lanturn,short,"What is the Type 1 of Lanturn?
+Answer:",water
+Type 1,Pichu,short,"What is the Type 1 of Pichu?
+Answer:",electric
+Type 1,Cleffa,short,"What is the Type 1 of Cleffa?
+Answer:",fairy
+Type 1,Igglybuff,short,"What is the Type 1 of Igglybuff?
+Answer:",normal
+Type 1,Togepi,short,"What is the Type 1 of Togepi?
+Answer:",fairy
+Type 1,Togetic,short,"What is the Type 1 of Togetic?
+Answer:",fairy
+Type 1,Natu,short,"What is the Type 1 of Natu?
+Answer:",psychic
+Type 1,Xatu,short,"What is the Type 1 of Xatu?
+Answer:",psychic
+Type 1,Mareep,short,"What is the Type 1 of Mareep?
+Answer:",electric
+Type 1,Flaaffy,short,"What is the Type 1 of Flaaffy?
+Answer:",electric
+Type 1,Ampharos,short,"What is the Type 1 of Ampharos?
+Answer:",electric
+Type 1,Bellossom,short,"What is the Type 1 of Bellossom?
+Answer:",grass
+Type 1,Marill,short,"What is the Type 1 of Marill?
+Answer:",water
+Type 1,Azumarill,short,"What is the Type 1 of Azumarill?
+Answer:",water
+Type 1,Sudowoodo,short,"What is the Type 1 of Sudowoodo?
+Answer:",rock
+Type 1,Politoed,short,"What is the Type 1 of Politoed?
+Answer:",water
+Type 1,Hoppip,short,"What is the Type 1 of Hoppip?
+Answer:",grass
+Type 1,Skiploom,short,"What is the Type 1 of Skiploom?
+Answer:",grass
+Type 1,Jumpluff,short,"What is the Type 1 of Jumpluff?
+Answer:",grass
+Type 1,Aipom,short,"What is the Type 1 of Aipom?
+Answer:",normal
+Type 1,Sunkern,short,"What is the Type 1 of Sunkern?
+Answer:",grass
+Type 1,Sunflora,short,"What is the Type 1 of Sunflora?
+Answer:",grass
+Type 1,Yanma,short,"What is the Type 1 of Yanma?
+Answer:",bug
+Type 1,Wooper,short,"What is the Type 1 of Wooper?
+Answer:",water
+Type 1,Quagsire,short,"What is the Type 1 of Quagsire?
+Answer:",water
+Type 1,Espeon,short,"What is the Type 1 of Espeon?
+Answer:",psychic
+Type 1,Umbreon,short,"What is the Type 1 of Umbreon?
+Answer:",dark
+Type 1,Murkrow,short,"What is the Type 1 of Murkrow?
+Answer:",dark
+Type 1,Slowking,short,"What is the Type 1 of Slowking?
+Answer:",water
+Type 1,Misdreavus,short,"What is the Type 1 of Misdreavus?
+Answer:",ghost
+Type 1,Unown,short,"What is the Type 1 of Unown?
+Answer:",psychic
+Type 1,Wobbuffet,short,"What is the Type 1 of Wobbuffet?
+Answer:",psychic
+Type 1,Girafarig,short,"What is the Type 1 of Girafarig?
+Answer:",normal
+Type 1,Pineco,short,"What is the Type 1 of Pineco?
+Answer:",bug
+Type 1,Forretress,short,"What is the Type 1 of Forretress?
+Answer:",bug
+Type 1,Dunsparce,short,"What is the Type 1 of Dunsparce?
+Answer:",normal
+Type 1,Gligar,short,"What is the Type 1 of Gligar?
+Answer:",ground
+Type 1,Steelix,short,"What is the Type 1 of Steelix?
+Answer:",steel
+Type 1,Snubbull,short,"What is the Type 1 of Snubbull?
+Answer:",fairy
+Type 1,Granbull,short,"What is the Type 1 of Granbull?
+Answer:",fairy
+Type 1,Qwilfish,short,"What is the Type 1 of Qwilfish?
+Answer:",water
+Type 1,Scizor,short,"What is the Type 1 of Scizor?
+Answer:",bug
+Type 1,Shuckle,short,"What is the Type 1 of Shuckle?
+Answer:",bug
+Type 1,Heracross,short,"What is the Type 1 of Heracross?
+Answer:",bug
+Type 1,Sneasel,short,"What is the Type 1 of Sneasel?
+Answer:",dark
+Type 1,Teddiursa,short,"What is the Type 1 of Teddiursa?
+Answer:",normal
+Type 1,Ursaring,short,"What is the Type 1 of Ursaring?
+Answer:",normal
+Type 1,Slugma,short,"What is the Type 1 of Slugma?
+Answer:",fire
+Type 1,Magcargo,short,"What is the Type 1 of Magcargo?
+Answer:",fire
+Type 1,Swinub,short,"What is the Type 1 of Swinub?
+Answer:",ice
+Type 1,Piloswine,short,"What is the Type 1 of Piloswine?
+Answer:",ice
+Type 1,Corsola,short,"What is the Type 1 of Corsola?
+Answer:",water
+Type 1,Remoraid,short,"What is the Type 1 of Remoraid?
+Answer:",water
+Type 1,Octillery,short,"What is the Type 1 of Octillery?
+Answer:",water
+Type 1,Delibird,short,"What is the Type 1 of Delibird?
+Answer:",ice
+Type 1,Mantine,short,"What is the Type 1 of Mantine?
+Answer:",water
+Type 1,Skarmory,short,"What is the Type 1 of Skarmory?
+Answer:",steel
+Type 1,Houndour,short,"What is the Type 1 of Houndour?
+Answer:",dark
+Type 1,Houndoom,short,"What is the Type 1 of Houndoom?
+Answer:",dark
+Type 1,Kingdra,short,"What is the Type 1 of Kingdra?
+Answer:",water
+Type 1,Phanpy,short,"What is the Type 1 of Phanpy?
+Answer:",ground
+Type 1,Donphan,short,"What is the Type 1 of Donphan?
+Answer:",ground
+Type 1,Porygon2,short,"What is the Type 1 of Porygon2?
+Answer:",normal
+Type 1,Stantler,short,"What is the Type 1 of Stantler?
+Answer:",normal
+Type 1,Smeargle,short,"What is the Type 1 of Smeargle?
+Answer:",normal
+Type 1,Tyrogue,short,"What is the Type 1 of Tyrogue?
+Answer:",fighting
+Type 1,Hitmontop,short,"What is the Type 1 of Hitmontop?
+Answer:",fighting
+Type 1,Smoochum,short,"What is the Type 1 of Smoochum?
+Answer:",ice
+Type 1,Elekid,short,"What is the Type 1 of Elekid?
+Answer:",electric
+Type 1,Magby,short,"What is the Type 1 of Magby?
+Answer:",fire
+Type 1,Miltank,short,"What is the Type 1 of Miltank?
+Answer:",normal
+Type 1,Blissey,short,"What is the Type 1 of Blissey?
+Answer:",normal
+Type 1,Raikou,short,"What is the Type 1 of Raikou?
+Answer:",electric
+Type 1,Entei,short,"What is the Type 1 of Entei?
+Answer:",fire
+Type 1,Suicune,short,"What is the Type 1 of Suicune?
+Answer:",water
+Type 1,Larvitar,short,"What is the Type 1 of Larvitar?
+Answer:",rock
+Type 1,Pupitar,short,"What is the Type 1 of Pupitar?
+Answer:",rock
+Type 1,Tyranitar,short,"What is the Type 1 of Tyranitar?
+Answer:",rock
+Type 1,Lugia,short,"What is the Type 1 of Lugia?
+Answer:",psychic
+Type 1,Ho-Oh,short,"What is the Type 1 of Ho-Oh?
+Answer:",fire
+Type 1,Celebi,short,"What is the Type 1 of Celebi?
+Answer:",psychic
+Type 1,Treecko,short,"What is the Type 1 of Treecko?
+Answer:",grass
+Type 1,Grovyle,short,"What is the Type 1 of Grovyle?
+Answer:",grass
+Type 1,Sceptile,short,"What is the Type 1 of Sceptile?
+Answer:",grass
+Type 1,Torchic,short,"What is the Type 1 of Torchic?
+Answer:",fire
+Type 1,Combusken,short,"What is the Type 1 of Combusken?
+Answer:",fire
+Type 1,Blaziken,short,"What is the Type 1 of Blaziken?
+Answer:",fire
+Type 1,Mudkip,short,"What is the Type 1 of Mudkip?
+Answer:",water
+Type 1,Marshtomp,short,"What is the Type 1 of Marshtomp?
+Answer:",water
+Type 1,Swampert,short,"What is the Type 1 of Swampert?
+Answer:",water
+Type 1,Poochyena,short,"What is the Type 1 of Poochyena?
+Answer:",dark
+Type 1,Mightyena,short,"What is the Type 1 of Mightyena?
+Answer:",dark
+Type 1,Zigzagoon,short,"What is the Type 1 of Zigzagoon?
+Answer:",normal
+Type 1,Linoone,short,"What is the Type 1 of Linoone?
+Answer:",normal
+Type 1,Wurmple,short,"What is the Type 1 of Wurmple?
+Answer:",bug
+Type 1,Silcoon,short,"What is the Type 1 of Silcoon?
+Answer:",bug
+Type 1,Beautifly,short,"What is the Type 1 of Beautifly?
+Answer:",bug
+Type 1,Cascoon,short,"What is the Type 1 of Cascoon?
+Answer:",bug
+Type 1,Dustox,short,"What is the Type 1 of Dustox?
+Answer:",bug
+Type 1,Lotad,short,"What is the Type 1 of Lotad?
+Answer:",water
+Type 1,Lombre,short,"What is the Type 1 of Lombre?
+Answer:",water
+Type 1,Ludicolo,short,"What is the Type 1 of Ludicolo?
+Answer:",water
+Type 1,Seedot,short,"What is the Type 1 of Seedot?
+Answer:",grass
+Type 1,Nuzleaf,short,"What is the Type 1 of Nuzleaf?
+Answer:",grass
+Type 1,Shiftry,short,"What is the Type 1 of Shiftry?
+Answer:",grass
+Type 1,Taillow,short,"What is the Type 1 of Taillow?
+Answer:",normal
+Type 1,Swellow,short,"What is the Type 1 of Swellow?
+Answer:",normal
+Type 1,Wingull,short,"What is the Type 1 of Wingull?
+Answer:",water
+Type 1,Pelipper,short,"What is the Type 1 of Pelipper?
+Answer:",water
+Type 1,Ralts,short,"What is the Type 1 of Ralts?
+Answer:",psychic
+Type 1,Kirlia,short,"What is the Type 1 of Kirlia?
+Answer:",psychic
+Type 1,Gardevoir,short,"What is the Type 1 of Gardevoir?
+Answer:",psychic
+Type 1,Surskit,short,"What is the Type 1 of Surskit?
+Answer:",bug
+Type 1,Masquerain,short,"What is the Type 1 of Masquerain?
+Answer:",bug
+Type 1,Shroomish,short,"What is the Type 1 of Shroomish?
+Answer:",grass
+Type 1,Breloom,short,"What is the Type 1 of Breloom?
+Answer:",grass
+Type 1,Slakoth,short,"What is the Type 1 of Slakoth?
+Answer:",normal
+Type 1,Vigoroth,short,"What is the Type 1 of Vigoroth?
+Answer:",normal
+Type 1,Slaking,short,"What is the Type 1 of Slaking?
+Answer:",normal
+Type 1,Nincada,short,"What is the Type 1 of Nincada?
+Answer:",bug
+Type 1,Ninjask,short,"What is the Type 1 of Ninjask?
+Answer:",bug
+Type 1,Shedinja,short,"What is the Type 1 of Shedinja?
+Answer:",bug
+Type 1,Whismur,short,"What is the Type 1 of Whismur?
+Answer:",normal
+Type 1,Loudred,short,"What is the Type 1 of Loudred?
+Answer:",normal
+Type 1,Exploud,short,"What is the Type 1 of Exploud?
+Answer:",normal
+Type 1,Makuhita,short,"What is the Type 1 of Makuhita?
+Answer:",fighting
+Type 1,Hariyama,short,"What is the Type 1 of Hariyama?
+Answer:",fighting
+Type 1,Azurill,short,"What is the Type 1 of Azurill?
+Answer:",normal
+Type 1,Nosepass,short,"What is the Type 1 of Nosepass?
+Answer:",rock
+Type 1,Skitty,short,"What is the Type 1 of Skitty?
+Answer:",normal
+Type 1,Delcatty,short,"What is the Type 1 of Delcatty?
+Answer:",normal
+Type 1,Sableye,short,"What is the Type 1 of Sableye?
+Answer:",dark
+Type 1,Mawile,short,"What is the Type 1 of Mawile?
+Answer:",steel
+Type 1,Aron,short,"What is the Type 1 of Aron?
+Answer:",steel
+Type 1,Lairon,short,"What is the Type 1 of Lairon?
+Answer:",steel
+Type 1,Aggron,short,"What is the Type 1 of Aggron?
+Answer:",steel
+Type 1,Meditite,short,"What is the Type 1 of Meditite?
+Answer:",fighting
+Type 1,Medicham,short,"What is the Type 1 of Medicham?
+Answer:",fighting
+Type 1,Electrike,short,"What is the Type 1 of Electrike?
+Answer:",electric
+Type 1,Manectric,short,"What is the Type 1 of Manectric?
+Answer:",electric
+Type 1,Plusle,short,"What is the Type 1 of Plusle?
+Answer:",electric
+Type 1,Minun,short,"What is the Type 1 of Minun?
+Answer:",electric
+Type 1,Volbeat,short,"What is the Type 1 of Volbeat?
+Answer:",bug
+Type 1,Illumise,short,"What is the Type 1 of Illumise?
+Answer:",bug
+Type 1,Roselia,short,"What is the Type 1 of Roselia?
+Answer:",grass
+Type 1,Gulpin,short,"What is the Type 1 of Gulpin?
+Answer:",poison
+Type 1,Swalot,short,"What is the Type 1 of Swalot?
+Answer:",poison
+Type 1,Carvanha,short,"What is the Type 1 of Carvanha?
+Answer:",water
+Type 1,Sharpedo,short,"What is the Type 1 of Sharpedo?
+Answer:",water
+Type 1,Wailmer,short,"What is the Type 1 of Wailmer?
+Answer:",water
+Type 1,Wailord,short,"What is the Type 1 of Wailord?
+Answer:",water
+Type 1,Numel,short,"What is the Type 1 of Numel?
+Answer:",fire
+Type 1,Camerupt,short,"What is the Type 1 of Camerupt?
+Answer:",fire
+Type 1,Torkoal,short,"What is the Type 1 of Torkoal?
+Answer:",fire
+Type 1,Spoink,short,"What is the Type 1 of Spoink?
+Answer:",psychic
+Type 1,Grumpig,short,"What is the Type 1 of Grumpig?
+Answer:",psychic
+Type 1,Spinda,short,"What is the Type 1 of Spinda?
+Answer:",normal
+Type 1,Trapinch,short,"What is the Type 1 of Trapinch?
+Answer:",ground
+Type 1,Vibrava,short,"What is the Type 1 of Vibrava?
+Answer:",ground
+Type 1,Flygon,short,"What is the Type 1 of Flygon?
+Answer:",ground
+Type 1,Cacnea,short,"What is the Type 1 of Cacnea?
+Answer:",grass
+Type 1,Cacturne,short,"What is the Type 1 of Cacturne?
+Answer:",grass
+Type 1,Swablu,short,"What is the Type 1 of Swablu?
+Answer:",normal
+Type 1,Altaria,short,"What is the Type 1 of Altaria?
+Answer:",dragon
+Type 1,Zangoose,short,"What is the Type 1 of Zangoose?
+Answer:",normal
+Type 1,Seviper,short,"What is the Type 1 of Seviper?
+Answer:",poison
+Type 1,Lunatone,short,"What is the Type 1 of Lunatone?
+Answer:",rock
+Type 1,Solrock,short,"What is the Type 1 of Solrock?
+Answer:",rock
+Type 1,Barboach,short,"What is the Type 1 of Barboach?
+Answer:",water
+Type 1,Whiscash,short,"What is the Type 1 of Whiscash?
+Answer:",water
+Type 1,Corphish,short,"What is the Type 1 of Corphish?
+Answer:",water
+Type 1,Crawdaunt,short,"What is the Type 1 of Crawdaunt?
+Answer:",water
+Type 1,Baltoy,short,"What is the Type 1 of Baltoy?
+Answer:",ground
+Type 1,Claydol,short,"What is the Type 1 of Claydol?
+Answer:",ground
+Type 1,Lileep,short,"What is the Type 1 of Lileep?
+Answer:",rock
+Type 1,Cradily,short,"What is the Type 1 of Cradily?
+Answer:",rock
+Type 1,Anorith,short,"What is the Type 1 of Anorith?
+Answer:",rock
+Type 1,Armaldo,short,"What is the Type 1 of Armaldo?
+Answer:",rock
+Type 1,Feebas,short,"What is the Type 1 of Feebas?
+Answer:",water
+Type 1,Milotic,short,"What is the Type 1 of Milotic?
+Answer:",water
+Type 1,Castform,short,"What is the Type 1 of Castform?
+Answer:",normal
+Type 1,Kecleon,short,"What is the Type 1 of Kecleon?
+Answer:",normal
+Type 1,Shuppet,short,"What is the Type 1 of Shuppet?
+Answer:",ghost
+Type 1,Banette,short,"What is the Type 1 of Banette?
+Answer:",ghost
+Type 1,Duskull,short,"What is the Type 1 of Duskull?
+Answer:",ghost
+Type 1,Dusclops,short,"What is the Type 1 of Dusclops?
+Answer:",ghost
+Type 1,Tropius,short,"What is the Type 1 of Tropius?
+Answer:",grass
+Type 1,Chimecho,short,"What is the Type 1 of Chimecho?
+Answer:",psychic
+Type 1,Absol,short,"What is the Type 1 of Absol?
+Answer:",dark
+Type 1,Wynaut,short,"What is the Type 1 of Wynaut?
+Answer:",psychic
+Type 1,Snorunt,short,"What is the Type 1 of Snorunt?
+Answer:",ice
+Type 1,Glalie,short,"What is the Type 1 of Glalie?
+Answer:",ice
+Type 1,Spheal,short,"What is the Type 1 of Spheal?
+Answer:",ice
+Type 1,Sealeo,short,"What is the Type 1 of Sealeo?
+Answer:",ice
+Type 1,Walrein,short,"What is the Type 1 of Walrein?
+Answer:",ice
+Type 1,Clamperl,short,"What is the Type 1 of Clamperl?
+Answer:",water
+Type 1,Huntail,short,"What is the Type 1 of Huntail?
+Answer:",water
+Type 1,Gorebyss,short,"What is the Type 1 of Gorebyss?
+Answer:",water
+Type 1,Relicanth,short,"What is the Type 1 of Relicanth?
+Answer:",water
+Type 1,Luvdisc,short,"What is the Type 1 of Luvdisc?
+Answer:",water
+Type 1,Bagon,short,"What is the Type 1 of Bagon?
+Answer:",dragon
+Type 1,Shelgon,short,"What is the Type 1 of Shelgon?
+Answer:",dragon
+Type 1,Salamence,short,"What is the Type 1 of Salamence?
+Answer:",dragon
+Type 1,Beldum,short,"What is the Type 1 of Beldum?
+Answer:",steel
+Type 1,Metang,short,"What is the Type 1 of Metang?
+Answer:",steel
+Type 1,Metagross,short,"What is the Type 1 of Metagross?
+Answer:",steel
+Type 1,Regirock,short,"What is the Type 1 of Regirock?
+Answer:",rock
+Type 1,Regice,short,"What is the Type 1 of Regice?
+Answer:",ice
+Type 1,Registeel,short,"What is the Type 1 of Registeel?
+Answer:",steel
+Type 1,Latias,short,"What is the Type 1 of Latias?
+Answer:",dragon
+Type 1,Latios,short,"What is the Type 1 of Latios?
+Answer:",dragon
+Type 1,Kyogre,short,"What is the Type 1 of Kyogre?
+Answer:",water
+Type 1,Groudon,short,"What is the Type 1 of Groudon?
+Answer:",ground
+Type 1,Rayquaza,short,"What is the Type 1 of Rayquaza?
+Answer:",dragon
+Type 1,Jirachi,short,"What is the Type 1 of Jirachi?
+Answer:",steel
+Type 1,Deoxys,short,"What is the Type 1 of Deoxys?
+Answer:",psychic
+Type 1,Turtwig,short,"What is the Type 1 of Turtwig?
+Answer:",grass
+Type 1,Grotle,short,"What is the Type 1 of Grotle?
+Answer:",grass
+Type 1,Torterra,short,"What is the Type 1 of Torterra?
+Answer:",grass
+Type 1,Chimchar,short,"What is the Type 1 of Chimchar?
+Answer:",fire
+Type 1,Monferno,short,"What is the Type 1 of Monferno?
+Answer:",fire
+Type 1,Infernape,short,"What is the Type 1 of Infernape?
+Answer:",fire
+Type 1,Piplup,short,"What is the Type 1 of Piplup?
+Answer:",water
+Type 1,Prinplup,short,"What is the Type 1 of Prinplup?
+Answer:",water
+Type 1,Empoleon,short,"What is the Type 1 of Empoleon?
+Answer:",water
+Type 1,Starly,short,"What is the Type 1 of Starly?
+Answer:",normal
+Type 1,Staravia,short,"What is the Type 1 of Staravia?
+Answer:",normal
+Type 1,Staraptor,short,"What is the Type 1 of Staraptor?
+Answer:",normal
+Type 1,Bidoof,short,"What is the Type 1 of Bidoof?
+Answer:",normal
+Type 1,Bibarel,short,"What is the Type 1 of Bibarel?
+Answer:",normal
+Type 1,Kricketot,short,"What is the Type 1 of Kricketot?
+Answer:",bug
+Type 1,Kricketune,short,"What is the Type 1 of Kricketune?
+Answer:",bug
+Type 1,Shinx,short,"What is the Type 1 of Shinx?
+Answer:",electric
+Type 1,Luxio,short,"What is the Type 1 of Luxio?
+Answer:",electric
+Type 1,Luxray,short,"What is the Type 1 of Luxray?
+Answer:",electric
+Type 1,Budew,short,"What is the Type 1 of Budew?
+Answer:",grass
+Type 1,Roserade,short,"What is the Type 1 of Roserade?
+Answer:",grass
+Type 1,Cranidos,short,"What is the Type 1 of Cranidos?
+Answer:",rock
+Type 1,Rampardos,short,"What is the Type 1 of Rampardos?
+Answer:",rock
+Type 1,Shieldon,short,"What is the Type 1 of Shieldon?
+Answer:",rock
+Type 1,Bastiodon,short,"What is the Type 1 of Bastiodon?
+Answer:",rock
+Type 1,Burmy,short,"What is the Type 1 of Burmy?
+Answer:",bug
+Type 1,Wormadam,short,"What is the Type 1 of Wormadam?
+Answer:",bug
+Type 1,Mothim,short,"What is the Type 1 of Mothim?
+Answer:",bug
+Type 1,Combee,short,"What is the Type 1 of Combee?
+Answer:",bug
+Type 1,Vespiquen,short,"What is the Type 1 of Vespiquen?
+Answer:",bug
+Type 1,Pachirisu,short,"What is the Type 1 of Pachirisu?
+Answer:",electric
+Type 1,Buizel,short,"What is the Type 1 of Buizel?
+Answer:",water
+Type 1,Floatzel,short,"What is the Type 1 of Floatzel?
+Answer:",water
+Type 1,Cherubi,short,"What is the Type 1 of Cherubi?
+Answer:",grass
+Type 1,Cherrim,short,"What is the Type 1 of Cherrim?
+Answer:",grass
+Type 1,Shellos,short,"What is the Type 1 of Shellos?
+Answer:",water
+Type 1,Gastrodon,short,"What is the Type 1 of Gastrodon?
+Answer:",water
+Type 1,Ambipom,short,"What is the Type 1 of Ambipom?
+Answer:",normal
+Type 1,Drifloon,short,"What is the Type 1 of Drifloon?
+Answer:",ghost
+Type 1,Drifblim,short,"What is the Type 1 of Drifblim?
+Answer:",ghost
+Type 1,Buneary,short,"What is the Type 1 of Buneary?
+Answer:",normal
+Type 1,Lopunny,short,"What is the Type 1 of Lopunny?
+Answer:",normal
+Type 1,Mismagius,short,"What is the Type 1 of Mismagius?
+Answer:",ghost
+Type 1,Honchkrow,short,"What is the Type 1 of Honchkrow?
+Answer:",dark
+Type 1,Glameow,short,"What is the Type 1 of Glameow?
+Answer:",normal
+Type 1,Purugly,short,"What is the Type 1 of Purugly?
+Answer:",normal
+Type 1,Chingling,short,"What is the Type 1 of Chingling?
+Answer:",psychic
+Type 1,Stunky,short,"What is the Type 1 of Stunky?
+Answer:",poison
+Type 1,Skuntank,short,"What is the Type 1 of Skuntank?
+Answer:",poison
+Type 1,Bronzor,short,"What is the Type 1 of Bronzor?
+Answer:",steel
+Type 1,Bronzong,short,"What is the Type 1 of Bronzong?
+Answer:",steel
+Type 1,Bonsly,short,"What is the Type 1 of Bonsly?
+Answer:",rock
+Type 1,Mime Jr.,short,"What is the Type 1 of Mime Jr.?
+Answer:",psychic
+Type 1,Happiny,short,"What is the Type 1 of Happiny?
+Answer:",normal
+Type 1,Chatot,short,"What is the Type 1 of Chatot?
+Answer:",normal
+Type 1,Spiritomb,short,"What is the Type 1 of Spiritomb?
+Answer:",ghost
+Type 1,Gible,short,"What is the Type 1 of Gible?
+Answer:",dragon
+Type 1,Gabite,short,"What is the Type 1 of Gabite?
+Answer:",dragon
+Type 1,Garchomp,short,"What is the Type 1 of Garchomp?
+Answer:",dragon
+Type 1,Munchlax,short,"What is the Type 1 of Munchlax?
+Answer:",normal
+Type 1,Riolu,short,"What is the Type 1 of Riolu?
+Answer:",fighting
+Type 1,Lucario,short,"What is the Type 1 of Lucario?
+Answer:",fighting
+Type 1,Hippopotas,short,"What is the Type 1 of Hippopotas?
+Answer:",ground
+Type 1,Hippowdon,short,"What is the Type 1 of Hippowdon?
+Answer:",ground
+Type 1,Skorupi,short,"What is the Type 1 of Skorupi?
+Answer:",poison
+Type 1,Drapion,short,"What is the Type 1 of Drapion?
+Answer:",poison
+Type 1,Croagunk,short,"What is the Type 1 of Croagunk?
+Answer:",poison
+Type 1,Toxicroak,short,"What is the Type 1 of Toxicroak?
+Answer:",poison
+Type 1,Carnivine,short,"What is the Type 1 of Carnivine?
+Answer:",grass
+Type 1,Finneon,short,"What is the Type 1 of Finneon?
+Answer:",water
+Type 1,Lumineon,short,"What is the Type 1 of Lumineon?
+Answer:",water
+Type 1,Mantyke,short,"What is the Type 1 of Mantyke?
+Answer:",water
+Type 1,Snover,short,"What is the Type 1 of Snover?
+Answer:",grass
+Type 1,Abomasnow,short,"What is the Type 1 of Abomasnow?
+Answer:",grass
+Type 1,Weavile,short,"What is the Type 1 of Weavile?
+Answer:",dark
+Type 1,Magnezone,short,"What is the Type 1 of Magnezone?
+Answer:",electric
+Type 1,Lickilicky,short,"What is the Type 1 of Lickilicky?
+Answer:",normal
+Type 1,Rhyperior,short,"What is the Type 1 of Rhyperior?
+Answer:",ground
+Type 1,Tangrowth,short,"What is the Type 1 of Tangrowth?
+Answer:",grass
+Type 1,Electivire,short,"What is the Type 1 of Electivire?
+Answer:",electric
+Type 1,Magmortar,short,"What is the Type 1 of Magmortar?
+Answer:",fire
+Type 1,Togekiss,short,"What is the Type 1 of Togekiss?
+Answer:",fairy
+Type 1,Yanmega,short,"What is the Type 1 of Yanmega?
+Answer:",bug
+Type 1,Leafeon,short,"What is the Type 1 of Leafeon?
+Answer:",grass
+Type 1,Glaceon,short,"What is the Type 1 of Glaceon?
+Answer:",ice
+Type 1,Gliscor,short,"What is the Type 1 of Gliscor?
+Answer:",ground
+Type 1,Mamoswine,short,"What is the Type 1 of Mamoswine?
+Answer:",ice
+Type 1,Porygon-Z,short,"What is the Type 1 of Porygon-Z?
+Answer:",normal
+Type 1,Gallade,short,"What is the Type 1 of Gallade?
+Answer:",psychic
+Type 1,Probopass,short,"What is the Type 1 of Probopass?
+Answer:",rock
+Type 1,Dusknoir,short,"What is the Type 1 of Dusknoir?
+Answer:",ghost
+Type 1,Froslass,short,"What is the Type 1 of Froslass?
+Answer:",ice
+Type 1,Rotom,short,"What is the Type 1 of Rotom?
+Answer:",electric
+Type 1,Uxie,short,"What is the Type 1 of Uxie?
+Answer:",psychic
+Type 1,Mesprit,short,"What is the Type 1 of Mesprit?
+Answer:",psychic
+Type 1,Azelf,short,"What is the Type 1 of Azelf?
+Answer:",psychic
+Type 1,Dialga,short,"What is the Type 1 of Dialga?
+Answer:",steel
+Type 1,Palkia,short,"What is the Type 1 of Palkia?
+Answer:",water
+Type 1,Heatran,short,"What is the Type 1 of Heatran?
+Answer:",fire
+Type 1,Regigigas,short,"What is the Type 1 of Regigigas?
+Answer:",normal
+Type 1,Giratina,short,"What is the Type 1 of Giratina?
+Answer:",ghost
+Type 1,Cresselia,short,"What is the Type 1 of Cresselia?
+Answer:",psychic
+Type 1,Phione,short,"What is the Type 1 of Phione?
+Answer:",water
+Type 1,Manaphy,short,"What is the Type 1 of Manaphy?
+Answer:",water
+Type 1,Darkrai,short,"What is the Type 1 of Darkrai?
+Answer:",dark
+Type 1,Shaymin,short,"What is the Type 1 of Shaymin?
+Answer:",grass
+Type 1,Arceus,short,"What is the Type 1 of Arceus?
+Answer:",normal
+Type 1,Victini,short,"What is the Type 1 of Victini?
+Answer:",psychic
+Type 1,Snivy,short,"What is the Type 1 of Snivy?
+Answer:",grass
+Type 1,Servine,short,"What is the Type 1 of Servine?
+Answer:",grass
+Type 1,Serperior,short,"What is the Type 1 of Serperior?
+Answer:",grass
+Type 1,Tepig,short,"What is the Type 1 of Tepig?
+Answer:",fire
+Type 1,Pignite,short,"What is the Type 1 of Pignite?
+Answer:",fire
+Type 1,Emboar,short,"What is the Type 1 of Emboar?
+Answer:",fire
+HP,Bulbasaur,short,"What is the HP of Bulbasaur?
+Answer:",45
+HP,Ivysaur,short,"What is the HP of Ivysaur?
+Answer:",60
+HP,Venusaur,short,"What is the HP of Venusaur?
+Answer:",80
+HP,Charmander,short,"What is the HP of Charmander?
+Answer:",39
+HP,Charmeleon,short,"What is the HP of Charmeleon?
+Answer:",58
+HP,Charizard,short,"What is the HP of Charizard?
+Answer:",78
+HP,Squirtle,short,"What is the HP of Squirtle?
+Answer:",44
+HP,Wartortle,short,"What is the HP of Wartortle?
+Answer:",59
+HP,Blastoise,short,"What is the HP of Blastoise?
+Answer:",79
+HP,Caterpie,short,"What is the HP of Caterpie?
+Answer:",45
+HP,Metapod,short,"What is the HP of Metapod?
+Answer:",50
+HP,Butterfree,short,"What is the HP of Butterfree?
+Answer:",60
+HP,Weedle,short,"What is the HP of Weedle?
+Answer:",40
+HP,Kakuna,short,"What is the HP of Kakuna?
+Answer:",45
+HP,Beedrill,short,"What is the HP of Beedrill?
+Answer:",65
+HP,Pidgey,short,"What is the HP of Pidgey?
+Answer:",40
+HP,Pidgeotto,short,"What is the HP of Pidgeotto?
+Answer:",63
+HP,Pidgeot,short,"What is the HP of Pidgeot?
+Answer:",83
+HP,Rattata,short,"What is the HP of Rattata?
+Answer:",30
+HP,Raticate,short,"What is the HP of Raticate?
+Answer:",75
+HP,Spearow,short,"What is the HP of Spearow?
+Answer:",40
+HP,Fearow,short,"What is the HP of Fearow?
+Answer:",65
+HP,Ekans,short,"What is the HP of Ekans?
+Answer:",35
+HP,Arbok,short,"What is the HP of Arbok?
+Answer:",60
+HP,Pikachu,short,"What is the HP of Pikachu?
+Answer:",35
+HP,Raichu,short,"What is the HP of Raichu?
+Answer:",60
+HP,Sandshrew,short,"What is the HP of Sandshrew?
+Answer:",50
+HP,Sandslash,short,"What is the HP of Sandslash?
+Answer:",75
+HP,Nidoran♀,short,"What is the HP of Nidoran♀?
+Answer:",55
+HP,Nidorina,short,"What is the HP of Nidorina?
+Answer:",70
+HP,Nidoqueen,short,"What is the HP of Nidoqueen?
+Answer:",90
+HP,Nidoran♂,short,"What is the HP of Nidoran♂?
+Answer:",46
+HP,Nidorino,short,"What is the HP of Nidorino?
+Answer:",61
+HP,Nidoking,short,"What is the HP of Nidoking?
+Answer:",81
+HP,Clefairy,short,"What is the HP of Clefairy?
+Answer:",70
+HP,Clefable,short,"What is the HP of Clefable?
+Answer:",95
+HP,Vulpix,short,"What is the HP of Vulpix?
+Answer:",38
+HP,Ninetales,short,"What is the HP of Ninetales?
+Answer:",73
+HP,Jigglypuff,short,"What is the HP of Jigglypuff?
+Answer:",115
+HP,Wigglytuff,short,"What is the HP of Wigglytuff?
+Answer:",140
+HP,Zubat,short,"What is the HP of Zubat?
+Answer:",40
+HP,Golbat,short,"What is the HP of Golbat?
+Answer:",75
+HP,Oddish,short,"What is the HP of Oddish?
+Answer:",45
+HP,Gloom,short,"What is the HP of Gloom?
+Answer:",60
+HP,Vileplume,short,"What is the HP of Vileplume?
+Answer:",75
+HP,Paras,short,"What is the HP of Paras?
+Answer:",35
+HP,Parasect,short,"What is the HP of Parasect?
+Answer:",60
+HP,Venonat,short,"What is the HP of Venonat?
+Answer:",60
+HP,Venomoth,short,"What is the HP of Venomoth?
+Answer:",70
+HP,Diglett,short,"What is the HP of Diglett?
+Answer:",10
+HP,Dugtrio,short,"What is the HP of Dugtrio?
+Answer:",35
+HP,Meowth,short,"What is the HP of Meowth?
+Answer:",40
+HP,Persian,short,"What is the HP of Persian?
+Answer:",65
+HP,Psyduck,short,"What is the HP of Psyduck?
+Answer:",50
+HP,Golduck,short,"What is the HP of Golduck?
+Answer:",80
+HP,Mankey,short,"What is the HP of Mankey?
+Answer:",40
+HP,Primeape,short,"What is the HP of Primeape?
+Answer:",65
+HP,Growlithe,short,"What is the HP of Growlithe?
+Answer:",55
+HP,Arcanine,short,"What is the HP of Arcanine?
+Answer:",90
+HP,Poliwag,short,"What is the HP of Poliwag?
+Answer:",40
+HP,Poliwhirl,short,"What is the HP of Poliwhirl?
+Answer:",65
+HP,Poliwrath,short,"What is the HP of Poliwrath?
+Answer:",90
+HP,Abra,short,"What is the HP of Abra?
+Answer:",25
+HP,Kadabra,short,"What is the HP of Kadabra?
+Answer:",40
+HP,Alakazam,short,"What is the HP of Alakazam?
+Answer:",55
+HP,Machop,short,"What is the HP of Machop?
+Answer:",70
+HP,Machoke,short,"What is the HP of Machoke?
+Answer:",80
+HP,Machamp,short,"What is the HP of Machamp?
+Answer:",90
+HP,Bellsprout,short,"What is the HP of Bellsprout?
+Answer:",50
+HP,Weepinbell,short,"What is the HP of Weepinbell?
+Answer:",65
+HP,Victreebel,short,"What is the HP of Victreebel?
+Answer:",80
+HP,Tentacool,short,"What is the HP of Tentacool?
+Answer:",40
+HP,Tentacruel,short,"What is the HP of Tentacruel?
+Answer:",80
+HP,Geodude,short,"What is the HP of Geodude?
+Answer:",40
+HP,Graveler,short,"What is the HP of Graveler?
+Answer:",55
+HP,Golem,short,"What is the HP of Golem?
+Answer:",80
+HP,Ponyta,short,"What is the HP of Ponyta?
+Answer:",50
+HP,Rapidash,short,"What is the HP of Rapidash?
+Answer:",65
+HP,Slowpoke,short,"What is the HP of Slowpoke?
+Answer:",90
+HP,Slowbro,short,"What is the HP of Slowbro?
+Answer:",95
+HP,Magnemite,short,"What is the HP of Magnemite?
+Answer:",25
+HP,Magneton,short,"What is the HP of Magneton?
+Answer:",50
+HP,Farfetch'd,short,"What is the HP of Farfetch'd?
+Answer:",52
+HP,Doduo,short,"What is the HP of Doduo?
+Answer:",35
+HP,Dodrio,short,"What is the HP of Dodrio?
+Answer:",60
+HP,Seel,short,"What is the HP of Seel?
+Answer:",65
+HP,Dewgong,short,"What is the HP of Dewgong?
+Answer:",90
+HP,Grimer,short,"What is the HP of Grimer?
+Answer:",80
+HP,Muk,short,"What is the HP of Muk?
+Answer:",105
+HP,Shellder,short,"What is the HP of Shellder?
+Answer:",30
+HP,Cloyster,short,"What is the HP of Cloyster?
+Answer:",50
+HP,Gastly,short,"What is the HP of Gastly?
+Answer:",30
+HP,Haunter,short,"What is the HP of Haunter?
+Answer:",45
+HP,Gengar,short,"What is the HP of Gengar?
+Answer:",60
+HP,Onix,short,"What is the HP of Onix?
+Answer:",35
+HP,Drowzee,short,"What is the HP of Drowzee?
+Answer:",60
+HP,Hypno,short,"What is the HP of Hypno?
+Answer:",85
+HP,Krabby,short,"What is the HP of Krabby?
+Answer:",30
+HP,Kingler,short,"What is the HP of Kingler?
+Answer:",55
+HP,Voltorb,short,"What is the HP of Voltorb?
+Answer:",40
+HP,Electrode,short,"What is the HP of Electrode?
+Answer:",60
+HP,Exeggcute,short,"What is the HP of Exeggcute?
+Answer:",60
+HP,Exeggutor,short,"What is the HP of Exeggutor?
+Answer:",95
+HP,Cubone,short,"What is the HP of Cubone?
+Answer:",50
+HP,Marowak,short,"What is the HP of Marowak?
+Answer:",60
+HP,Hitmonlee,short,"What is the HP of Hitmonlee?
+Answer:",50
+HP,Hitmonchan,short,"What is the HP of Hitmonchan?
+Answer:",50
+HP,Lickitung,short,"What is the HP of Lickitung?
+Answer:",90
+HP,Koffing,short,"What is the HP of Koffing?
+Answer:",40
+HP,Weezing,short,"What is the HP of Weezing?
+Answer:",65
+HP,Rhyhorn,short,"What is the HP of Rhyhorn?
+Answer:",80
+HP,Rhydon,short,"What is the HP of Rhydon?
+Answer:",105
+HP,Chansey,short,"What is the HP of Chansey?
+Answer:",250
+HP,Tangela,short,"What is the HP of Tangela?
+Answer:",65
+HP,Kangaskhan,short,"What is the HP of Kangaskhan?
+Answer:",105
+HP,Horsea,short,"What is the HP of Horsea?
+Answer:",30
+HP,Seadra,short,"What is the HP of Seadra?
+Answer:",55
+HP,Goldeen,short,"What is the HP of Goldeen?
+Answer:",45
+HP,Seaking,short,"What is the HP of Seaking?
+Answer:",80
+HP,Staryu,short,"What is the HP of Staryu?
+Answer:",30
+HP,Starmie,short,"What is the HP of Starmie?
+Answer:",60
+HP,Mr. Mime,short,"What is the HP of Mr. Mime?
+Answer:",40
+HP,Scyther,short,"What is the HP of Scyther?
+Answer:",70
+HP,Jynx,short,"What is the HP of Jynx?
+Answer:",65
+HP,Electabuzz,short,"What is the HP of Electabuzz?
+Answer:",65
+HP,Magmar,short,"What is the HP of Magmar?
+Answer:",65
+HP,Pinsir,short,"What is the HP of Pinsir?
+Answer:",65
+HP,Tauros,short,"What is the HP of Tauros?
+Answer:",75
+HP,Magikarp,short,"What is the HP of Magikarp?
+Answer:",20
+HP,Gyarados,short,"What is the HP of Gyarados?
+Answer:",95
+HP,Lapras,short,"What is the HP of Lapras?
+Answer:",130
+HP,Ditto,short,"What is the HP of Ditto?
+Answer:",48
+HP,Eevee,short,"What is the HP of Eevee?
+Answer:",55
+HP,Vaporeon,short,"What is the HP of Vaporeon?
+Answer:",130
+HP,Jolteon,short,"What is the HP of Jolteon?
+Answer:",65
+HP,Flareon,short,"What is the HP of Flareon?
+Answer:",65
+HP,Porygon,short,"What is the HP of Porygon?
+Answer:",65
+HP,Omanyte,short,"What is the HP of Omanyte?
+Answer:",35
+HP,Omastar,short,"What is the HP of Omastar?
+Answer:",70
+HP,Kabuto,short,"What is the HP of Kabuto?
+Answer:",30
+HP,Kabutops,short,"What is the HP of Kabutops?
+Answer:",60
+HP,Aerodactyl,short,"What is the HP of Aerodactyl?
+Answer:",80
+HP,Snorlax,short,"What is the HP of Snorlax?
+Answer:",160
+HP,Articuno,short,"What is the HP of Articuno?
+Answer:",90
+HP,Zapdos,short,"What is the HP of Zapdos?
+Answer:",90
+HP,Moltres,short,"What is the HP of Moltres?
+Answer:",90
+HP,Dratini,short,"What is the HP of Dratini?
+Answer:",41
+HP,Dragonair,short,"What is the HP of Dragonair?
+Answer:",61
+HP,Dragonite,short,"What is the HP of Dragonite?
+Answer:",91
+HP,Mewtwo,short,"What is the HP of Mewtwo?
+Answer:",106
+HP,Mew,short,"What is the HP of Mew?
+Answer:",100
+HP,Chikorita,short,"What is the HP of Chikorita?
+Answer:",45
+HP,Bayleef,short,"What is the HP of Bayleef?
+Answer:",60
+HP,Meganium,short,"What is the HP of Meganium?
+Answer:",80
+HP,Cyndaquil,short,"What is the HP of Cyndaquil?
+Answer:",39
+HP,Quilava,short,"What is the HP of Quilava?
+Answer:",58
+HP,Typhlosion,short,"What is the HP of Typhlosion?
+Answer:",78
+HP,Totodile,short,"What is the HP of Totodile?
+Answer:",50
+HP,Croconaw,short,"What is the HP of Croconaw?
+Answer:",65
+HP,Feraligatr,short,"What is the HP of Feraligatr?
+Answer:",85
+HP,Sentret,short,"What is the HP of Sentret?
+Answer:",35
+HP,Furret,short,"What is the HP of Furret?
+Answer:",85
+HP,Hoothoot,short,"What is the HP of Hoothoot?
+Answer:",60
+HP,Noctowl,short,"What is the HP of Noctowl?
+Answer:",100
+HP,Ledyba,short,"What is the HP of Ledyba?
+Answer:",40
+HP,Ledian,short,"What is the HP of Ledian?
+Answer:",55
+HP,Spinarak,short,"What is the HP of Spinarak?
+Answer:",40
+HP,Ariados,short,"What is the HP of Ariados?
+Answer:",70
+HP,Crobat,short,"What is the HP of Crobat?
+Answer:",85
+HP,Chinchou,short,"What is the HP of Chinchou?
+Answer:",75
+HP,Lanturn,short,"What is the HP of Lanturn?
+Answer:",125
+HP,Pichu,short,"What is the HP of Pichu?
+Answer:",20
+HP,Cleffa,short,"What is the HP of Cleffa?
+Answer:",50
+HP,Igglybuff,short,"What is the HP of Igglybuff?
+Answer:",90
+HP,Togepi,short,"What is the HP of Togepi?
+Answer:",35
+HP,Togetic,short,"What is the HP of Togetic?
+Answer:",55
+HP,Natu,short,"What is the HP of Natu?
+Answer:",40
+HP,Xatu,short,"What is the HP of Xatu?
+Answer:",65
+HP,Mareep,short,"What is the HP of Mareep?
+Answer:",55
+HP,Flaaffy,short,"What is the HP of Flaaffy?
+Answer:",70
+HP,Ampharos,short,"What is the HP of Ampharos?
+Answer:",90
+HP,Bellossom,short,"What is the HP of Bellossom?
+Answer:",75
+HP,Marill,short,"What is the HP of Marill?
+Answer:",70
+HP,Azumarill,short,"What is the HP of Azumarill?
+Answer:",100
+HP,Sudowoodo,short,"What is the HP of Sudowoodo?
+Answer:",70
+HP,Politoed,short,"What is the HP of Politoed?
+Answer:",90
+HP,Hoppip,short,"What is the HP of Hoppip?
+Answer:",35
+HP,Skiploom,short,"What is the HP of Skiploom?
+Answer:",55
+HP,Jumpluff,short,"What is the HP of Jumpluff?
+Answer:",75
+HP,Aipom,short,"What is the HP of Aipom?
+Answer:",55
+HP,Sunkern,short,"What is the HP of Sunkern?
+Answer:",30
+HP,Sunflora,short,"What is the HP of Sunflora?
+Answer:",75
+HP,Yanma,short,"What is the HP of Yanma?
+Answer:",65
+HP,Wooper,short,"What is the HP of Wooper?
+Answer:",55
+HP,Quagsire,short,"What is the HP of Quagsire?
+Answer:",95
+HP,Espeon,short,"What is the HP of Espeon?
+Answer:",65
+HP,Umbreon,short,"What is the HP of Umbreon?
+Answer:",95
+HP,Murkrow,short,"What is the HP of Murkrow?
+Answer:",60
+HP,Slowking,short,"What is the HP of Slowking?
+Answer:",95
+HP,Misdreavus,short,"What is the HP of Misdreavus?
+Answer:",60
+HP,Unown,short,"What is the HP of Unown?
+Answer:",48
+HP,Wobbuffet,short,"What is the HP of Wobbuffet?
+Answer:",190
+HP,Girafarig,short,"What is the HP of Girafarig?
+Answer:",70
+HP,Pineco,short,"What is the HP of Pineco?
+Answer:",50
+HP,Forretress,short,"What is the HP of Forretress?
+Answer:",75
+HP,Dunsparce,short,"What is the HP of Dunsparce?
+Answer:",100
+HP,Gligar,short,"What is the HP of Gligar?
+Answer:",65
+HP,Steelix,short,"What is the HP of Steelix?
+Answer:",75
+HP,Snubbull,short,"What is the HP of Snubbull?
+Answer:",60
+HP,Granbull,short,"What is the HP of Granbull?
+Answer:",90
+HP,Qwilfish,short,"What is the HP of Qwilfish?
+Answer:",65
+HP,Scizor,short,"What is the HP of Scizor?
+Answer:",70
+HP,Shuckle,short,"What is the HP of Shuckle?
+Answer:",20
+HP,Heracross,short,"What is the HP of Heracross?
+Answer:",80
+HP,Sneasel,short,"What is the HP of Sneasel?
+Answer:",55
+HP,Teddiursa,short,"What is the HP of Teddiursa?
+Answer:",60
+HP,Ursaring,short,"What is the HP of Ursaring?
+Answer:",90
+HP,Slugma,short,"What is the HP of Slugma?
+Answer:",40
+HP,Magcargo,short,"What is the HP of Magcargo?
+Answer:",60
+HP,Swinub,short,"What is the HP of Swinub?
+Answer:",50
+HP,Piloswine,short,"What is the HP of Piloswine?
+Answer:",100
+HP,Corsola,short,"What is the HP of Corsola?
+Answer:",65
+HP,Remoraid,short,"What is the HP of Remoraid?
+Answer:",35
+HP,Octillery,short,"What is the HP of Octillery?
+Answer:",75
+HP,Delibird,short,"What is the HP of Delibird?
+Answer:",45
+HP,Mantine,short,"What is the HP of Mantine?
+Answer:",85
+HP,Skarmory,short,"What is the HP of Skarmory?
+Answer:",65
+HP,Houndour,short,"What is the HP of Houndour?
+Answer:",45
+HP,Houndoom,short,"What is the HP of Houndoom?
+Answer:",75
+HP,Kingdra,short,"What is the HP of Kingdra?
+Answer:",75
+HP,Phanpy,short,"What is the HP of Phanpy?
+Answer:",90
+HP,Donphan,short,"What is the HP of Donphan?
+Answer:",90
+HP,Porygon2,short,"What is the HP of Porygon2?
+Answer:",85
+HP,Stantler,short,"What is the HP of Stantler?
+Answer:",73
+HP,Smeargle,short,"What is the HP of Smeargle?
+Answer:",55
+HP,Tyrogue,short,"What is the HP of Tyrogue?
+Answer:",35
+HP,Hitmontop,short,"What is the HP of Hitmontop?
+Answer:",50
+HP,Smoochum,short,"What is the HP of Smoochum?
+Answer:",45
+HP,Elekid,short,"What is the HP of Elekid?
+Answer:",45
+HP,Magby,short,"What is the HP of Magby?
+Answer:",45
+HP,Miltank,short,"What is the HP of Miltank?
+Answer:",95
+HP,Blissey,short,"What is the HP of Blissey?
+Answer:",255
+HP,Raikou,short,"What is the HP of Raikou?
+Answer:",90
+HP,Entei,short,"What is the HP of Entei?
+Answer:",115
+HP,Suicune,short,"What is the HP of Suicune?
+Answer:",100
+HP,Larvitar,short,"What is the HP of Larvitar?
+Answer:",50
+HP,Pupitar,short,"What is the HP of Pupitar?
+Answer:",70
+HP,Tyranitar,short,"What is the HP of Tyranitar?
+Answer:",100
+HP,Lugia,short,"What is the HP of Lugia?
+Answer:",106
+HP,Ho-Oh,short,"What is the HP of Ho-Oh?
+Answer:",106
+HP,Celebi,short,"What is the HP of Celebi?
+Answer:",100
+HP,Treecko,short,"What is the HP of Treecko?
+Answer:",40
+HP,Grovyle,short,"What is the HP of Grovyle?
+Answer:",50
+HP,Sceptile,short,"What is the HP of Sceptile?
+Answer:",70
+HP,Torchic,short,"What is the HP of Torchic?
+Answer:",45
+HP,Combusken,short,"What is the HP of Combusken?
+Answer:",60
+HP,Blaziken,short,"What is the HP of Blaziken?
+Answer:",80
+HP,Mudkip,short,"What is the HP of Mudkip?
+Answer:",50
+HP,Marshtomp,short,"What is the HP of Marshtomp?
+Answer:",70
+HP,Swampert,short,"What is the HP of Swampert?
+Answer:",100
+HP,Poochyena,short,"What is the HP of Poochyena?
+Answer:",35
+HP,Mightyena,short,"What is the HP of Mightyena?
+Answer:",70
+HP,Zigzagoon,short,"What is the HP of Zigzagoon?
+Answer:",38
+HP,Linoone,short,"What is the HP of Linoone?
+Answer:",78
+HP,Wurmple,short,"What is the HP of Wurmple?
+Answer:",45
+HP,Silcoon,short,"What is the HP of Silcoon?
+Answer:",50
+HP,Beautifly,short,"What is the HP of Beautifly?
+Answer:",60
+HP,Cascoon,short,"What is the HP of Cascoon?
+Answer:",50
+HP,Dustox,short,"What is the HP of Dustox?
+Answer:",60
+HP,Lotad,short,"What is the HP of Lotad?
+Answer:",40
+HP,Lombre,short,"What is the HP of Lombre?
+Answer:",60
+HP,Ludicolo,short,"What is the HP of Ludicolo?
+Answer:",80
+HP,Seedot,short,"What is the HP of Seedot?
+Answer:",40
+HP,Nuzleaf,short,"What is the HP of Nuzleaf?
+Answer:",70
+HP,Shiftry,short,"What is the HP of Shiftry?
+Answer:",90
+HP,Taillow,short,"What is the HP of Taillow?
+Answer:",40
+HP,Swellow,short,"What is the HP of Swellow?
+Answer:",60
+HP,Wingull,short,"What is the HP of Wingull?
+Answer:",40
+HP,Pelipper,short,"What is the HP of Pelipper?
+Answer:",60
+HP,Ralts,short,"What is the HP of Ralts?
+Answer:",28
+HP,Kirlia,short,"What is the HP of Kirlia?
+Answer:",38
+HP,Gardevoir,short,"What is the HP of Gardevoir?
+Answer:",68
+HP,Surskit,short,"What is the HP of Surskit?
+Answer:",40
+HP,Masquerain,short,"What is the HP of Masquerain?
+Answer:",70
+HP,Shroomish,short,"What is the HP of Shroomish?
+Answer:",60
+HP,Breloom,short,"What is the HP of Breloom?
+Answer:",60
+HP,Slakoth,short,"What is the HP of Slakoth?
+Answer:",60
+HP,Vigoroth,short,"What is the HP of Vigoroth?
+Answer:",80
+HP,Slaking,short,"What is the HP of Slaking?
+Answer:",150
+HP,Nincada,short,"What is the HP of Nincada?
+Answer:",31
+HP,Ninjask,short,"What is the HP of Ninjask?
+Answer:",61
+HP,Shedinja,short,"What is the HP of Shedinja?
+Answer:",1
+HP,Whismur,short,"What is the HP of Whismur?
+Answer:",64
+HP,Loudred,short,"What is the HP of Loudred?
+Answer:",84
+HP,Exploud,short,"What is the HP of Exploud?
+Answer:",104
+HP,Makuhita,short,"What is the HP of Makuhita?
+Answer:",72
+HP,Hariyama,short,"What is the HP of Hariyama?
+Answer:",144
+HP,Azurill,short,"What is the HP of Azurill?
+Answer:",50
+HP,Nosepass,short,"What is the HP of Nosepass?
+Answer:",30
+HP,Skitty,short,"What is the HP of Skitty?
+Answer:",50
+HP,Delcatty,short,"What is the HP of Delcatty?
+Answer:",70
+HP,Sableye,short,"What is the HP of Sableye?
+Answer:",50
+HP,Mawile,short,"What is the HP of Mawile?
+Answer:",50
+HP,Aron,short,"What is the HP of Aron?
+Answer:",50
+HP,Lairon,short,"What is the HP of Lairon?
+Answer:",60
+HP,Aggron,short,"What is the HP of Aggron?
+Answer:",70
+HP,Meditite,short,"What is the HP of Meditite?
+Answer:",30
+HP,Medicham,short,"What is the HP of Medicham?
+Answer:",60
+HP,Electrike,short,"What is the HP of Electrike?
+Answer:",40
+HP,Manectric,short,"What is the HP of Manectric?
+Answer:",70
+HP,Plusle,short,"What is the HP of Plusle?
+Answer:",60
+HP,Minun,short,"What is the HP of Minun?
+Answer:",60
+HP,Volbeat,short,"What is the HP of Volbeat?
+Answer:",65
+HP,Illumise,short,"What is the HP of Illumise?
+Answer:",65
+HP,Roselia,short,"What is the HP of Roselia?
+Answer:",50
+HP,Gulpin,short,"What is the HP of Gulpin?
+Answer:",70
+HP,Swalot,short,"What is the HP of Swalot?
+Answer:",100
+HP,Carvanha,short,"What is the HP of Carvanha?
+Answer:",45
+HP,Sharpedo,short,"What is the HP of Sharpedo?
+Answer:",70
+HP,Wailmer,short,"What is the HP of Wailmer?
+Answer:",130
+HP,Wailord,short,"What is the HP of Wailord?
+Answer:",170
+HP,Numel,short,"What is the HP of Numel?
+Answer:",60
+HP,Camerupt,short,"What is the HP of Camerupt?
+Answer:",70
+HP,Torkoal,short,"What is the HP of Torkoal?
+Answer:",70
+HP,Spoink,short,"What is the HP of Spoink?
+Answer:",60
+HP,Grumpig,short,"What is the HP of Grumpig?
+Answer:",80
+HP,Spinda,short,"What is the HP of Spinda?
+Answer:",60
+HP,Trapinch,short,"What is the HP of Trapinch?
+Answer:",45
+HP,Vibrava,short,"What is the HP of Vibrava?
+Answer:",50
+HP,Flygon,short,"What is the HP of Flygon?
+Answer:",80
+HP,Cacnea,short,"What is the HP of Cacnea?
+Answer:",50
+HP,Cacturne,short,"What is the HP of Cacturne?
+Answer:",70
+HP,Swablu,short,"What is the HP of Swablu?
+Answer:",45
+HP,Altaria,short,"What is the HP of Altaria?
+Answer:",75
+HP,Zangoose,short,"What is the HP of Zangoose?
+Answer:",73
+HP,Seviper,short,"What is the HP of Seviper?
+Answer:",73
+HP,Lunatone,short,"What is the HP of Lunatone?
+Answer:",90
+HP,Solrock,short,"What is the HP of Solrock?
+Answer:",90
+HP,Barboach,short,"What is the HP of Barboach?
+Answer:",50
+HP,Whiscash,short,"What is the HP of Whiscash?
+Answer:",110
+HP,Corphish,short,"What is the HP of Corphish?
+Answer:",43
+HP,Crawdaunt,short,"What is the HP of Crawdaunt?
+Answer:",63
+HP,Baltoy,short,"What is the HP of Baltoy?
+Answer:",40
+HP,Claydol,short,"What is the HP of Claydol?
+Answer:",60
+HP,Lileep,short,"What is the HP of Lileep?
+Answer:",66
+HP,Cradily,short,"What is the HP of Cradily?
+Answer:",86
+HP,Anorith,short,"What is the HP of Anorith?
+Answer:",45
+HP,Armaldo,short,"What is the HP of Armaldo?
+Answer:",75
+HP,Feebas,short,"What is the HP of Feebas?
+Answer:",20
+HP,Milotic,short,"What is the HP of Milotic?
+Answer:",95
+HP,Castform,short,"What is the HP of Castform?
+Answer:",70
+HP,Kecleon,short,"What is the HP of Kecleon?
+Answer:",60
+HP,Shuppet,short,"What is the HP of Shuppet?
+Answer:",44
+HP,Banette,short,"What is the HP of Banette?
+Answer:",64
+HP,Duskull,short,"What is the HP of Duskull?
+Answer:",20
+HP,Dusclops,short,"What is the HP of Dusclops?
+Answer:",40
+HP,Tropius,short,"What is the HP of Tropius?
+Answer:",99
+HP,Chimecho,short,"What is the HP of Chimecho?
+Answer:",75
+HP,Absol,short,"What is the HP of Absol?
+Answer:",65
+HP,Wynaut,short,"What is the HP of Wynaut?
+Answer:",95
+HP,Snorunt,short,"What is the HP of Snorunt?
+Answer:",50
+HP,Glalie,short,"What is the HP of Glalie?
+Answer:",80
+HP,Spheal,short,"What is the HP of Spheal?
+Answer:",70
+HP,Sealeo,short,"What is the HP of Sealeo?
+Answer:",90
+HP,Walrein,short,"What is the HP of Walrein?
+Answer:",110
+HP,Clamperl,short,"What is the HP of Clamperl?
+Answer:",35
+HP,Huntail,short,"What is the HP of Huntail?
+Answer:",55
+HP,Gorebyss,short,"What is the HP of Gorebyss?
+Answer:",55
+HP,Relicanth,short,"What is the HP of Relicanth?
+Answer:",100
+HP,Luvdisc,short,"What is the HP of Luvdisc?
+Answer:",43
+HP,Bagon,short,"What is the HP of Bagon?
+Answer:",45
+HP,Shelgon,short,"What is the HP of Shelgon?
+Answer:",65
+HP,Salamence,short,"What is the HP of Salamence?
+Answer:",95
+HP,Beldum,short,"What is the HP of Beldum?
+Answer:",40
+HP,Metang,short,"What is the HP of Metang?
+Answer:",60
+HP,Metagross,short,"What is the HP of Metagross?
+Answer:",80
+HP,Regirock,short,"What is the HP of Regirock?
+Answer:",80
+HP,Regice,short,"What is the HP of Regice?
+Answer:",80
+HP,Registeel,short,"What is the HP of Registeel?
+Answer:",80
+HP,Latias,short,"What is the HP of Latias?
+Answer:",80
+HP,Latios,short,"What is the HP of Latios?
+Answer:",80
+HP,Kyogre,short,"What is the HP of Kyogre?
+Answer:",100
+HP,Groudon,short,"What is the HP of Groudon?
+Answer:",100
+HP,Rayquaza,short,"What is the HP of Rayquaza?
+Answer:",105
+HP,Jirachi,short,"What is the HP of Jirachi?
+Answer:",100
+HP,Deoxys,short,"What is the HP of Deoxys?
+Answer:",50
+HP,Turtwig,short,"What is the HP of Turtwig?
+Answer:",55
+HP,Grotle,short,"What is the HP of Grotle?
+Answer:",75
+HP,Torterra,short,"What is the HP of Torterra?
+Answer:",95
+HP,Chimchar,short,"What is the HP of Chimchar?
+Answer:",44
+HP,Monferno,short,"What is the HP of Monferno?
+Answer:",64
+HP,Infernape,short,"What is the HP of Infernape?
+Answer:",76
+HP,Piplup,short,"What is the HP of Piplup?
+Answer:",53
+HP,Prinplup,short,"What is the HP of Prinplup?
+Answer:",64
+HP,Empoleon,short,"What is the HP of Empoleon?
+Answer:",84
+HP,Starly,short,"What is the HP of Starly?
+Answer:",40
+HP,Staravia,short,"What is the HP of Staravia?
+Answer:",55
+HP,Staraptor,short,"What is the HP of Staraptor?
+Answer:",85
+HP,Bidoof,short,"What is the HP of Bidoof?
+Answer:",59
+HP,Bibarel,short,"What is the HP of Bibarel?
+Answer:",79
+HP,Kricketot,short,"What is the HP of Kricketot?
+Answer:",37
+HP,Kricketune,short,"What is the HP of Kricketune?
+Answer:",77
+HP,Shinx,short,"What is the HP of Shinx?
+Answer:",45
+HP,Luxio,short,"What is the HP of Luxio?
+Answer:",60
+HP,Luxray,short,"What is the HP of Luxray?
+Answer:",80
+HP,Budew,short,"What is the HP of Budew?
+Answer:",40
+HP,Roserade,short,"What is the HP of Roserade?
+Answer:",60
+HP,Cranidos,short,"What is the HP of Cranidos?
+Answer:",67
+HP,Rampardos,short,"What is the HP of Rampardos?
+Answer:",97
+HP,Shieldon,short,"What is the HP of Shieldon?
+Answer:",30
+HP,Bastiodon,short,"What is the HP of Bastiodon?
+Answer:",60
+HP,Burmy,short,"What is the HP of Burmy?
+Answer:",40
+HP,Wormadam,short,"What is the HP of Wormadam?
+Answer:",60
+HP,Mothim,short,"What is the HP of Mothim?
+Answer:",70
+HP,Combee,short,"What is the HP of Combee?
+Answer:",30
+HP,Vespiquen,short,"What is the HP of Vespiquen?
+Answer:",70
+HP,Pachirisu,short,"What is the HP of Pachirisu?
+Answer:",60
+HP,Buizel,short,"What is the HP of Buizel?
+Answer:",55
+HP,Floatzel,short,"What is the HP of Floatzel?
+Answer:",85
+HP,Cherubi,short,"What is the HP of Cherubi?
+Answer:",45
+HP,Cherrim,short,"What is the HP of Cherrim?
+Answer:",70
+HP,Shellos,short,"What is the HP of Shellos?
+Answer:",76
+HP,Gastrodon,short,"What is the HP of Gastrodon?
+Answer:",111
+HP,Ambipom,short,"What is the HP of Ambipom?
+Answer:",75
+HP,Drifloon,short,"What is the HP of Drifloon?
+Answer:",90
+HP,Drifblim,short,"What is the HP of Drifblim?
+Answer:",150
+HP,Buneary,short,"What is the HP of Buneary?
+Answer:",55
+HP,Lopunny,short,"What is the HP of Lopunny?
+Answer:",65
+HP,Mismagius,short,"What is the HP of Mismagius?
+Answer:",60
+HP,Honchkrow,short,"What is the HP of Honchkrow?
+Answer:",100
+HP,Glameow,short,"What is the HP of Glameow?
+Answer:",49
+HP,Purugly,short,"What is the HP of Purugly?
+Answer:",71
+HP,Chingling,short,"What is the HP of Chingling?
+Answer:",45
+HP,Stunky,short,"What is the HP of Stunky?
+Answer:",63
+HP,Skuntank,short,"What is the HP of Skuntank?
+Answer:",103
+HP,Bronzor,short,"What is the HP of Bronzor?
+Answer:",57
+HP,Bronzong,short,"What is the HP of Bronzong?
+Answer:",67
+HP,Bonsly,short,"What is the HP of Bonsly?
+Answer:",50
+HP,Mime Jr.,short,"What is the HP of Mime Jr.?
+Answer:",20
+HP,Happiny,short,"What is the HP of Happiny?
+Answer:",100
+HP,Chatot,short,"What is the HP of Chatot?
+Answer:",76
+HP,Spiritomb,short,"What is the HP of Spiritomb?
+Answer:",50
+HP,Gible,short,"What is the HP of Gible?
+Answer:",58
+HP,Gabite,short,"What is the HP of Gabite?
+Answer:",68
+HP,Garchomp,short,"What is the HP of Garchomp?
+Answer:",108
+HP,Munchlax,short,"What is the HP of Munchlax?
+Answer:",135
+HP,Riolu,short,"What is the HP of Riolu?
+Answer:",40
+HP,Lucario,short,"What is the HP of Lucario?
+Answer:",70
+HP,Hippopotas,short,"What is the HP of Hippopotas?
+Answer:",68
+HP,Hippowdon,short,"What is the HP of Hippowdon?
+Answer:",108
+HP,Skorupi,short,"What is the HP of Skorupi?
+Answer:",40
+HP,Drapion,short,"What is the HP of Drapion?
+Answer:",70
+HP,Croagunk,short,"What is the HP of Croagunk?
+Answer:",48
+HP,Toxicroak,short,"What is the HP of Toxicroak?
+Answer:",83
+HP,Carnivine,short,"What is the HP of Carnivine?
+Answer:",74
+HP,Finneon,short,"What is the HP of Finneon?
+Answer:",49
+HP,Lumineon,short,"What is the HP of Lumineon?
+Answer:",69
+HP,Mantyke,short,"What is the HP of Mantyke?
+Answer:",45
+HP,Snover,short,"What is the HP of Snover?
+Answer:",60
+HP,Abomasnow,short,"What is the HP of Abomasnow?
+Answer:",90
+HP,Weavile,short,"What is the HP of Weavile?
+Answer:",70
+HP,Magnezone,short,"What is the HP of Magnezone?
+Answer:",70
+HP,Lickilicky,short,"What is the HP of Lickilicky?
+Answer:",110
+HP,Rhyperior,short,"What is the HP of Rhyperior?
+Answer:",115
+HP,Tangrowth,short,"What is the HP of Tangrowth?
+Answer:",100
+HP,Electivire,short,"What is the HP of Electivire?
+Answer:",75
+HP,Magmortar,short,"What is the HP of Magmortar?
+Answer:",75
+HP,Togekiss,short,"What is the HP of Togekiss?
+Answer:",85
+HP,Yanmega,short,"What is the HP of Yanmega?
+Answer:",86
+HP,Leafeon,short,"What is the HP of Leafeon?
+Answer:",65
+HP,Glaceon,short,"What is the HP of Glaceon?
+Answer:",65
+HP,Gliscor,short,"What is the HP of Gliscor?
+Answer:",75
+HP,Mamoswine,short,"What is the HP of Mamoswine?
+Answer:",110
+HP,Porygon-Z,short,"What is the HP of Porygon-Z?
+Answer:",85
+HP,Gallade,short,"What is the HP of Gallade?
+Answer:",68
+HP,Probopass,short,"What is the HP of Probopass?
+Answer:",60
+HP,Dusknoir,short,"What is the HP of Dusknoir?
+Answer:",45
+HP,Froslass,short,"What is the HP of Froslass?
+Answer:",70
+HP,Rotom,short,"What is the HP of Rotom?
+Answer:",50
+HP,Uxie,short,"What is the HP of Uxie?
+Answer:",75
+HP,Mesprit,short,"What is the HP of Mesprit?
+Answer:",80
+HP,Azelf,short,"What is the HP of Azelf?
+Answer:",75
+HP,Dialga,short,"What is the HP of Dialga?
+Answer:",100
+HP,Palkia,short,"What is the HP of Palkia?
+Answer:",90
+HP,Heatran,short,"What is the HP of Heatran?
+Answer:",91
+HP,Regigigas,short,"What is the HP of Regigigas?
+Answer:",110
+HP,Giratina,short,"What is the HP of Giratina?
+Answer:",150
+HP,Cresselia,short,"What is the HP of Cresselia?
+Answer:",120
+HP,Phione,short,"What is the HP of Phione?
+Answer:",80
+HP,Manaphy,short,"What is the HP of Manaphy?
+Answer:",100
+HP,Darkrai,short,"What is the HP of Darkrai?
+Answer:",70
+HP,Shaymin,short,"What is the HP of Shaymin?
+Answer:",100
+HP,Arceus,short,"What is the HP of Arceus?
+Answer:",120
+HP,Victini,short,"What is the HP of Victini?
+Answer:",100
+HP,Snivy,short,"What is the HP of Snivy?
+Answer:",45
+HP,Servine,short,"What is the HP of Servine?
+Answer:",60
+HP,Serperior,short,"What is the HP of Serperior?
+Answer:",75
+HP,Tepig,short,"What is the HP of Tepig?
+Answer:",65
+HP,Pignite,short,"What is the HP of Pignite?
+Answer:",90
+HP,Emboar,short,"What is the HP of Emboar?
+Answer:",110
+Speed,Bulbasaur,short,"What is the Speed of Bulbasaur?
+Answer:",45
+Speed,Ivysaur,short,"What is the Speed of Ivysaur?
+Answer:",60
+Speed,Venusaur,short,"What is the Speed of Venusaur?
+Answer:",80
+Speed,Charmander,short,"What is the Speed of Charmander?
+Answer:",65
+Speed,Charmeleon,short,"What is the Speed of Charmeleon?
+Answer:",80
+Speed,Charizard,short,"What is the Speed of Charizard?
+Answer:",100
+Speed,Squirtle,short,"What is the Speed of Squirtle?
+Answer:",43
+Speed,Wartortle,short,"What is the Speed of Wartortle?
+Answer:",58
+Speed,Blastoise,short,"What is the Speed of Blastoise?
+Answer:",78
+Speed,Caterpie,short,"What is the Speed of Caterpie?
+Answer:",45
+Speed,Metapod,short,"What is the Speed of Metapod?
+Answer:",30
+Speed,Butterfree,short,"What is the Speed of Butterfree?
+Answer:",70
+Speed,Weedle,short,"What is the Speed of Weedle?
+Answer:",50
+Speed,Kakuna,short,"What is the Speed of Kakuna?
+Answer:",35
+Speed,Beedrill,short,"What is the Speed of Beedrill?
+Answer:",145
+Speed,Pidgey,short,"What is the Speed of Pidgey?
+Answer:",56
+Speed,Pidgeotto,short,"What is the Speed of Pidgeotto?
+Answer:",71
+Speed,Pidgeot,short,"What is the Speed of Pidgeot?
+Answer:",121
+Speed,Rattata,short,"What is the Speed of Rattata?
+Answer:",72
+Speed,Raticate,short,"What is the Speed of Raticate?
+Answer:",77
+Speed,Spearow,short,"What is the Speed of Spearow?
+Answer:",70
+Speed,Fearow,short,"What is the Speed of Fearow?
+Answer:",100
+Speed,Ekans,short,"What is the Speed of Ekans?
+Answer:",55
+Speed,Arbok,short,"What is the Speed of Arbok?
+Answer:",80
+Speed,Pikachu,short,"What is the Speed of Pikachu?
+Answer:",90
+Speed,Raichu,short,"What is the Speed of Raichu?
+Answer:",110
+Speed,Sandshrew,short,"What is the Speed of Sandshrew?
+Answer:",40
+Speed,Sandslash,short,"What is the Speed of Sandslash?
+Answer:",65
+Speed,Nidoran♀,short,"What is the Speed of Nidoran♀?
+Answer:",41
+Speed,Nidorina,short,"What is the Speed of Nidorina?
+Answer:",56
+Speed,Nidoqueen,short,"What is the Speed of Nidoqueen?
+Answer:",76
+Speed,Nidoran♂,short,"What is the Speed of Nidoran♂?
+Answer:",50
+Speed,Nidorino,short,"What is the Speed of Nidorino?
+Answer:",65
+Speed,Nidoking,short,"What is the Speed of Nidoking?
+Answer:",85
+Speed,Clefairy,short,"What is the Speed of Clefairy?
+Answer:",35
+Speed,Clefable,short,"What is the Speed of Clefable?
+Answer:",60
+Speed,Vulpix,short,"What is the Speed of Vulpix?
+Answer:",65
+Speed,Ninetales,short,"What is the Speed of Ninetales?
+Answer:",109
+Speed,Jigglypuff,short,"What is the Speed of Jigglypuff?
+Answer:",20
+Speed,Wigglytuff,short,"What is the Speed of Wigglytuff?
+Answer:",45
+Speed,Zubat,short,"What is the Speed of Zubat?
+Answer:",55
+Speed,Golbat,short,"What is the Speed of Golbat?
+Answer:",90
+Speed,Oddish,short,"What is the Speed of Oddish?
+Answer:",30
+Speed,Gloom,short,"What is the Speed of Gloom?
+Answer:",40
+Speed,Vileplume,short,"What is the Speed of Vileplume?
+Answer:",50
+Speed,Paras,short,"What is the Speed of Paras?
+Answer:",25
+Speed,Parasect,short,"What is the Speed of Parasect?
+Answer:",30
+Speed,Venonat,short,"What is the Speed of Venonat?
+Answer:",45
+Speed,Venomoth,short,"What is the Speed of Venomoth?
+Answer:",90
+Speed,Diglett,short,"What is the Speed of Diglett?
+Answer:",90
+Speed,Dugtrio,short,"What is the Speed of Dugtrio?
+Answer:",110
+Speed,Meowth,short,"What is the Speed of Meowth?
+Answer:",90
+Speed,Persian,short,"What is the Speed of Persian?
+Answer:",115
+Speed,Psyduck,short,"What is the Speed of Psyduck?
+Answer:",55
+Speed,Golduck,short,"What is the Speed of Golduck?
+Answer:",85
+Speed,Mankey,short,"What is the Speed of Mankey?
+Answer:",70
+Speed,Primeape,short,"What is the Speed of Primeape?
+Answer:",95
+Speed,Growlithe,short,"What is the Speed of Growlithe?
+Answer:",60
+Speed,Arcanine,short,"What is the Speed of Arcanine?
+Answer:",95
+Speed,Poliwag,short,"What is the Speed of Poliwag?
+Answer:",90
+Speed,Poliwhirl,short,"What is the Speed of Poliwhirl?
+Answer:",90
+Speed,Poliwrath,short,"What is the Speed of Poliwrath?
+Answer:",70
+Speed,Abra,short,"What is the Speed of Abra?
+Answer:",90
+Speed,Kadabra,short,"What is the Speed of Kadabra?
+Answer:",105
+Speed,Alakazam,short,"What is the Speed of Alakazam?
+Answer:",150
+Speed,Machop,short,"What is the Speed of Machop?
+Answer:",35
+Speed,Machoke,short,"What is the Speed of Machoke?
+Answer:",45
+Speed,Machamp,short,"What is the Speed of Machamp?
+Answer:",55
+Speed,Bellsprout,short,"What is the Speed of Bellsprout?
+Answer:",40
+Speed,Weepinbell,short,"What is the Speed of Weepinbell?
+Answer:",55
+Speed,Victreebel,short,"What is the Speed of Victreebel?
+Answer:",70
+Speed,Tentacool,short,"What is the Speed of Tentacool?
+Answer:",70
+Speed,Tentacruel,short,"What is the Speed of Tentacruel?
+Answer:",100
+Speed,Geodude,short,"What is the Speed of Geodude?
+Answer:",20
+Speed,Graveler,short,"What is the Speed of Graveler?
+Answer:",35
+Speed,Golem,short,"What is the Speed of Golem?
+Answer:",45
+Speed,Ponyta,short,"What is the Speed of Ponyta?
+Answer:",90
+Speed,Rapidash,short,"What is the Speed of Rapidash?
+Answer:",105
+Speed,Slowpoke,short,"What is the Speed of Slowpoke?
+Answer:",15
+Speed,Slowbro,short,"What is the Speed of Slowbro?
+Answer:",30
+Speed,Magnemite,short,"What is the Speed of Magnemite?
+Answer:",45
+Speed,Magneton,short,"What is the Speed of Magneton?
+Answer:",70
+Speed,Farfetch'd,short,"What is the Speed of Farfetch'd?
+Answer:",60
+Speed,Doduo,short,"What is the Speed of Doduo?
+Answer:",75
+Speed,Dodrio,short,"What is the Speed of Dodrio?
+Answer:",110
+Speed,Seel,short,"What is the Speed of Seel?
+Answer:",45
+Speed,Dewgong,short,"What is the Speed of Dewgong?
+Answer:",70
+Speed,Grimer,short,"What is the Speed of Grimer?
+Answer:",25
+Speed,Muk,short,"What is the Speed of Muk?
+Answer:",50
+Speed,Shellder,short,"What is the Speed of Shellder?
+Answer:",40
+Speed,Cloyster,short,"What is the Speed of Cloyster?
+Answer:",70
+Speed,Gastly,short,"What is the Speed of Gastly?
+Answer:",80
+Speed,Haunter,short,"What is the Speed of Haunter?
+Answer:",95
+Speed,Gengar,short,"What is the Speed of Gengar?
+Answer:",130
+Speed,Onix,short,"What is the Speed of Onix?
+Answer:",70
+Speed,Drowzee,short,"What is the Speed of Drowzee?
+Answer:",42
+Speed,Hypno,short,"What is the Speed of Hypno?
+Answer:",67
+Speed,Krabby,short,"What is the Speed of Krabby?
+Answer:",50
+Speed,Kingler,short,"What is the Speed of Kingler?
+Answer:",75
+Speed,Voltorb,short,"What is the Speed of Voltorb?
+Answer:",100
+Speed,Electrode,short,"What is the Speed of Electrode?
+Answer:",150
+Speed,Exeggcute,short,"What is the Speed of Exeggcute?
+Answer:",40
+Speed,Exeggutor,short,"What is the Speed of Exeggutor?
+Answer:",45
+Speed,Cubone,short,"What is the Speed of Cubone?
+Answer:",35
+Speed,Marowak,short,"What is the Speed of Marowak?
+Answer:",45
+Speed,Hitmonlee,short,"What is the Speed of Hitmonlee?
+Answer:",87
+Speed,Hitmonchan,short,"What is the Speed of Hitmonchan?
+Answer:",76
+Speed,Lickitung,short,"What is the Speed of Lickitung?
+Answer:",30
+Speed,Koffing,short,"What is the Speed of Koffing?
+Answer:",35
+Speed,Weezing,short,"What is the Speed of Weezing?
+Answer:",60
+Speed,Rhyhorn,short,"What is the Speed of Rhyhorn?
+Answer:",25
+Speed,Rhydon,short,"What is the Speed of Rhydon?
+Answer:",40
+Speed,Chansey,short,"What is the Speed of Chansey?
+Answer:",50
+Speed,Tangela,short,"What is the Speed of Tangela?
+Answer:",60
+Speed,Kangaskhan,short,"What is the Speed of Kangaskhan?
+Answer:",100
+Speed,Horsea,short,"What is the Speed of Horsea?
+Answer:",60
+Speed,Seadra,short,"What is the Speed of Seadra?
+Answer:",85
+Speed,Goldeen,short,"What is the Speed of Goldeen?
+Answer:",63
+Speed,Seaking,short,"What is the Speed of Seaking?
+Answer:",68
+Speed,Staryu,short,"What is the Speed of Staryu?
+Answer:",85
+Speed,Starmie,short,"What is the Speed of Starmie?
+Answer:",115
+Speed,Mr. Mime,short,"What is the Speed of Mr. Mime?
+Answer:",90
+Speed,Scyther,short,"What is the Speed of Scyther?
+Answer:",105
+Speed,Jynx,short,"What is the Speed of Jynx?
+Answer:",95
+Speed,Electabuzz,short,"What is the Speed of Electabuzz?
+Answer:",105
+Speed,Magmar,short,"What is the Speed of Magmar?
+Answer:",93
+Speed,Pinsir,short,"What is the Speed of Pinsir?
+Answer:",105
+Speed,Tauros,short,"What is the Speed of Tauros?
+Answer:",110
+Speed,Magikarp,short,"What is the Speed of Magikarp?
+Answer:",80
+Speed,Gyarados,short,"What is the Speed of Gyarados?
+Answer:",81
+Speed,Lapras,short,"What is the Speed of Lapras?
+Answer:",60
+Speed,Ditto,short,"What is the Speed of Ditto?
+Answer:",48
+Speed,Eevee,short,"What is the Speed of Eevee?
+Answer:",55
+Speed,Vaporeon,short,"What is the Speed of Vaporeon?
+Answer:",65
+Speed,Jolteon,short,"What is the Speed of Jolteon?
+Answer:",130
+Speed,Flareon,short,"What is the Speed of Flareon?
+Answer:",65
+Speed,Porygon,short,"What is the Speed of Porygon?
+Answer:",40
+Speed,Omanyte,short,"What is the Speed of Omanyte?
+Answer:",35
+Speed,Omastar,short,"What is the Speed of Omastar?
+Answer:",55
+Speed,Kabuto,short,"What is the Speed of Kabuto?
+Answer:",55
+Speed,Kabutops,short,"What is the Speed of Kabutops?
+Answer:",80
+Speed,Aerodactyl,short,"What is the Speed of Aerodactyl?
+Answer:",150
+Speed,Snorlax,short,"What is the Speed of Snorlax?
+Answer:",30
+Speed,Articuno,short,"What is the Speed of Articuno?
+Answer:",85
+Speed,Zapdos,short,"What is the Speed of Zapdos?
+Answer:",100
+Speed,Moltres,short,"What is the Speed of Moltres?
+Answer:",90
+Speed,Dratini,short,"What is the Speed of Dratini?
+Answer:",50
+Speed,Dragonair,short,"What is the Speed of Dragonair?
+Answer:",70
+Speed,Dragonite,short,"What is the Speed of Dragonite?
+Answer:",80
+Speed,Mewtwo,short,"What is the Speed of Mewtwo?
+Answer:",140
+Speed,Mew,short,"What is the Speed of Mew?
+Answer:",100
+Speed,Chikorita,short,"What is the Speed of Chikorita?
+Answer:",45
+Speed,Bayleef,short,"What is the Speed of Bayleef?
+Answer:",60
+Speed,Meganium,short,"What is the Speed of Meganium?
+Answer:",80
+Speed,Cyndaquil,short,"What is the Speed of Cyndaquil?
+Answer:",65
+Speed,Quilava,short,"What is the Speed of Quilava?
+Answer:",80
+Speed,Typhlosion,short,"What is the Speed of Typhlosion?
+Answer:",100
+Speed,Totodile,short,"What is the Speed of Totodile?
+Answer:",43
+Speed,Croconaw,short,"What is the Speed of Croconaw?
+Answer:",58
+Speed,Feraligatr,short,"What is the Speed of Feraligatr?
+Answer:",78
+Speed,Sentret,short,"What is the Speed of Sentret?
+Answer:",20
+Speed,Furret,short,"What is the Speed of Furret?
+Answer:",90
+Speed,Hoothoot,short,"What is the Speed of Hoothoot?
+Answer:",50
+Speed,Noctowl,short,"What is the Speed of Noctowl?
+Answer:",70
+Speed,Ledyba,short,"What is the Speed of Ledyba?
+Answer:",55
+Speed,Ledian,short,"What is the Speed of Ledian?
+Answer:",85
+Speed,Spinarak,short,"What is the Speed of Spinarak?
+Answer:",30
+Speed,Ariados,short,"What is the Speed of Ariados?
+Answer:",40
+Speed,Crobat,short,"What is the Speed of Crobat?
+Answer:",130
+Speed,Chinchou,short,"What is the Speed of Chinchou?
+Answer:",67
+Speed,Lanturn,short,"What is the Speed of Lanturn?
+Answer:",67
+Speed,Pichu,short,"What is the Speed of Pichu?
+Answer:",60
+Speed,Cleffa,short,"What is the Speed of Cleffa?
+Answer:",15
+Speed,Igglybuff,short,"What is the Speed of Igglybuff?
+Answer:",15
+Speed,Togepi,short,"What is the Speed of Togepi?
+Answer:",20
+Speed,Togetic,short,"What is the Speed of Togetic?
+Answer:",40
+Speed,Natu,short,"What is the Speed of Natu?
+Answer:",70
+Speed,Xatu,short,"What is the Speed of Xatu?
+Answer:",95
+Speed,Mareep,short,"What is the Speed of Mareep?
+Answer:",35
+Speed,Flaaffy,short,"What is the Speed of Flaaffy?
+Answer:",45
+Speed,Ampharos,short,"What is the Speed of Ampharos?
+Answer:",45
+Speed,Bellossom,short,"What is the Speed of Bellossom?
+Answer:",50
+Speed,Marill,short,"What is the Speed of Marill?
+Answer:",40
+Speed,Azumarill,short,"What is the Speed of Azumarill?
+Answer:",50
+Speed,Sudowoodo,short,"What is the Speed of Sudowoodo?
+Answer:",30
+Speed,Politoed,short,"What is the Speed of Politoed?
+Answer:",70
+Speed,Hoppip,short,"What is the Speed of Hoppip?
+Answer:",50
+Speed,Skiploom,short,"What is the Speed of Skiploom?
+Answer:",80
+Speed,Jumpluff,short,"What is the Speed of Jumpluff?
+Answer:",110
+Speed,Aipom,short,"What is the Speed of Aipom?
+Answer:",85
+Speed,Sunkern,short,"What is the Speed of Sunkern?
+Answer:",30
+Speed,Sunflora,short,"What is the Speed of Sunflora?
+Answer:",30
+Speed,Yanma,short,"What is the Speed of Yanma?
+Answer:",95
+Speed,Wooper,short,"What is the Speed of Wooper?
+Answer:",15
+Speed,Quagsire,short,"What is the Speed of Quagsire?
+Answer:",35
+Speed,Espeon,short,"What is the Speed of Espeon?
+Answer:",110
+Speed,Umbreon,short,"What is the Speed of Umbreon?
+Answer:",65
+Speed,Murkrow,short,"What is the Speed of Murkrow?
+Answer:",91
+Speed,Slowking,short,"What is the Speed of Slowking?
+Answer:",30
+Speed,Misdreavus,short,"What is the Speed of Misdreavus?
+Answer:",85
+Speed,Unown,short,"What is the Speed of Unown?
+Answer:",48
+Speed,Wobbuffet,short,"What is the Speed of Wobbuffet?
+Answer:",33
+Speed,Girafarig,short,"What is the Speed of Girafarig?
+Answer:",85
+Speed,Pineco,short,"What is the Speed of Pineco?
+Answer:",15
+Speed,Forretress,short,"What is the Speed of Forretress?
+Answer:",40
+Speed,Dunsparce,short,"What is the Speed of Dunsparce?
+Answer:",45
+Speed,Gligar,short,"What is the Speed of Gligar?
+Answer:",85
+Speed,Steelix,short,"What is the Speed of Steelix?
+Answer:",30
+Speed,Snubbull,short,"What is the Speed of Snubbull?
+Answer:",30
+Speed,Granbull,short,"What is the Speed of Granbull?
+Answer:",45
+Speed,Qwilfish,short,"What is the Speed of Qwilfish?
+Answer:",85
+Speed,Scizor,short,"What is the Speed of Scizor?
+Answer:",75
+Speed,Shuckle,short,"What is the Speed of Shuckle?
+Answer:",5
+Speed,Heracross,short,"What is the Speed of Heracross?
+Answer:",75
+Speed,Sneasel,short,"What is the Speed of Sneasel?
+Answer:",115
+Speed,Teddiursa,short,"What is the Speed of Teddiursa?
+Answer:",40
+Speed,Ursaring,short,"What is the Speed of Ursaring?
+Answer:",55
+Speed,Slugma,short,"What is the Speed of Slugma?
+Answer:",20
+Speed,Magcargo,short,"What is the Speed of Magcargo?
+Answer:",30
+Speed,Swinub,short,"What is the Speed of Swinub?
+Answer:",50
+Speed,Piloswine,short,"What is the Speed of Piloswine?
+Answer:",50
+Speed,Corsola,short,"What is the Speed of Corsola?
+Answer:",35
+Speed,Remoraid,short,"What is the Speed of Remoraid?
+Answer:",65
+Speed,Octillery,short,"What is the Speed of Octillery?
+Answer:",45
+Speed,Delibird,short,"What is the Speed of Delibird?
+Answer:",75
+Speed,Mantine,short,"What is the Speed of Mantine?
+Answer:",70
+Speed,Skarmory,short,"What is the Speed of Skarmory?
+Answer:",70
+Speed,Houndour,short,"What is the Speed of Houndour?
+Answer:",65
+Speed,Houndoom,short,"What is the Speed of Houndoom?
+Answer:",115
+Speed,Kingdra,short,"What is the Speed of Kingdra?
+Answer:",85
+Speed,Phanpy,short,"What is the Speed of Phanpy?
+Answer:",40
+Speed,Donphan,short,"What is the Speed of Donphan?
+Answer:",50
+Speed,Porygon2,short,"What is the Speed of Porygon2?
+Answer:",60
+Speed,Stantler,short,"What is the Speed of Stantler?
+Answer:",85
+Speed,Smeargle,short,"What is the Speed of Smeargle?
+Answer:",75
+Speed,Tyrogue,short,"What is the Speed of Tyrogue?
+Answer:",35
+Speed,Hitmontop,short,"What is the Speed of Hitmontop?
+Answer:",70
+Speed,Smoochum,short,"What is the Speed of Smoochum?
+Answer:",65
+Speed,Elekid,short,"What is the Speed of Elekid?
+Answer:",95
+Speed,Magby,short,"What is the Speed of Magby?
+Answer:",83
+Speed,Miltank,short,"What is the Speed of Miltank?
+Answer:",100
+Speed,Blissey,short,"What is the Speed of Blissey?
+Answer:",55
+Speed,Raikou,short,"What is the Speed of Raikou?
+Answer:",115
+Speed,Entei,short,"What is the Speed of Entei?
+Answer:",100
+Speed,Suicune,short,"What is the Speed of Suicune?
+Answer:",85
+Speed,Larvitar,short,"What is the Speed of Larvitar?
+Answer:",41
+Speed,Pupitar,short,"What is the Speed of Pupitar?
+Answer:",51
+Speed,Tyranitar,short,"What is the Speed of Tyranitar?
+Answer:",71
+Speed,Lugia,short,"What is the Speed of Lugia?
+Answer:",110
+Speed,Ho-Oh,short,"What is the Speed of Ho-Oh?
+Answer:",90
+Speed,Celebi,short,"What is the Speed of Celebi?
+Answer:",100
+Speed,Treecko,short,"What is the Speed of Treecko?
+Answer:",70
+Speed,Grovyle,short,"What is the Speed of Grovyle?
+Answer:",95
+Speed,Sceptile,short,"What is the Speed of Sceptile?
+Answer:",145
+Speed,Torchic,short,"What is the Speed of Torchic?
+Answer:",45
+Speed,Combusken,short,"What is the Speed of Combusken?
+Answer:",55
+Speed,Blaziken,short,"What is the Speed of Blaziken?
+Answer:",100
+Speed,Mudkip,short,"What is the Speed of Mudkip?
+Answer:",40
+Speed,Marshtomp,short,"What is the Speed of Marshtomp?
+Answer:",50
+Speed,Swampert,short,"What is the Speed of Swampert?
+Answer:",70
+Speed,Poochyena,short,"What is the Speed of Poochyena?
+Answer:",35
+Speed,Mightyena,short,"What is the Speed of Mightyena?
+Answer:",70
+Speed,Zigzagoon,short,"What is the Speed of Zigzagoon?
+Answer:",60
+Speed,Linoone,short,"What is the Speed of Linoone?
+Answer:",100
+Speed,Wurmple,short,"What is the Speed of Wurmple?
+Answer:",20
+Speed,Silcoon,short,"What is the Speed of Silcoon?
+Answer:",15
+Speed,Beautifly,short,"What is the Speed of Beautifly?
+Answer:",65
+Speed,Cascoon,short,"What is the Speed of Cascoon?
+Answer:",15
+Speed,Dustox,short,"What is the Speed of Dustox?
+Answer:",65
+Speed,Lotad,short,"What is the Speed of Lotad?
+Answer:",30
+Speed,Lombre,short,"What is the Speed of Lombre?
+Answer:",50
+Speed,Ludicolo,short,"What is the Speed of Ludicolo?
+Answer:",70
+Speed,Seedot,short,"What is the Speed of Seedot?
+Answer:",30
+Speed,Nuzleaf,short,"What is the Speed of Nuzleaf?
+Answer:",60
+Speed,Shiftry,short,"What is the Speed of Shiftry?
+Answer:",80
+Speed,Taillow,short,"What is the Speed of Taillow?
+Answer:",85
+Speed,Swellow,short,"What is the Speed of Swellow?
+Answer:",125
+Speed,Wingull,short,"What is the Speed of Wingull?
+Answer:",85
+Speed,Pelipper,short,"What is the Speed of Pelipper?
+Answer:",65
+Speed,Ralts,short,"What is the Speed of Ralts?
+Answer:",40
+Speed,Kirlia,short,"What is the Speed of Kirlia?
+Answer:",50
+Speed,Gardevoir,short,"What is the Speed of Gardevoir?
+Answer:",100
+Speed,Surskit,short,"What is the Speed of Surskit?
+Answer:",65
+Speed,Masquerain,short,"What is the Speed of Masquerain?
+Answer:",80
+Speed,Shroomish,short,"What is the Speed of Shroomish?
+Answer:",35
+Speed,Breloom,short,"What is the Speed of Breloom?
+Answer:",70
+Speed,Slakoth,short,"What is the Speed of Slakoth?
+Answer:",30
+Speed,Vigoroth,short,"What is the Speed of Vigoroth?
+Answer:",90
+Speed,Slaking,short,"What is the Speed of Slaking?
+Answer:",100
+Speed,Nincada,short,"What is the Speed of Nincada?
+Answer:",40
+Speed,Ninjask,short,"What is the Speed of Ninjask?
+Answer:",160
+Speed,Shedinja,short,"What is the Speed of Shedinja?
+Answer:",40
+Speed,Whismur,short,"What is the Speed of Whismur?
+Answer:",28
+Speed,Loudred,short,"What is the Speed of Loudred?
+Answer:",48
+Speed,Exploud,short,"What is the Speed of Exploud?
+Answer:",68
+Speed,Makuhita,short,"What is the Speed of Makuhita?
+Answer:",25
+Speed,Hariyama,short,"What is the Speed of Hariyama?
+Answer:",50
+Speed,Azurill,short,"What is the Speed of Azurill?
+Answer:",20
+Speed,Nosepass,short,"What is the Speed of Nosepass?
+Answer:",30
+Speed,Skitty,short,"What is the Speed of Skitty?
+Answer:",50
+Speed,Delcatty,short,"What is the Speed of Delcatty?
+Answer:",90
+Speed,Sableye,short,"What is the Speed of Sableye?
+Answer:",20
+Speed,Mawile,short,"What is the Speed of Mawile?
+Answer:",50
+Speed,Aron,short,"What is the Speed of Aron?
+Answer:",30
+Speed,Lairon,short,"What is the Speed of Lairon?
+Answer:",40
+Speed,Aggron,short,"What is the Speed of Aggron?
+Answer:",50
+Speed,Meditite,short,"What is the Speed of Meditite?
+Answer:",60
+Speed,Medicham,short,"What is the Speed of Medicham?
+Answer:",100
+Speed,Electrike,short,"What is the Speed of Electrike?
+Answer:",65
+Speed,Manectric,short,"What is the Speed of Manectric?
+Answer:",135
+Speed,Plusle,short,"What is the Speed of Plusle?
+Answer:",95
+Speed,Minun,short,"What is the Speed of Minun?
+Answer:",95
+Speed,Volbeat,short,"What is the Speed of Volbeat?
+Answer:",85
+Speed,Illumise,short,"What is the Speed of Illumise?
+Answer:",85
+Speed,Roselia,short,"What is the Speed of Roselia?
+Answer:",65
+Speed,Gulpin,short,"What is the Speed of Gulpin?
+Answer:",40
+Speed,Swalot,short,"What is the Speed of Swalot?
+Answer:",55
+Speed,Carvanha,short,"What is the Speed of Carvanha?
+Answer:",65
+Speed,Sharpedo,short,"What is the Speed of Sharpedo?
+Answer:",105
+Speed,Wailmer,short,"What is the Speed of Wailmer?
+Answer:",60
+Speed,Wailord,short,"What is the Speed of Wailord?
+Answer:",60
+Speed,Numel,short,"What is the Speed of Numel?
+Answer:",35
+Speed,Camerupt,short,"What is the Speed of Camerupt?
+Answer:",20
+Speed,Torkoal,short,"What is the Speed of Torkoal?
+Answer:",20
+Speed,Spoink,short,"What is the Speed of Spoink?
+Answer:",60
+Speed,Grumpig,short,"What is the Speed of Grumpig?
+Answer:",80
+Speed,Spinda,short,"What is the Speed of Spinda?
+Answer:",60
+Speed,Trapinch,short,"What is the Speed of Trapinch?
+Answer:",10
+Speed,Vibrava,short,"What is the Speed of Vibrava?
+Answer:",70
+Speed,Flygon,short,"What is the Speed of Flygon?
+Answer:",100
+Speed,Cacnea,short,"What is the Speed of Cacnea?
+Answer:",35
+Speed,Cacturne,short,"What is the Speed of Cacturne?
+Answer:",55
+Speed,Swablu,short,"What is the Speed of Swablu?
+Answer:",50
+Speed,Altaria,short,"What is the Speed of Altaria?
+Answer:",80
+Speed,Zangoose,short,"What is the Speed of Zangoose?
+Answer:",90
+Speed,Seviper,short,"What is the Speed of Seviper?
+Answer:",65
+Speed,Lunatone,short,"What is the Speed of Lunatone?
+Answer:",70
+Speed,Solrock,short,"What is the Speed of Solrock?
+Answer:",70
+Speed,Barboach,short,"What is the Speed of Barboach?
+Answer:",60
+Speed,Whiscash,short,"What is the Speed of Whiscash?
+Answer:",60
+Speed,Corphish,short,"What is the Speed of Corphish?
+Answer:",35
+Speed,Crawdaunt,short,"What is the Speed of Crawdaunt?
+Answer:",55
+Speed,Baltoy,short,"What is the Speed of Baltoy?
+Answer:",55
+Speed,Claydol,short,"What is the Speed of Claydol?
+Answer:",75
+Speed,Lileep,short,"What is the Speed of Lileep?
+Answer:",23
+Speed,Cradily,short,"What is the Speed of Cradily?
+Answer:",43
+Speed,Anorith,short,"What is the Speed of Anorith?
+Answer:",75
+Speed,Armaldo,short,"What is the Speed of Armaldo?
+Answer:",45
+Speed,Feebas,short,"What is the Speed of Feebas?
+Answer:",80
+Speed,Milotic,short,"What is the Speed of Milotic?
+Answer:",81
+Speed,Castform,short,"What is the Speed of Castform?
+Answer:",70
+Speed,Kecleon,short,"What is the Speed of Kecleon?
+Answer:",40
+Speed,Shuppet,short,"What is the Speed of Shuppet?
+Answer:",45
+Speed,Banette,short,"What is the Speed of Banette?
+Answer:",75
+Speed,Duskull,short,"What is the Speed of Duskull?
+Answer:",25
+Speed,Dusclops,short,"What is the Speed of Dusclops?
+Answer:",25
+Speed,Tropius,short,"What is the Speed of Tropius?
+Answer:",51
+Speed,Chimecho,short,"What is the Speed of Chimecho?
+Answer:",65
+Speed,Absol,short,"What is the Speed of Absol?
+Answer:",115
+Speed,Wynaut,short,"What is the Speed of Wynaut?
+Answer:",23
+Speed,Snorunt,short,"What is the Speed of Snorunt?
+Answer:",50
+Speed,Glalie,short,"What is the Speed of Glalie?
+Answer:",100
+Speed,Spheal,short,"What is the Speed of Spheal?
+Answer:",25
+Speed,Sealeo,short,"What is the Speed of Sealeo?
+Answer:",45
+Speed,Walrein,short,"What is the Speed of Walrein?
+Answer:",65
+Speed,Clamperl,short,"What is the Speed of Clamperl?
+Answer:",32
+Speed,Huntail,short,"What is the Speed of Huntail?
+Answer:",52
+Speed,Gorebyss,short,"What is the Speed of Gorebyss?
+Answer:",52
+Speed,Relicanth,short,"What is the Speed of Relicanth?
+Answer:",55
+Speed,Luvdisc,short,"What is the Speed of Luvdisc?
+Answer:",97
+Speed,Bagon,short,"What is the Speed of Bagon?
+Answer:",50
+Speed,Shelgon,short,"What is the Speed of Shelgon?
+Answer:",50
+Speed,Salamence,short,"What is the Speed of Salamence?
+Answer:",120
+Speed,Beldum,short,"What is the Speed of Beldum?
+Answer:",30
+Speed,Metang,short,"What is the Speed of Metang?
+Answer:",50
+Speed,Metagross,short,"What is the Speed of Metagross?
+Answer:",110
+Speed,Regirock,short,"What is the Speed of Regirock?
+Answer:",50
+Speed,Regice,short,"What is the Speed of Regice?
+Answer:",50
+Speed,Registeel,short,"What is the Speed of Registeel?
+Answer:",50
+Speed,Latias,short,"What is the Speed of Latias?
+Answer:",110
+Speed,Latios,short,"What is the Speed of Latios?
+Answer:",110
+Speed,Kyogre,short,"What is the Speed of Kyogre?
+Answer:",90
+Speed,Groudon,short,"What is the Speed of Groudon?
+Answer:",90
+Speed,Rayquaza,short,"What is the Speed of Rayquaza?
+Answer:",115
+Speed,Jirachi,short,"What is the Speed of Jirachi?
+Answer:",100
+Speed,Deoxys,short,"What is the Speed of Deoxys?
+Answer:",180
+Speed,Turtwig,short,"What is the Speed of Turtwig?
+Answer:",31
+Speed,Grotle,short,"What is the Speed of Grotle?
+Answer:",36
+Speed,Torterra,short,"What is the Speed of Torterra?
+Answer:",56
+Speed,Chimchar,short,"What is the Speed of Chimchar?
+Answer:",61
+Speed,Monferno,short,"What is the Speed of Monferno?
+Answer:",81
+Speed,Infernape,short,"What is the Speed of Infernape?
+Answer:",108
+Speed,Piplup,short,"What is the Speed of Piplup?
+Answer:",40
+Speed,Prinplup,short,"What is the Speed of Prinplup?
+Answer:",50
+Speed,Empoleon,short,"What is the Speed of Empoleon?
+Answer:",60
+Speed,Starly,short,"What is the Speed of Starly?
+Answer:",60
+Speed,Staravia,short,"What is the Speed of Staravia?
+Answer:",80
+Speed,Staraptor,short,"What is the Speed of Staraptor?
+Answer:",100
+Speed,Bidoof,short,"What is the Speed of Bidoof?
+Answer:",31
+Speed,Bibarel,short,"What is the Speed of Bibarel?
+Answer:",71
+Speed,Kricketot,short,"What is the Speed of Kricketot?
+Answer:",25
+Speed,Kricketune,short,"What is the Speed of Kricketune?
+Answer:",65
+Speed,Shinx,short,"What is the Speed of Shinx?
+Answer:",45
+Speed,Luxio,short,"What is the Speed of Luxio?
+Answer:",60
+Speed,Luxray,short,"What is the Speed of Luxray?
+Answer:",70
+Speed,Budew,short,"What is the Speed of Budew?
+Answer:",55
+Speed,Roserade,short,"What is the Speed of Roserade?
+Answer:",90
+Speed,Cranidos,short,"What is the Speed of Cranidos?
+Answer:",58
+Speed,Rampardos,short,"What is the Speed of Rampardos?
+Answer:",58
+Speed,Shieldon,short,"What is the Speed of Shieldon?
+Answer:",30
+Speed,Bastiodon,short,"What is the Speed of Bastiodon?
+Answer:",30
+Speed,Burmy,short,"What is the Speed of Burmy?
+Answer:",36
+Speed,Wormadam,short,"What is the Speed of Wormadam?
+Answer:",36
+Speed,Mothim,short,"What is the Speed of Mothim?
+Answer:",66
+Speed,Combee,short,"What is the Speed of Combee?
+Answer:",70
+Speed,Vespiquen,short,"What is the Speed of Vespiquen?
+Answer:",40
+Speed,Pachirisu,short,"What is the Speed of Pachirisu?
+Answer:",95
+Speed,Buizel,short,"What is the Speed of Buizel?
+Answer:",85
+Speed,Floatzel,short,"What is the Speed of Floatzel?
+Answer:",115
+Speed,Cherubi,short,"What is the Speed of Cherubi?
+Answer:",35
+Speed,Cherrim,short,"What is the Speed of Cherrim?
+Answer:",85
+Speed,Shellos,short,"What is the Speed of Shellos?
+Answer:",34
+Speed,Gastrodon,short,"What is the Speed of Gastrodon?
+Answer:",39
+Speed,Ambipom,short,"What is the Speed of Ambipom?
+Answer:",115
+Speed,Drifloon,short,"What is the Speed of Drifloon?
+Answer:",70
+Speed,Drifblim,short,"What is the Speed of Drifblim?
+Answer:",80
+Speed,Buneary,short,"What is the Speed of Buneary?
+Answer:",85
+Speed,Lopunny,short,"What is the Speed of Lopunny?
+Answer:",135
+Speed,Mismagius,short,"What is the Speed of Mismagius?
+Answer:",105
+Speed,Honchkrow,short,"What is the Speed of Honchkrow?
+Answer:",71
+Speed,Glameow,short,"What is the Speed of Glameow?
+Answer:",85
+Speed,Purugly,short,"What is the Speed of Purugly?
+Answer:",112
+Speed,Chingling,short,"What is the Speed of Chingling?
+Answer:",45
+Speed,Stunky,short,"What is the Speed of Stunky?
+Answer:",74
+Speed,Skuntank,short,"What is the Speed of Skuntank?
+Answer:",84
+Speed,Bronzor,short,"What is the Speed of Bronzor?
+Answer:",23
+Speed,Bronzong,short,"What is the Speed of Bronzong?
+Answer:",33
+Speed,Bonsly,short,"What is the Speed of Bonsly?
+Answer:",10
+Speed,Mime Jr.,short,"What is the Speed of Mime Jr.?
+Answer:",60
+Speed,Happiny,short,"What is the Speed of Happiny?
+Answer:",30
+Speed,Chatot,short,"What is the Speed of Chatot?
+Answer:",91
+Speed,Spiritomb,short,"What is the Speed of Spiritomb?
+Answer:",35
+Speed,Gible,short,"What is the Speed of Gible?
+Answer:",42
+Speed,Gabite,short,"What is the Speed of Gabite?
+Answer:",82
+Speed,Garchomp,short,"What is the Speed of Garchomp?
+Answer:",92
+Speed,Munchlax,short,"What is the Speed of Munchlax?
+Answer:",5
+Speed,Riolu,short,"What is the Speed of Riolu?
+Answer:",60
+Speed,Lucario,short,"What is the Speed of Lucario?
+Answer:",112
+Speed,Hippopotas,short,"What is the Speed of Hippopotas?
+Answer:",32
+Speed,Hippowdon,short,"What is the Speed of Hippowdon?
+Answer:",47
+Speed,Skorupi,short,"What is the Speed of Skorupi?
+Answer:",65
+Speed,Drapion,short,"What is the Speed of Drapion?
+Answer:",95
+Speed,Croagunk,short,"What is the Speed of Croagunk?
+Answer:",50
+Speed,Toxicroak,short,"What is the Speed of Toxicroak?
+Answer:",85
+Speed,Carnivine,short,"What is the Speed of Carnivine?
+Answer:",46
+Speed,Finneon,short,"What is the Speed of Finneon?
+Answer:",66
+Speed,Lumineon,short,"What is the Speed of Lumineon?
+Answer:",91
+Speed,Mantyke,short,"What is the Speed of Mantyke?
+Answer:",50
+Speed,Snover,short,"What is the Speed of Snover?
+Answer:",40
+Speed,Abomasnow,short,"What is the Speed of Abomasnow?
+Answer:",30
+Speed,Weavile,short,"What is the Speed of Weavile?
+Answer:",125
+Speed,Magnezone,short,"What is the Speed of Magnezone?
+Answer:",60
+Speed,Lickilicky,short,"What is the Speed of Lickilicky?
+Answer:",50
+Speed,Rhyperior,short,"What is the Speed of Rhyperior?
+Answer:",40
+Speed,Tangrowth,short,"What is the Speed of Tangrowth?
+Answer:",50
+Speed,Electivire,short,"What is the Speed of Electivire?
+Answer:",95
+Speed,Magmortar,short,"What is the Speed of Magmortar?
+Answer:",83
+Speed,Togekiss,short,"What is the Speed of Togekiss?
+Answer:",80
+Speed,Yanmega,short,"What is the Speed of Yanmega?
+Answer:",95
+Speed,Leafeon,short,"What is the Speed of Leafeon?
+Answer:",95
+Speed,Glaceon,short,"What is the Speed of Glaceon?
+Answer:",65
+Speed,Gliscor,short,"What is the Speed of Gliscor?
+Answer:",95
+Speed,Mamoswine,short,"What is the Speed of Mamoswine?
+Answer:",80
+Speed,Porygon-Z,short,"What is the Speed of Porygon-Z?
+Answer:",90
+Speed,Gallade,short,"What is the Speed of Gallade?
+Answer:",110
+Speed,Probopass,short,"What is the Speed of Probopass?
+Answer:",40
+Speed,Dusknoir,short,"What is the Speed of Dusknoir?
+Answer:",45
+Speed,Froslass,short,"What is the Speed of Froslass?
+Answer:",110
+Speed,Rotom,short,"What is the Speed of Rotom?
+Answer:",86
+Speed,Uxie,short,"What is the Speed of Uxie?
+Answer:",95
+Speed,Mesprit,short,"What is the Speed of Mesprit?
+Answer:",80
+Speed,Azelf,short,"What is the Speed of Azelf?
+Answer:",115
+Speed,Dialga,short,"What is the Speed of Dialga?
+Answer:",90
+Speed,Palkia,short,"What is the Speed of Palkia?
+Answer:",100
+Speed,Heatran,short,"What is the Speed of Heatran?
+Answer:",77
+Speed,Regigigas,short,"What is the Speed of Regigigas?
+Answer:",100
+Speed,Giratina,short,"What is the Speed of Giratina?
+Answer:",90
+Speed,Cresselia,short,"What is the Speed of Cresselia?
+Answer:",85
+Speed,Phione,short,"What is the Speed of Phione?
+Answer:",80
+Speed,Manaphy,short,"What is the Speed of Manaphy?
+Answer:",100
+Speed,Darkrai,short,"What is the Speed of Darkrai?
+Answer:",125
+Speed,Shaymin,short,"What is the Speed of Shaymin?
+Answer:",127
+Speed,Arceus,short,"What is the Speed of Arceus?
+Answer:",120
+Speed,Victini,short,"What is the Speed of Victini?
+Answer:",100
+Speed,Snivy,short,"What is the Speed of Snivy?
+Answer:",63
+Speed,Servine,short,"What is the Speed of Servine?
+Answer:",83
+Speed,Serperior,short,"What is the Speed of Serperior?
+Answer:",113
+Speed,Tepig,short,"What is the Speed of Tepig?
+Answer:",45
+Speed,Pignite,short,"What is the Speed of Pignite?
+Answer:",55
+Speed,Emboar,short,"What is the Speed of Emboar?
+Answer:",65
+Defense,Bulbasaur,short,"What is the Defense of Bulbasaur?
+Answer:",49
+Defense,Ivysaur,short,"What is the Defense of Ivysaur?
+Answer:",63
+Defense,Venusaur,short,"What is the Defense of Venusaur?
+Answer:",123
+Defense,Charmander,short,"What is the Defense of Charmander?
+Answer:",43
+Defense,Charmeleon,short,"What is the Defense of Charmeleon?
+Answer:",58
+Defense,Charizard,short,"What is the Defense of Charizard?
+Answer:",78
+Defense,Squirtle,short,"What is the Defense of Squirtle?
+Answer:",65
+Defense,Wartortle,short,"What is the Defense of Wartortle?
+Answer:",80
+Defense,Blastoise,short,"What is the Defense of Blastoise?
+Answer:",120
+Defense,Caterpie,short,"What is the Defense of Caterpie?
+Answer:",35
+Defense,Metapod,short,"What is the Defense of Metapod?
+Answer:",55
+Defense,Butterfree,short,"What is the Defense of Butterfree?
+Answer:",50
+Defense,Weedle,short,"What is the Defense of Weedle?
+Answer:",30
+Defense,Kakuna,short,"What is the Defense of Kakuna?
+Answer:",50
+Defense,Beedrill,short,"What is the Defense of Beedrill?
+Answer:",40
+Defense,Pidgey,short,"What is the Defense of Pidgey?
+Answer:",40
+Defense,Pidgeotto,short,"What is the Defense of Pidgeotto?
+Answer:",55
+Defense,Pidgeot,short,"What is the Defense of Pidgeot?
+Answer:",80
+Defense,Rattata,short,"What is the Defense of Rattata?
+Answer:",35
+Defense,Raticate,short,"What is the Defense of Raticate?
+Answer:",70
+Defense,Spearow,short,"What is the Defense of Spearow?
+Answer:",30
+Defense,Fearow,short,"What is the Defense of Fearow?
+Answer:",65
+Defense,Ekans,short,"What is the Defense of Ekans?
+Answer:",44
+Defense,Arbok,short,"What is the Defense of Arbok?
+Answer:",69
+Defense,Pikachu,short,"What is the Defense of Pikachu?
+Answer:",40
+Defense,Raichu,short,"What is the Defense of Raichu?
+Answer:",50
+Defense,Sandshrew,short,"What is the Defense of Sandshrew?
+Answer:",90
+Defense,Sandslash,short,"What is the Defense of Sandslash?
+Answer:",120
+Defense,Nidoran♀,short,"What is the Defense of Nidoran♀?
+Answer:",52
+Defense,Nidorina,short,"What is the Defense of Nidorina?
+Answer:",67
+Defense,Nidoqueen,short,"What is the Defense of Nidoqueen?
+Answer:",87
+Defense,Nidoran♂,short,"What is the Defense of Nidoran♂?
+Answer:",40
+Defense,Nidorino,short,"What is the Defense of Nidorino?
+Answer:",57
+Defense,Nidoking,short,"What is the Defense of Nidoking?
+Answer:",77
+Defense,Clefairy,short,"What is the Defense of Clefairy?
+Answer:",48
+Defense,Clefable,short,"What is the Defense of Clefable?
+Answer:",73
+Defense,Vulpix,short,"What is the Defense of Vulpix?
+Answer:",40
+Defense,Ninetales,short,"What is the Defense of Ninetales?
+Answer:",75
+Defense,Jigglypuff,short,"What is the Defense of Jigglypuff?
+Answer:",20
+Defense,Wigglytuff,short,"What is the Defense of Wigglytuff?
+Answer:",45
+Defense,Zubat,short,"What is the Defense of Zubat?
+Answer:",35
+Defense,Golbat,short,"What is the Defense of Golbat?
+Answer:",70
+Defense,Oddish,short,"What is the Defense of Oddish?
+Answer:",55
+Defense,Gloom,short,"What is the Defense of Gloom?
+Answer:",70
+Defense,Vileplume,short,"What is the Defense of Vileplume?
+Answer:",85
+Defense,Paras,short,"What is the Defense of Paras?
+Answer:",55
+Defense,Parasect,short,"What is the Defense of Parasect?
+Answer:",80
+Defense,Venonat,short,"What is the Defense of Venonat?
+Answer:",50
+Defense,Venomoth,short,"What is the Defense of Venomoth?
+Answer:",60
+Defense,Diglett,short,"What is the Defense of Diglett?
+Answer:",30
+Defense,Dugtrio,short,"What is the Defense of Dugtrio?
+Answer:",60
+Defense,Meowth,short,"What is the Defense of Meowth?
+Answer:",35
+Defense,Persian,short,"What is the Defense of Persian?
+Answer:",60
+Defense,Psyduck,short,"What is the Defense of Psyduck?
+Answer:",48
+Defense,Golduck,short,"What is the Defense of Golduck?
+Answer:",78
+Defense,Mankey,short,"What is the Defense of Mankey?
+Answer:",35
+Defense,Primeape,short,"What is the Defense of Primeape?
+Answer:",60
+Defense,Growlithe,short,"What is the Defense of Growlithe?
+Answer:",45
+Defense,Arcanine,short,"What is the Defense of Arcanine?
+Answer:",80
+Defense,Poliwag,short,"What is the Defense of Poliwag?
+Answer:",40
+Defense,Poliwhirl,short,"What is the Defense of Poliwhirl?
+Answer:",65
+Defense,Poliwrath,short,"What is the Defense of Poliwrath?
+Answer:",95
+Defense,Abra,short,"What is the Defense of Abra?
+Answer:",15
+Defense,Kadabra,short,"What is the Defense of Kadabra?
+Answer:",30
+Defense,Alakazam,short,"What is the Defense of Alakazam?
+Answer:",65
+Defense,Machop,short,"What is the Defense of Machop?
+Answer:",50
+Defense,Machoke,short,"What is the Defense of Machoke?
+Answer:",70
+Defense,Machamp,short,"What is the Defense of Machamp?
+Answer:",80
+Defense,Bellsprout,short,"What is the Defense of Bellsprout?
+Answer:",35
+Defense,Weepinbell,short,"What is the Defense of Weepinbell?
+Answer:",50
+Defense,Victreebel,short,"What is the Defense of Victreebel?
+Answer:",65
+Defense,Tentacool,short,"What is the Defense of Tentacool?
+Answer:",35
+Defense,Tentacruel,short,"What is the Defense of Tentacruel?
+Answer:",65
+Defense,Geodude,short,"What is the Defense of Geodude?
+Answer:",100
+Defense,Graveler,short,"What is the Defense of Graveler?
+Answer:",115
+Defense,Golem,short,"What is the Defense of Golem?
+Answer:",130
+Defense,Ponyta,short,"What is the Defense of Ponyta?
+Answer:",55
+Defense,Rapidash,short,"What is the Defense of Rapidash?
+Answer:",70
+Defense,Slowpoke,short,"What is the Defense of Slowpoke?
+Answer:",65
+Defense,Slowbro,short,"What is the Defense of Slowbro?
+Answer:",180
+Defense,Magnemite,short,"What is the Defense of Magnemite?
+Answer:",70
+Defense,Magneton,short,"What is the Defense of Magneton?
+Answer:",95
+Defense,Farfetch'd,short,"What is the Defense of Farfetch'd?
+Answer:",55
+Defense,Doduo,short,"What is the Defense of Doduo?
+Answer:",45
+Defense,Dodrio,short,"What is the Defense of Dodrio?
+Answer:",70
+Defense,Seel,short,"What is the Defense of Seel?
+Answer:",55
+Defense,Dewgong,short,"What is the Defense of Dewgong?
+Answer:",80
+Defense,Grimer,short,"What is the Defense of Grimer?
+Answer:",50
+Defense,Muk,short,"What is the Defense of Muk?
+Answer:",75
+Defense,Shellder,short,"What is the Defense of Shellder?
+Answer:",100
+Defense,Cloyster,short,"What is the Defense of Cloyster?
+Answer:",180
+Defense,Gastly,short,"What is the Defense of Gastly?
+Answer:",30
+Defense,Haunter,short,"What is the Defense of Haunter?
+Answer:",45
+Defense,Gengar,short,"What is the Defense of Gengar?
+Answer:",80
+Defense,Onix,short,"What is the Defense of Onix?
+Answer:",160
+Defense,Drowzee,short,"What is the Defense of Drowzee?
+Answer:",45
+Defense,Hypno,short,"What is the Defense of Hypno?
+Answer:",70
+Defense,Krabby,short,"What is the Defense of Krabby?
+Answer:",90
+Defense,Kingler,short,"What is the Defense of Kingler?
+Answer:",115
+Defense,Voltorb,short,"What is the Defense of Voltorb?
+Answer:",50
+Defense,Electrode,short,"What is the Defense of Electrode?
+Answer:",70
+Defense,Exeggcute,short,"What is the Defense of Exeggcute?
+Answer:",80
+Defense,Exeggutor,short,"What is the Defense of Exeggutor?
+Answer:",85
+Defense,Cubone,short,"What is the Defense of Cubone?
+Answer:",95
+Defense,Marowak,short,"What is the Defense of Marowak?
+Answer:",110
+Defense,Hitmonlee,short,"What is the Defense of Hitmonlee?
+Answer:",53
+Defense,Hitmonchan,short,"What is the Defense of Hitmonchan?
+Answer:",79
+Defense,Lickitung,short,"What is the Defense of Lickitung?
+Answer:",75
+Defense,Koffing,short,"What is the Defense of Koffing?
+Answer:",95
+Defense,Weezing,short,"What is the Defense of Weezing?
+Answer:",120
+Defense,Rhyhorn,short,"What is the Defense of Rhyhorn?
+Answer:",95
+Defense,Rhydon,short,"What is the Defense of Rhydon?
+Answer:",120
+Defense,Chansey,short,"What is the Defense of Chansey?
+Answer:",5
+Defense,Tangela,short,"What is the Defense of Tangela?
+Answer:",115
+Defense,Kangaskhan,short,"What is the Defense of Kangaskhan?
+Answer:",100
+Defense,Horsea,short,"What is the Defense of Horsea?
+Answer:",70
+Defense,Seadra,short,"What is the Defense of Seadra?
+Answer:",95
+Defense,Goldeen,short,"What is the Defense of Goldeen?
+Answer:",60
+Defense,Seaking,short,"What is the Defense of Seaking?
+Answer:",65
+Defense,Staryu,short,"What is the Defense of Staryu?
+Answer:",55
+Defense,Starmie,short,"What is the Defense of Starmie?
+Answer:",85
+Defense,Mr. Mime,short,"What is the Defense of Mr. Mime?
+Answer:",65
+Defense,Scyther,short,"What is the Defense of Scyther?
+Answer:",80
+Defense,Jynx,short,"What is the Defense of Jynx?
+Answer:",35
+Defense,Electabuzz,short,"What is the Defense of Electabuzz?
+Answer:",57
+Defense,Magmar,short,"What is the Defense of Magmar?
+Answer:",57
+Defense,Pinsir,short,"What is the Defense of Pinsir?
+Answer:",120
+Defense,Tauros,short,"What is the Defense of Tauros?
+Answer:",95
+Defense,Magikarp,short,"What is the Defense of Magikarp?
+Answer:",55
+Defense,Gyarados,short,"What is the Defense of Gyarados?
+Answer:",109
+Defense,Lapras,short,"What is the Defense of Lapras?
+Answer:",80
+Defense,Ditto,short,"What is the Defense of Ditto?
+Answer:",48
+Defense,Eevee,short,"What is the Defense of Eevee?
+Answer:",50
+Defense,Vaporeon,short,"What is the Defense of Vaporeon?
+Answer:",60
+Defense,Jolteon,short,"What is the Defense of Jolteon?
+Answer:",60
+Defense,Flareon,short,"What is the Defense of Flareon?
+Answer:",60
+Defense,Porygon,short,"What is the Defense of Porygon?
+Answer:",70
+Defense,Omanyte,short,"What is the Defense of Omanyte?
+Answer:",100
+Defense,Omastar,short,"What is the Defense of Omastar?
+Answer:",125
+Defense,Kabuto,short,"What is the Defense of Kabuto?
+Answer:",90
+Defense,Kabutops,short,"What is the Defense of Kabutops?
+Answer:",105
+Defense,Aerodactyl,short,"What is the Defense of Aerodactyl?
+Answer:",85
+Defense,Snorlax,short,"What is the Defense of Snorlax?
+Answer:",65
+Defense,Articuno,short,"What is the Defense of Articuno?
+Answer:",100
+Defense,Zapdos,short,"What is the Defense of Zapdos?
+Answer:",85
+Defense,Moltres,short,"What is the Defense of Moltres?
+Answer:",90
+Defense,Dratini,short,"What is the Defense of Dratini?
+Answer:",45
+Defense,Dragonair,short,"What is the Defense of Dragonair?
+Answer:",65
+Defense,Dragonite,short,"What is the Defense of Dragonite?
+Answer:",95
+Defense,Mewtwo,short,"What is the Defense of Mewtwo?
+Answer:",70
+Defense,Mew,short,"What is the Defense of Mew?
+Answer:",100
+Defense,Chikorita,short,"What is the Defense of Chikorita?
+Answer:",65
+Defense,Bayleef,short,"What is the Defense of Bayleef?
+Answer:",80
+Defense,Meganium,short,"What is the Defense of Meganium?
+Answer:",100
+Defense,Cyndaquil,short,"What is the Defense of Cyndaquil?
+Answer:",43
+Defense,Quilava,short,"What is the Defense of Quilava?
+Answer:",58
+Defense,Typhlosion,short,"What is the Defense of Typhlosion?
+Answer:",78
+Defense,Totodile,short,"What is the Defense of Totodile?
+Answer:",64
+Defense,Croconaw,short,"What is the Defense of Croconaw?
+Answer:",80
+Defense,Feraligatr,short,"What is the Defense of Feraligatr?
+Answer:",100
+Defense,Sentret,short,"What is the Defense of Sentret?
+Answer:",34
+Defense,Furret,short,"What is the Defense of Furret?
+Answer:",64
+Defense,Hoothoot,short,"What is the Defense of Hoothoot?
+Answer:",30
+Defense,Noctowl,short,"What is the Defense of Noctowl?
+Answer:",50
+Defense,Ledyba,short,"What is the Defense of Ledyba?
+Answer:",30
+Defense,Ledian,short,"What is the Defense of Ledian?
+Answer:",50
+Defense,Spinarak,short,"What is the Defense of Spinarak?
+Answer:",40
+Defense,Ariados,short,"What is the Defense of Ariados?
+Answer:",70
+Defense,Crobat,short,"What is the Defense of Crobat?
+Answer:",80
+Defense,Chinchou,short,"What is the Defense of Chinchou?
+Answer:",38
+Defense,Lanturn,short,"What is the Defense of Lanturn?
+Answer:",58
+Defense,Pichu,short,"What is the Defense of Pichu?
+Answer:",15
+Defense,Cleffa,short,"What is the Defense of Cleffa?
+Answer:",28
+Defense,Igglybuff,short,"What is the Defense of Igglybuff?
+Answer:",15
+Defense,Togepi,short,"What is the Defense of Togepi?
+Answer:",65
+Defense,Togetic,short,"What is the Defense of Togetic?
+Answer:",85
+Defense,Natu,short,"What is the Defense of Natu?
+Answer:",45
+Defense,Xatu,short,"What is the Defense of Xatu?
+Answer:",70
+Defense,Mareep,short,"What is the Defense of Mareep?
+Answer:",40
+Defense,Flaaffy,short,"What is the Defense of Flaaffy?
+Answer:",55
+Defense,Ampharos,short,"What is the Defense of Ampharos?
+Answer:",105
+Defense,Bellossom,short,"What is the Defense of Bellossom?
+Answer:",95
+Defense,Marill,short,"What is the Defense of Marill?
+Answer:",50
+Defense,Azumarill,short,"What is the Defense of Azumarill?
+Answer:",80
+Defense,Sudowoodo,short,"What is the Defense of Sudowoodo?
+Answer:",115
+Defense,Politoed,short,"What is the Defense of Politoed?
+Answer:",75
+Defense,Hoppip,short,"What is the Defense of Hoppip?
+Answer:",40
+Defense,Skiploom,short,"What is the Defense of Skiploom?
+Answer:",50
+Defense,Jumpluff,short,"What is the Defense of Jumpluff?
+Answer:",70
+Defense,Aipom,short,"What is the Defense of Aipom?
+Answer:",55
+Defense,Sunkern,short,"What is the Defense of Sunkern?
+Answer:",30
+Defense,Sunflora,short,"What is the Defense of Sunflora?
+Answer:",55
+Defense,Yanma,short,"What is the Defense of Yanma?
+Answer:",45
+Defense,Wooper,short,"What is the Defense of Wooper?
+Answer:",45
+Defense,Quagsire,short,"What is the Defense of Quagsire?
+Answer:",85
+Defense,Espeon,short,"What is the Defense of Espeon?
+Answer:",60
+Defense,Umbreon,short,"What is the Defense of Umbreon?
+Answer:",110
+Defense,Murkrow,short,"What is the Defense of Murkrow?
+Answer:",42
+Defense,Slowking,short,"What is the Defense of Slowking?
+Answer:",80
+Defense,Misdreavus,short,"What is the Defense of Misdreavus?
+Answer:",60
+Defense,Unown,short,"What is the Defense of Unown?
+Answer:",48
+Defense,Wobbuffet,short,"What is the Defense of Wobbuffet?
+Answer:",58
+Defense,Girafarig,short,"What is the Defense of Girafarig?
+Answer:",65
+Defense,Pineco,short,"What is the Defense of Pineco?
+Answer:",90
+Defense,Forretress,short,"What is the Defense of Forretress?
+Answer:",140
+Defense,Dunsparce,short,"What is the Defense of Dunsparce?
+Answer:",70
+Defense,Gligar,short,"What is the Defense of Gligar?
+Answer:",105
+Defense,Steelix,short,"What is the Defense of Steelix?
+Answer:",230
+Defense,Snubbull,short,"What is the Defense of Snubbull?
+Answer:",50
+Defense,Granbull,short,"What is the Defense of Granbull?
+Answer:",75
+Defense,Qwilfish,short,"What is the Defense of Qwilfish?
+Answer:",85
+Defense,Scizor,short,"What is the Defense of Scizor?
+Answer:",140
+Defense,Shuckle,short,"What is the Defense of Shuckle?
+Answer:",230
+Defense,Heracross,short,"What is the Defense of Heracross?
+Answer:",115
+Defense,Sneasel,short,"What is the Defense of Sneasel?
+Answer:",55
+Defense,Teddiursa,short,"What is the Defense of Teddiursa?
+Answer:",50
+Defense,Ursaring,short,"What is the Defense of Ursaring?
+Answer:",75
+Defense,Slugma,short,"What is the Defense of Slugma?
+Answer:",40
+Defense,Magcargo,short,"What is the Defense of Magcargo?
+Answer:",120
+Defense,Swinub,short,"What is the Defense of Swinub?
+Answer:",40
+Defense,Piloswine,short,"What is the Defense of Piloswine?
+Answer:",80
+Defense,Corsola,short,"What is the Defense of Corsola?
+Answer:",95
+Defense,Remoraid,short,"What is the Defense of Remoraid?
+Answer:",35
+Defense,Octillery,short,"What is the Defense of Octillery?
+Answer:",75
+Defense,Delibird,short,"What is the Defense of Delibird?
+Answer:",45
+Defense,Mantine,short,"What is the Defense of Mantine?
+Answer:",70
+Defense,Skarmory,short,"What is the Defense of Skarmory?
+Answer:",140
+Defense,Houndour,short,"What is the Defense of Houndour?
+Answer:",30
+Defense,Houndoom,short,"What is the Defense of Houndoom?
+Answer:",90
+Defense,Kingdra,short,"What is the Defense of Kingdra?
+Answer:",95
+Defense,Phanpy,short,"What is the Defense of Phanpy?
+Answer:",60
+Defense,Donphan,short,"What is the Defense of Donphan?
+Answer:",120
+Defense,Porygon2,short,"What is the Defense of Porygon2?
+Answer:",90
+Defense,Stantler,short,"What is the Defense of Stantler?
+Answer:",62
+Defense,Smeargle,short,"What is the Defense of Smeargle?
+Answer:",35
+Defense,Tyrogue,short,"What is the Defense of Tyrogue?
+Answer:",35
+Defense,Hitmontop,short,"What is the Defense of Hitmontop?
+Answer:",95
+Defense,Smoochum,short,"What is the Defense of Smoochum?
+Answer:",15
+Defense,Elekid,short,"What is the Defense of Elekid?
+Answer:",37
+Defense,Magby,short,"What is the Defense of Magby?
+Answer:",37
+Defense,Miltank,short,"What is the Defense of Miltank?
+Answer:",105
+Defense,Blissey,short,"What is the Defense of Blissey?
+Answer:",10
+Defense,Raikou,short,"What is the Defense of Raikou?
+Answer:",75
+Defense,Entei,short,"What is the Defense of Entei?
+Answer:",85
+Defense,Suicune,short,"What is the Defense of Suicune?
+Answer:",115
+Defense,Larvitar,short,"What is the Defense of Larvitar?
+Answer:",50
+Defense,Pupitar,short,"What is the Defense of Pupitar?
+Answer:",70
+Defense,Tyranitar,short,"What is the Defense of Tyranitar?
+Answer:",150
+Defense,Lugia,short,"What is the Defense of Lugia?
+Answer:",130
+Defense,Ho-Oh,short,"What is the Defense of Ho-Oh?
+Answer:",90
+Defense,Celebi,short,"What is the Defense of Celebi?
+Answer:",100
+Defense,Treecko,short,"What is the Defense of Treecko?
+Answer:",35
+Defense,Grovyle,short,"What is the Defense of Grovyle?
+Answer:",45
+Defense,Sceptile,short,"What is the Defense of Sceptile?
+Answer:",75
+Defense,Torchic,short,"What is the Defense of Torchic?
+Answer:",40
+Defense,Combusken,short,"What is the Defense of Combusken?
+Answer:",60
+Defense,Blaziken,short,"What is the Defense of Blaziken?
+Answer:",80
+Defense,Mudkip,short,"What is the Defense of Mudkip?
+Answer:",50
+Defense,Marshtomp,short,"What is the Defense of Marshtomp?
+Answer:",70
+Defense,Swampert,short,"What is the Defense of Swampert?
+Answer:",110
+Defense,Poochyena,short,"What is the Defense of Poochyena?
+Answer:",35
+Defense,Mightyena,short,"What is the Defense of Mightyena?
+Answer:",70
+Defense,Zigzagoon,short,"What is the Defense of Zigzagoon?
+Answer:",41
+Defense,Linoone,short,"What is the Defense of Linoone?
+Answer:",61
+Defense,Wurmple,short,"What is the Defense of Wurmple?
+Answer:",35
+Defense,Silcoon,short,"What is the Defense of Silcoon?
+Answer:",55
+Defense,Beautifly,short,"What is the Defense of Beautifly?
+Answer:",50
+Defense,Cascoon,short,"What is the Defense of Cascoon?
+Answer:",55
+Defense,Dustox,short,"What is the Defense of Dustox?
+Answer:",70
+Defense,Lotad,short,"What is the Defense of Lotad?
+Answer:",30
+Defense,Lombre,short,"What is the Defense of Lombre?
+Answer:",50
+Defense,Ludicolo,short,"What is the Defense of Ludicolo?
+Answer:",70
+Defense,Seedot,short,"What is the Defense of Seedot?
+Answer:",50
+Defense,Nuzleaf,short,"What is the Defense of Nuzleaf?
+Answer:",40
+Defense,Shiftry,short,"What is the Defense of Shiftry?
+Answer:",60
+Defense,Taillow,short,"What is the Defense of Taillow?
+Answer:",30
+Defense,Swellow,short,"What is the Defense of Swellow?
+Answer:",60
+Defense,Wingull,short,"What is the Defense of Wingull?
+Answer:",30
+Defense,Pelipper,short,"What is the Defense of Pelipper?
+Answer:",100
+Defense,Ralts,short,"What is the Defense of Ralts?
+Answer:",25
+Defense,Kirlia,short,"What is the Defense of Kirlia?
+Answer:",35
+Defense,Gardevoir,short,"What is the Defense of Gardevoir?
+Answer:",65
+Defense,Surskit,short,"What is the Defense of Surskit?
+Answer:",32
+Defense,Masquerain,short,"What is the Defense of Masquerain?
+Answer:",62
+Defense,Shroomish,short,"What is the Defense of Shroomish?
+Answer:",60
+Defense,Breloom,short,"What is the Defense of Breloom?
+Answer:",80
+Defense,Slakoth,short,"What is the Defense of Slakoth?
+Answer:",60
+Defense,Vigoroth,short,"What is the Defense of Vigoroth?
+Answer:",80
+Defense,Slaking,short,"What is the Defense of Slaking?
+Answer:",100
+Defense,Nincada,short,"What is the Defense of Nincada?
+Answer:",90
+Defense,Ninjask,short,"What is the Defense of Ninjask?
+Answer:",45
+Defense,Shedinja,short,"What is the Defense of Shedinja?
+Answer:",45
+Defense,Whismur,short,"What is the Defense of Whismur?
+Answer:",23
+Defense,Loudred,short,"What is the Defense of Loudred?
+Answer:",43
+Defense,Exploud,short,"What is the Defense of Exploud?
+Answer:",63
+Defense,Makuhita,short,"What is the Defense of Makuhita?
+Answer:",30
+Defense,Hariyama,short,"What is the Defense of Hariyama?
+Answer:",60
+Defense,Azurill,short,"What is the Defense of Azurill?
+Answer:",40
+Defense,Nosepass,short,"What is the Defense of Nosepass?
+Answer:",135
+Defense,Skitty,short,"What is the Defense of Skitty?
+Answer:",45
+Defense,Delcatty,short,"What is the Defense of Delcatty?
+Answer:",65
+Defense,Sableye,short,"What is the Defense of Sableye?
+Answer:",125
+Defense,Mawile,short,"What is the Defense of Mawile?
+Answer:",125
+Defense,Aron,short,"What is the Defense of Aron?
+Answer:",100
+Defense,Lairon,short,"What is the Defense of Lairon?
+Answer:",140
+Defense,Aggron,short,"What is the Defense of Aggron?
+Answer:",230
+Defense,Meditite,short,"What is the Defense of Meditite?
+Answer:",55
+Defense,Medicham,short,"What is the Defense of Medicham?
+Answer:",85
+Defense,Electrike,short,"What is the Defense of Electrike?
+Answer:",40
+Defense,Manectric,short,"What is the Defense of Manectric?
+Answer:",80
+Defense,Plusle,short,"What is the Defense of Plusle?
+Answer:",40
+Defense,Minun,short,"What is the Defense of Minun?
+Answer:",50
+Defense,Volbeat,short,"What is the Defense of Volbeat?
+Answer:",75
+Defense,Illumise,short,"What is the Defense of Illumise?
+Answer:",75
+Defense,Roselia,short,"What is the Defense of Roselia?
+Answer:",45
+Defense,Gulpin,short,"What is the Defense of Gulpin?
+Answer:",53
+Defense,Swalot,short,"What is the Defense of Swalot?
+Answer:",83
+Defense,Carvanha,short,"What is the Defense of Carvanha?
+Answer:",20
+Defense,Sharpedo,short,"What is the Defense of Sharpedo?
+Answer:",70
+Defense,Wailmer,short,"What is the Defense of Wailmer?
+Answer:",35
+Defense,Wailord,short,"What is the Defense of Wailord?
+Answer:",45
+Defense,Numel,short,"What is the Defense of Numel?
+Answer:",40
+Defense,Camerupt,short,"What is the Defense of Camerupt?
+Answer:",100
+Defense,Torkoal,short,"What is the Defense of Torkoal?
+Answer:",140
+Defense,Spoink,short,"What is the Defense of Spoink?
+Answer:",35
+Defense,Grumpig,short,"What is the Defense of Grumpig?
+Answer:",65
+Defense,Spinda,short,"What is the Defense of Spinda?
+Answer:",60
+Defense,Trapinch,short,"What is the Defense of Trapinch?
+Answer:",45
+Defense,Vibrava,short,"What is the Defense of Vibrava?
+Answer:",50
+Defense,Flygon,short,"What is the Defense of Flygon?
+Answer:",80
+Defense,Cacnea,short,"What is the Defense of Cacnea?
+Answer:",40
+Defense,Cacturne,short,"What is the Defense of Cacturne?
+Answer:",60
+Defense,Swablu,short,"What is the Defense of Swablu?
+Answer:",60
+Defense,Altaria,short,"What is the Defense of Altaria?
+Answer:",110
+Defense,Zangoose,short,"What is the Defense of Zangoose?
+Answer:",60
+Defense,Seviper,short,"What is the Defense of Seviper?
+Answer:",60
+Defense,Lunatone,short,"What is the Defense of Lunatone?
+Answer:",65
+Defense,Solrock,short,"What is the Defense of Solrock?
+Answer:",85
+Defense,Barboach,short,"What is the Defense of Barboach?
+Answer:",43
+Defense,Whiscash,short,"What is the Defense of Whiscash?
+Answer:",73
+Defense,Corphish,short,"What is the Defense of Corphish?
+Answer:",65
+Defense,Crawdaunt,short,"What is the Defense of Crawdaunt?
+Answer:",85
+Defense,Baltoy,short,"What is the Defense of Baltoy?
+Answer:",55
+Defense,Claydol,short,"What is the Defense of Claydol?
+Answer:",105
+Defense,Lileep,short,"What is the Defense of Lileep?
+Answer:",77
+Defense,Cradily,short,"What is the Defense of Cradily?
+Answer:",97
+Defense,Anorith,short,"What is the Defense of Anorith?
+Answer:",50
+Defense,Armaldo,short,"What is the Defense of Armaldo?
+Answer:",100
+Defense,Feebas,short,"What is the Defense of Feebas?
+Answer:",20
+Defense,Milotic,short,"What is the Defense of Milotic?
+Answer:",79
+Defense,Castform,short,"What is the Defense of Castform?
+Answer:",70
+Defense,Kecleon,short,"What is the Defense of Kecleon?
+Answer:",70
+Defense,Shuppet,short,"What is the Defense of Shuppet?
+Answer:",35
+Defense,Banette,short,"What is the Defense of Banette?
+Answer:",75
+Defense,Duskull,short,"What is the Defense of Duskull?
+Answer:",90
+Defense,Dusclops,short,"What is the Defense of Dusclops?
+Answer:",130
+Defense,Tropius,short,"What is the Defense of Tropius?
+Answer:",83
+Defense,Chimecho,short,"What is the Defense of Chimecho?
+Answer:",80
+Defense,Absol,short,"What is the Defense of Absol?
+Answer:",60
+Defense,Wynaut,short,"What is the Defense of Wynaut?
+Answer:",48
+Defense,Snorunt,short,"What is the Defense of Snorunt?
+Answer:",50
+Defense,Glalie,short,"What is the Defense of Glalie?
+Answer:",80
+Defense,Spheal,short,"What is the Defense of Spheal?
+Answer:",50
+Defense,Sealeo,short,"What is the Defense of Sealeo?
+Answer:",70
+Defense,Walrein,short,"What is the Defense of Walrein?
+Answer:",90
+Defense,Clamperl,short,"What is the Defense of Clamperl?
+Answer:",85
+Defense,Huntail,short,"What is the Defense of Huntail?
+Answer:",105
+Defense,Gorebyss,short,"What is the Defense of Gorebyss?
+Answer:",105
+Defense,Relicanth,short,"What is the Defense of Relicanth?
+Answer:",130
+Defense,Luvdisc,short,"What is the Defense of Luvdisc?
+Answer:",55
+Defense,Bagon,short,"What is the Defense of Bagon?
+Answer:",60
+Defense,Shelgon,short,"What is the Defense of Shelgon?
+Answer:",100
+Defense,Salamence,short,"What is the Defense of Salamence?
+Answer:",130
+Defense,Beldum,short,"What is the Defense of Beldum?
+Answer:",80
+Defense,Metang,short,"What is the Defense of Metang?
+Answer:",100
+Defense,Metagross,short,"What is the Defense of Metagross?
+Answer:",150
+Defense,Regirock,short,"What is the Defense of Regirock?
+Answer:",200
+Defense,Regice,short,"What is the Defense of Regice?
+Answer:",100
+Defense,Registeel,short,"What is the Defense of Registeel?
+Answer:",150
+Defense,Latias,short,"What is the Defense of Latias?
+Answer:",120
+Defense,Latios,short,"What is the Defense of Latios?
+Answer:",100
+Defense,Kyogre,short,"What is the Defense of Kyogre?
+Answer:",90
+Defense,Groudon,short,"What is the Defense of Groudon?
+Answer:",160
+Defense,Rayquaza,short,"What is the Defense of Rayquaza?
+Answer:",100
+Defense,Jirachi,short,"What is the Defense of Jirachi?
+Answer:",100
+Defense,Deoxys,short,"What is the Defense of Deoxys?
+Answer:",90
+Defense,Turtwig,short,"What is the Defense of Turtwig?
+Answer:",64
+Defense,Grotle,short,"What is the Defense of Grotle?
+Answer:",85
+Defense,Torterra,short,"What is the Defense of Torterra?
+Answer:",105
+Defense,Chimchar,short,"What is the Defense of Chimchar?
+Answer:",44
+Defense,Monferno,short,"What is the Defense of Monferno?
+Answer:",52
+Defense,Infernape,short,"What is the Defense of Infernape?
+Answer:",71
+Defense,Piplup,short,"What is the Defense of Piplup?
+Answer:",53
+Defense,Prinplup,short,"What is the Defense of Prinplup?
+Answer:",68
+Defense,Empoleon,short,"What is the Defense of Empoleon?
+Answer:",88
+Defense,Starly,short,"What is the Defense of Starly?
+Answer:",30
+Defense,Staravia,short,"What is the Defense of Staravia?
+Answer:",50
+Defense,Staraptor,short,"What is the Defense of Staraptor?
+Answer:",70
+Defense,Bidoof,short,"What is the Defense of Bidoof?
+Answer:",40
+Defense,Bibarel,short,"What is the Defense of Bibarel?
+Answer:",60
+Defense,Kricketot,short,"What is the Defense of Kricketot?
+Answer:",41
+Defense,Kricketune,short,"What is the Defense of Kricketune?
+Answer:",51
+Defense,Shinx,short,"What is the Defense of Shinx?
+Answer:",34
+Defense,Luxio,short,"What is the Defense of Luxio?
+Answer:",49
+Defense,Luxray,short,"What is the Defense of Luxray?
+Answer:",79
+Defense,Budew,short,"What is the Defense of Budew?
+Answer:",35
+Defense,Roserade,short,"What is the Defense of Roserade?
+Answer:",65
+Defense,Cranidos,short,"What is the Defense of Cranidos?
+Answer:",40
+Defense,Rampardos,short,"What is the Defense of Rampardos?
+Answer:",60
+Defense,Shieldon,short,"What is the Defense of Shieldon?
+Answer:",118
+Defense,Bastiodon,short,"What is the Defense of Bastiodon?
+Answer:",168
+Defense,Burmy,short,"What is the Defense of Burmy?
+Answer:",45
+Defense,Wormadam,short,"What is the Defense of Wormadam?
+Answer:",95
+Defense,Mothim,short,"What is the Defense of Mothim?
+Answer:",50
+Defense,Combee,short,"What is the Defense of Combee?
+Answer:",42
+Defense,Vespiquen,short,"What is the Defense of Vespiquen?
+Answer:",102
+Defense,Pachirisu,short,"What is the Defense of Pachirisu?
+Answer:",70
+Defense,Buizel,short,"What is the Defense of Buizel?
+Answer:",35
+Defense,Floatzel,short,"What is the Defense of Floatzel?
+Answer:",55
+Defense,Cherubi,short,"What is the Defense of Cherubi?
+Answer:",45
+Defense,Cherrim,short,"What is the Defense of Cherrim?
+Answer:",70
+Defense,Shellos,short,"What is the Defense of Shellos?
+Answer:",48
+Defense,Gastrodon,short,"What is the Defense of Gastrodon?
+Answer:",68
+Defense,Ambipom,short,"What is the Defense of Ambipom?
+Answer:",66
+Defense,Drifloon,short,"What is the Defense of Drifloon?
+Answer:",34
+Defense,Drifblim,short,"What is the Defense of Drifblim?
+Answer:",44
+Defense,Buneary,short,"What is the Defense of Buneary?
+Answer:",44
+Defense,Lopunny,short,"What is the Defense of Lopunny?
+Answer:",94
+Defense,Mismagius,short,"What is the Defense of Mismagius?
+Answer:",60
+Defense,Honchkrow,short,"What is the Defense of Honchkrow?
+Answer:",52
+Defense,Glameow,short,"What is the Defense of Glameow?
+Answer:",42
+Defense,Purugly,short,"What is the Defense of Purugly?
+Answer:",64
+Defense,Chingling,short,"What is the Defense of Chingling?
+Answer:",50
+Defense,Stunky,short,"What is the Defense of Stunky?
+Answer:",47
+Defense,Skuntank,short,"What is the Defense of Skuntank?
+Answer:",67
+Defense,Bronzor,short,"What is the Defense of Bronzor?
+Answer:",86
+Defense,Bronzong,short,"What is the Defense of Bronzong?
+Answer:",116
+Defense,Bonsly,short,"What is the Defense of Bonsly?
+Answer:",95
+Defense,Mime Jr.,short,"What is the Defense of Mime Jr.?
+Answer:",45
+Defense,Happiny,short,"What is the Defense of Happiny?
+Answer:",5
+Defense,Chatot,short,"What is the Defense of Chatot?
+Answer:",45
+Defense,Spiritomb,short,"What is the Defense of Spiritomb?
+Answer:",108
+Defense,Gible,short,"What is the Defense of Gible?
+Answer:",45
+Defense,Gabite,short,"What is the Defense of Gabite?
+Answer:",65
+Defense,Garchomp,short,"What is the Defense of Garchomp?
+Answer:",115
+Defense,Munchlax,short,"What is the Defense of Munchlax?
+Answer:",40
+Defense,Riolu,short,"What is the Defense of Riolu?
+Answer:",40
+Defense,Lucario,short,"What is the Defense of Lucario?
+Answer:",88
+Defense,Hippopotas,short,"What is the Defense of Hippopotas?
+Answer:",78
+Defense,Hippowdon,short,"What is the Defense of Hippowdon?
+Answer:",118
+Defense,Skorupi,short,"What is the Defense of Skorupi?
+Answer:",90
+Defense,Drapion,short,"What is the Defense of Drapion?
+Answer:",110
+Defense,Croagunk,short,"What is the Defense of Croagunk?
+Answer:",40
+Defense,Toxicroak,short,"What is the Defense of Toxicroak?
+Answer:",65
+Defense,Carnivine,short,"What is the Defense of Carnivine?
+Answer:",72
+Defense,Finneon,short,"What is the Defense of Finneon?
+Answer:",56
+Defense,Lumineon,short,"What is the Defense of Lumineon?
+Answer:",76
+Defense,Mantyke,short,"What is the Defense of Mantyke?
+Answer:",50
+Defense,Snover,short,"What is the Defense of Snover?
+Answer:",50
+Defense,Abomasnow,short,"What is the Defense of Abomasnow?
+Answer:",105
+Defense,Weavile,short,"What is the Defense of Weavile?
+Answer:",65
+Defense,Magnezone,short,"What is the Defense of Magnezone?
+Answer:",115
+Defense,Lickilicky,short,"What is the Defense of Lickilicky?
+Answer:",95
+Defense,Rhyperior,short,"What is the Defense of Rhyperior?
+Answer:",130
+Defense,Tangrowth,short,"What is the Defense of Tangrowth?
+Answer:",125
+Defense,Electivire,short,"What is the Defense of Electivire?
+Answer:",67
+Defense,Magmortar,short,"What is the Defense of Magmortar?
+Answer:",67
+Defense,Togekiss,short,"What is the Defense of Togekiss?
+Answer:",95
+Defense,Yanmega,short,"What is the Defense of Yanmega?
+Answer:",86
+Defense,Leafeon,short,"What is the Defense of Leafeon?
+Answer:",130
+Defense,Glaceon,short,"What is the Defense of Glaceon?
+Answer:",110
+Defense,Gliscor,short,"What is the Defense of Gliscor?
+Answer:",125
+Defense,Mamoswine,short,"What is the Defense of Mamoswine?
+Answer:",80
+Defense,Porygon-Z,short,"What is the Defense of Porygon-Z?
+Answer:",70
+Defense,Gallade,short,"What is the Defense of Gallade?
+Answer:",95
+Defense,Probopass,short,"What is the Defense of Probopass?
+Answer:",145
+Defense,Dusknoir,short,"What is the Defense of Dusknoir?
+Answer:",135
+Defense,Froslass,short,"What is the Defense of Froslass?
+Answer:",70
+Defense,Rotom,short,"What is the Defense of Rotom?
+Answer:",107
+Defense,Uxie,short,"What is the Defense of Uxie?
+Answer:",130
+Defense,Mesprit,short,"What is the Defense of Mesprit?
+Answer:",105
+Defense,Azelf,short,"What is the Defense of Azelf?
+Answer:",70
+Defense,Dialga,short,"What is the Defense of Dialga?
+Answer:",120
+Defense,Palkia,short,"What is the Defense of Palkia?
+Answer:",100
+Defense,Heatran,short,"What is the Defense of Heatran?
+Answer:",106
+Defense,Regigigas,short,"What is the Defense of Regigigas?
+Answer:",110
+Defense,Giratina,short,"What is the Defense of Giratina?
+Answer:",100
+Defense,Cresselia,short,"What is the Defense of Cresselia?
+Answer:",120
+Defense,Phione,short,"What is the Defense of Phione?
+Answer:",80
+Defense,Manaphy,short,"What is the Defense of Manaphy?
+Answer:",100
+Defense,Darkrai,short,"What is the Defense of Darkrai?
+Answer:",90
+Defense,Shaymin,short,"What is the Defense of Shaymin?
+Answer:",75
+Defense,Arceus,short,"What is the Defense of Arceus?
+Answer:",120
+Defense,Victini,short,"What is the Defense of Victini?
+Answer:",100
+Defense,Snivy,short,"What is the Defense of Snivy?
+Answer:",55
+Defense,Servine,short,"What is the Defense of Servine?
+Answer:",75
+Defense,Serperior,short,"What is the Defense of Serperior?
+Answer:",95
+Defense,Tepig,short,"What is the Defense of Tepig?
+Answer:",45
+Defense,Pignite,short,"What is the Defense of Pignite?
+Answer:",55
+Defense,Emboar,short,"What is the Defense of Emboar?
+Answer:",65
