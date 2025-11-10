@@ -21,13 +21,17 @@ Make sure that the [Pokemon dataset](https://www.kaggle.com/datasets/rounakbanik
 Run the full experiments with all three Gemma-3 model sizes (1B, 4B, and 12B) by executing:
 
 ```bash
-python part_1.py
+python part_1.py --model google/gemma-3-1b-it --size 1
+
+python part_1.py --model google/gemma-3-4b-it --size 4
+
+python part_1.py --model google/gemma-3-12b-it --size 12
 ```
 
 This will:
 
 - Build the Pokemon benchmark from the CSV (if it doesn't already exist)
-- Run evaluations with `google/gemma-3-1b-it`, `google/gemma-3-4b-it`, and `google/gemma-3-12b-it`
+- Run evaluations with the specified model.
 - Evaluate on TriviaQA and IFEval
 - Save results to `results/part1_results.csv` and `results/part1_results.json`
 - Generate the memorization-vs-scale plot at `results/part1_memorization.png`

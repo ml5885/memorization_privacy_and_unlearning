@@ -99,9 +99,13 @@ def eval_mcq_letter(pred, correct_letter):
     return 1 if p == correct_letter.upper() else 0
 
 def run_pokemon_eval(tokenizer, model, model_id, bench_path, batch_size, limit, save_path=None, eval_mode: str = "auto"):
+    print(f"\n{'='*80}")
+    print(f"Running Pokemon evaluation for {model_id}")
+    print(f"{'='*80}")
     examples = load_pokemon_benchmark(bench_path)
     if limit > 0:
         examples = examples[:limit]
+    print(f"Total examples: {len(examples)}")
 
     trait2correct = defaultdict(int)
     trait2total = defaultdict(int)
@@ -109,7 +113,7 @@ def run_pokemon_eval(tokenizer, model, model_id, bench_path, batch_size, limit, 
     log_f = open_jsonl(save_path) if save_path else None
 
     batch_prompts, batch_meta = [], []
-    for ex in tqdm(examples, desc=f"{model_id} / pokemon"):
+    for ex in tqdm(examples, desc=f"Pokemon eval ({model_id})"):
         batch_prompts.append(ex["prompt"])
         batch_meta.append(ex)
 
@@ -170,12 +174,19 @@ def run_pokemon_eval(tokenizer, model, model_id, bench_path, batch_size, limit, 
     if log_f:
         log_f.close()
 
-    return {
+    results = {
         t: trait2correct[t] / max(1, trait2total[t])
         for t in sorted(trait2total.keys())
     }
+    print(f"\nPokemon results for {model_id}:")
+    for trait, acc in results.items():
+        print(f"  {trait}: {acc:.4f}")
+    return results
 
 def run_triviaqa_eval(tokenizer, model, model_id, batch_size, limit, save_path=None, eval_mode: str = "contains"):
+    print(f"\n{'='*80}")
+    print(f"Running TriviaQA evaluation for {model_id}")
+    print(f"{'='*80}")
     ds = load_dataset("mandarjoshi/trivia_qa", "rc", split="validation")
 
     records = []
@@ -186,10 +197,11 @@ def run_triviaqa_eval(tokenizer, model, model_id, batch_size, limit, save_path=N
         records.append({"prompt": prompt, "golds": golds, "question": q})
         if limit > 0 and len(records) >= limit:
             break
+    print(f"Total examples: {len(records)}")
 
     correct, total = 0, 0
     log_f = open_jsonl(save_path) if save_path else None
-    for i in range(0, len(records), batch_size):
+    for i in tqdm(range(0, len(records), batch_size), desc=f"TriviaQA eval ({model_id})"):
         chunk = records[i : i + batch_size]
         prompts = [r["prompt"] for r in chunk]
         outs = generate_batch(tokenizer, model, prompts)
@@ -215,9 +227,14 @@ def run_triviaqa_eval(tokenizer, model, model_id, batch_size, limit, save_path=N
     if log_f:
         log_f.close()
 
-    return correct / max(1, total)
+    accuracy = correct / max(1, total)
+    print(f"\nTriviaQA results for {model_id}: {accuracy:.4f} ({correct}/{total})")
+    return accuracy
 
 def run_ifeval_eval(tokenizer, model, model_id, batch_size, limit, save_path=None):
+    print(f"\n{'='*80}")
+    print(f"Running IFEval evaluation for {model_id}")
+    print(f"{'='*80}")
     ds = load_dataset("google/IFEval", split="train")
 
     prompts = []
@@ -231,9 +248,10 @@ def run_ifeval_eval(tokenizer, model, model_id, batch_size, limit, save_path=Non
         prompts.append(prompt)
         if limit > 0 and len(prompts) >= limit:
             break
+    print(f"Total examples: {len(prompts)}")
 
     outs = []
-    for i in range(0, len(prompts), batch_size):
+    for i in tqdm(range(0, len(prompts), batch_size), desc=f"IFEval eval ({model_id})"):
         outs.extend(generate_batch(tokenizer, model, prompts[i : i + batch_size]))
 
     good = 0
@@ -256,13 +274,16 @@ def run_ifeval_eval(tokenizer, model, model_id, batch_size, limit, save_path=Non
     if log_f:
         log_f.close()
 
-    return good / max(1, len(outs))
+    accuracy = good / max(1, len(outs))
+    print(f"\nIFEval results for {model_id}: {accuracy:.4f} ({good}/{len(outs)})")
+    return accuracy
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--outdir", type=str, default="results/part1")
-    ap.add_argument("--analysis", action="store_true")
-    ap.add_argument("--test", action="store_true")
+    ap.add_argument("--analysis", action="store_true", help="Run analysis only (plot results from existing model outputs)")
+    ap.add_argument("--model", type=str, default=None, help="Model ID to evaluate (e.g., google/gemma-3-1b-it)")
+    ap.add_argument("--model_size", type=float, default=None, help="Model size in billions of parameters (e.g., 1, 4, 12)")
     ap.add_argument("--batch_size", type=int, default=32)
     ap.add_argument("--limit_pokemon", type=int, default=0)
     ap.add_argument("--limit_triviaqa", type=int, default=0)
@@ -275,19 +296,81 @@ def main():
     ensure_dir(args.outdir)
     bench_path = os.path.join("data", "pokemon_benchmark.csv")
 
-    if args.test:
-        model_ids = ["google/gemma-3-1b-it"]
-        sizes_b = [1]
+    if args.analysis:
+        # Analysis mode: plot results from all models in the results directory
+        print(f"\n{'#'*80}")
+        print("Running analysis mode: generating plots from existing results")
+        print(f"{'#'*80}\n")
+        
+        # Load all model results from the results directory
+        results_files = []
+        for fname in os.listdir(args.outdir):
+            if fname.startswith("model_") and fname.endswith(".json"):
+                results_files.append(os.path.join(args.outdir, fname))
+        
+        if not results_files:
+            print(f"No model result files found in {args.outdir}")
+            print("Looking for files matching pattern: model_*.json")
+            return
+        
+        print(f"Found {len(results_files)} model result file(s):")
+        for f in results_files:
+            print(f"  - {os.path.basename(f)}")
+        
+        # Load all results
+        all_results = []
+        for result_file in results_files:
+            with open(result_file) as f:
+                result = json.load(f)
+                all_results.append(result)
+        
+        # Sort by model size
+        all_results.sort(key=lambda x: x.get("size_b", 0))
+        
+        # Create combined results table
+        save_table(
+            all_results,
+            os.path.join(args.outdir, "part1_results.csv"),
+            os.path.join(args.outdir, "part1_results.json"),
+        )
+        print(f"\nCombined results saved to {args.outdir}/part1_results.csv and part1_results.json")
+        
+        # Generate plots
+        print(f"\nGenerating memorization plot...")
+        sizes = [r["size_b"] for r in all_results]
+        trait2acc = {
+            label: [r.get(label, 0.0) for r in all_results] 
+            for label in TRAIT_PLOT_LABELS.values()
+        }
+        plot_path = os.path.join(args.outdir, "part1_memorization.png")
+        plot_memorization(
+            sizes,
+            trait2acc,
+            plot_path,
+        )
+        print(f"Plot saved to {plot_path}")
+        
     else:
-        model_ids = [
-            "google/gemma-3-1b-it",
-            "google/gemma-3-4b-it",
-            "google/gemma-3-12b-it",
-        ]
-        sizes_b = [1, 4, 12]
-
-    if not args.analysis:
+        # Evaluation mode: run evaluation for a single model
+        if not args.model:
+            print("Error: --model argument is required for evaluation mode")
+            print("Example: python part_1.py --model google/gemma-3-1b-it --model_size 1")
+            return
+        
+        if args.model_size is None:
+            print("Error: --model_size argument is required for evaluation mode")
+            print("Example: python part_1.py --model google/gemma-3-1b-it --model_size 1")
+            return
+        
+        model_id = args.model
+        model_size = args.model_size
+        
+        print(f"\n{'#'*80}")
+        print(f"Running evaluation for model: {model_id} ({model_size}B parameters)")
+        print(f"{'#'*80}\n")
+        # Build benchmark if needed
         if not os.path.exists(bench_path):
+            print(f"Building Pokemon benchmark at {bench_path}...")
             ensure_dir(os.path.dirname(bench_path) or ".")
             build_pokemon_benchmark(
                 raw_csv_path=args.pokemon_csv,
@@ -295,60 +378,58 @@ def main():
                 use_mcq=args.pokemon_mcq,
                 min_per_trait=args.min_per_trait,
             )
-
-        rows = []
+            print("Pokemon benchmark created successfully!")
+        
+        # Setup response logging directory
         responses_dir = os.path.join(args.outdir, "responses")
         ensure_dir(responses_dir)
         
-        for mid, sz in zip(model_ids, sizes_b):
-            mid_safe = sanitize_filename(mid)
-            trait_acc = run_pokemon_eval(
-                mid,
-                bench_path,
-                args.batch_size,
-                args.limit_pokemon,
-                save_path=(os.path.join(responses_dir, f"pokemon_{mid_safe}.jsonl") if responses_dir else None),
-                eval_mode="auto",
-            )
-            tqa = run_triviaqa_eval(
-                mid,
-                batch_size=args.batch_size,
-                limit=args.limit_triviaqa,
-                save_path=(os.path.join(responses_dir, f"triviaqa_rc_{mid_safe}.jsonl") if responses_dir else None),
-                eval_mode="contains",
-            )
-            ife = run_ifeval_eval(
-                mid,
-                batch_size=args.batch_size,
-                limit=args.limit_ifeval,
-                save_path=(os.path.join(responses_dir, f"ifeval_{mid_safe}.jsonl") if responses_dir else None),
-            )
-
-            row = {"model": mid, "size_b": sz}
-            for trait_key, label in TRAIT_PLOT_LABELS.items():
-                row[label] = round(trait_acc.get(trait_key, 0.0), 4)
-            row["TriviaQA"] = round(tqa, 4)
-            row["IFEval"] = round(ife, 4)
-            rows.append(row)
-
-        save_table(
-            rows,
-            os.path.join(args.outdir, "part1_results.csv"),
-            os.path.join(args.outdir, "part1_results.json"),
+        # Run evaluations for this model
+        mid_safe = sanitize_filename(model_id)
+        
+        trait_acc = run_pokemon_eval(
+            model_id,
+            bench_path,
+            args.batch_size,
+            args.limit_pokemon,
+            save_path=os.path.join(responses_dir, f"pokemon_{mid_safe}.jsonl"),
+            eval_mode="auto",
         )
-
-    with open(os.path.join(args.outdir, "part1_results.json")) as f:
-        rows = json.load(f)
-
-    sizes = [r["size_b"] for r in rows]
-    trait2acc = {
-        label: [r[label] for r in rows] for label in TRAIT_PLOT_LABELS.values()
-    }
-    plot_memorization(
-        sizes,
-        trait2acc,
-        os.path.join(args.outdir, "part1_memorization.png"),
-    )
+        
+        tqa = run_triviaqa_eval(
+            model_id,
+            batch_size=args.batch_size,
+            limit=args.limit_triviaqa,
+            save_path=os.path.join(responses_dir, f"triviaqa_rc_{mid_safe}.jsonl"),
+            eval_mode="contains",
+        )
+        
+        ife = run_ifeval_eval(
+            model_id,
+            batch_size=args.batch_size,
+            limit=args.limit_ifeval,
+            save_path=os.path.join(responses_dir, f"ifeval_{mid_safe}.jsonl"),
+        )
+        
+        # Save results for this model
+        result = {"model": model_id, "size_b": model_size}
+        for trait_key, label in TRAIT_PLOT_LABELS.items():
+            result[label] = round(trait_acc.get(trait_key, 0.0), 4)
+        result["TriviaQA"] = round(tqa, 4)
+        result["IFEval"] = round(ife, 4)
+        
+        # Save individual model result
+        model_result_path = os.path.join(args.outdir, f"model_{mid_safe}.json")
+        with open(model_result_path, "w") as f:
+            json.dump(result, f, indent=2)
+        
+        print(f"\n{'#'*80}")
+        print(f"Evaluation completed for {model_id}")
+        print(f"{'#'*80}")
+        print(f"Summary: TriviaQA={tqa:.4f}, IFEval={ife:.4f}")
+        print(f"Results saved to {model_result_path}")
+        print(f"\nTo generate plots after all models complete, run:")
+        print(f"  python part_1.py --analysis")
 
 if __name__ == "__main__":
     main()
