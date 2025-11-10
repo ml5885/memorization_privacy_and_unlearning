@@ -1,5 +1,6 @@
 import csv
 import os
+import random
 
 TRAIT_COLUMN_MAP = {
     "Type 1": "type1",
@@ -50,10 +51,25 @@ def build_pokemon_benchmark(raw_csv_path, out_csv_path, use_mcq, min_per_trait):
                 options = [ans] + distractors
                 while len(options) < 4:
                     options.append(options[-1])
+                
+                # Randomly shuffle the options to avoid correct answer always being A
+                correct_index = random.randint(0, 3)
+                shuffled_options = [None, None, None, None]
+                shuffled_options[correct_index] = ans
+                
+                # Fill in the distractors
+                distractor_idx = 0
+                for i in range(4):
+                    if shuffled_options[i] is None:
+                        shuffled_options[i] = distractors[distractor_idx] if distractor_idx < len(distractors) else distractors[-1]
+                        distractor_idx += 1
+                
+                correct_letter = letters[correct_index]
+                
                 prompt = (
                     f"You are a concise assistant. Respond with only one letter.\n"
                     f"Question: What is the {trait} of {name}?\n"
-                    f"Choices: A) {options[0]} B) {options[1]} C) {options[2]} D) {options[3]}\n"
+                    f"Choices: A) {shuffled_options[0]} B) {shuffled_options[1]} C) {shuffled_options[2]} D) {shuffled_options[3]}\n"
                     f"Answer (letter only):"
                 )
                 items.append({
@@ -61,8 +77,8 @@ def build_pokemon_benchmark(raw_csv_path, out_csv_path, use_mcq, min_per_trait):
                     "name": name,
                     "format": "mcq",
                     "prompt": prompt,
-                    "answer": options[0],
-                    "answer_letter": letters[0],
+                    "answer": ans,
+                    "answer_letter": correct_letter,
                 })
             else:
                 prompt = (

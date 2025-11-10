@@ -294,7 +294,10 @@ def main():
     args = ap.parse_args()
 
     ensure_dir(args.outdir)
-    bench_path = os.path.join("data", "pokemon_benchmark.csv")
+    if args.pokemon_mcq:
+        bench_path = os.path.join("data", "pokemon_benchmark_mcq.csv")
+    else:
+        bench_path = os.path.join("data", "pokemon_benchmark.csv")
 
     if args.analysis:
         # Analysis mode: plot results from all models in the results directory
