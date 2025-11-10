@@ -302,7 +302,6 @@ def main():
         print("Running analysis mode: generating plots from existing results")
         print(f"{'#'*80}\n")
         
-        # Load all model results from the results directory
         results_files = []
         for fname in os.listdir(args.outdir):
             if fname.startswith("model_") and fname.endswith(".json"):
@@ -317,17 +316,14 @@ def main():
         for f in results_files:
             print(f"  - {os.path.basename(f)}")
         
-        # Load all results
         all_results = []
         for result_file in results_files:
             with open(result_file) as f:
                 result = json.load(f)
                 all_results.append(result)
         
-        # Sort by model size
         all_results.sort(key=lambda x: x.get("size_b", 0))
         
-        # Create combined results table
         save_table(
             all_results,
             os.path.join(args.outdir, "part1_results.csv"),
@@ -335,7 +331,6 @@ def main():
         )
         print(f"\nCombined results saved to {args.outdir}/part1_results.csv and part1_results.json")
         
-        # Generate plots
         print(f"\nGenerating memorization plot...")
         sizes = [r["size_b"] for r in all_results]
         trait2acc = {
@@ -368,7 +363,7 @@ def main():
         print(f"\n{'#'*80}")
         print(f"Running evaluation for model: {model_id} ({model_size}B parameters)")
         print(f"{'#'*80}\n")
-        # Build benchmark if needed
+
         if not os.path.exists(bench_path):
             print(f"Building Pokemon benchmark at {bench_path}...")
             ensure_dir(os.path.dirname(bench_path) or ".")
@@ -380,14 +375,18 @@ def main():
             )
             print("Pokemon benchmark created successfully!")
         
-        # Setup response logging directory
         responses_dir = os.path.join(args.outdir, "responses")
         ensure_dir(responses_dir)
         
-        # Run evaluations for this model
+        print(f"\nLoading model: {model_id}...")
+        tokenizer, model = load_gemma_model(model_id)
+        print("Model loaded successfully!")
+        
         mid_safe = sanitize_filename(model_id)
         
         trait_acc = run_pokemon_eval(
+            tokenizer,
+            model,
             model_id,
             bench_path,
             args.batch_size,
@@ -397,6 +396,8 @@ def main():
         )
         
         tqa = run_triviaqa_eval(
+            tokenizer,
+            model,
             model_id,
             batch_size=args.batch_size,
             limit=args.limit_triviaqa,
@@ -405,20 +406,20 @@ def main():
         )
         
         ife = run_ifeval_eval(
+            tokenizer,
+            model,
             model_id,
             batch_size=args.batch_size,
             limit=args.limit_ifeval,
             save_path=os.path.join(responses_dir, f"ifeval_{mid_safe}.jsonl"),
         )
         
-        # Save results for this model
         result = {"model": model_id, "size_b": model_size}
         for trait_key, label in TRAIT_PLOT_LABELS.items():
             result[label] = round(trait_acc.get(trait_key, 0.0), 4)
         result["TriviaQA"] = round(tqa, 4)
         result["IFEval"] = round(ife, 4)
         
-        # Save individual model result
         model_result_path = os.path.join(args.outdir, f"model_{mid_safe}.json")
         with open(model_result_path, "w") as f:
             json.dump(result, f, indent=2)
