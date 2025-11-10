@@ -6,8 +6,7 @@ Project code for Programming Assignment 2 for 15-783: Trustworthy AI - Theory & 
 
 Simple overview of the main folders and files:
 
-- `part_1.py` – Runs Part 1 experiments: builds Pokémon benchmark, evaluates Gemma models, saves results & plot.
-- `data/`
+- `part_1.py` – Runs Part 1 experiments (see below).
   - `data/pokemon.csv` – Original Kaggle Pokémon dataset.
   - `data/pokemon_benchmark.csv` – Generated evaluation benchmark.
   - `data/pokemon.py` – Code to build/load the Pokémon benchmark.
@@ -19,7 +18,7 @@ Simple overview of the main folders and files:
 
 Make sure that the [Pokemon dataset](https://www.kaggle.com/datasets/rounakbanik/pokemon) from Kaggle is saved at `data/pokemon.csv`.
 
-To run the full experiments with all three Gemma-3 model sizes (1B, 4B, and 12B):
+Run the full experiments with all three Gemma-3 model sizes (1B, 4B, and 12B) by executing:
 
 ```bash
 python part_1.py
@@ -27,7 +26,7 @@ python part_1.py
 
 This will:
 
-- Build the Pokemon benchmark from the CSV
+- Build the Pokemon benchmark from the CSV (if it doesn't already exist)
 - Run evaluations with `google/gemma-3-1b-it`, `google/gemma-3-4b-it`, and `google/gemma-3-12b-it`
 - Evaluate on TriviaQA and IFEval
 - Save results to `results/part1_results.csv` and `results/part1_results.json`
