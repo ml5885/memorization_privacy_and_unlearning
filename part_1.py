@@ -98,8 +98,7 @@ def eval_mcq_letter(pred, correct_letter):
         p = p[0]
     return 1 if p == correct_letter.upper() else 0
 
-def run_pokemon_eval(model_id, bench_path, batch_size, limit, save_path=None, eval_mode: str = "auto"):
-    tokenizer, model = load_gemma_model(model_id)
+def run_pokemon_eval(tokenizer, model, model_id, bench_path, batch_size, limit, save_path=None, eval_mode: str = "auto"):
     examples = load_pokemon_benchmark(bench_path)
     if limit > 0:
         examples = examples[:limit]
@@ -176,8 +175,7 @@ def run_pokemon_eval(model_id, bench_path, batch_size, limit, save_path=None, ev
         for t in sorted(trait2total.keys())
     }
 
-def run_triviaqa_eval(model_id, batch_size, limit, save_path=None, eval_mode: str = "contains"):
-    tokenizer, model = load_gemma_model(model_id)
+def run_triviaqa_eval(tokenizer, model, model_id, batch_size, limit, save_path=None, eval_mode: str = "contains"):
     ds = load_dataset("mandarjoshi/trivia_qa", "rc", split="validation")
 
     records = []
@@ -219,9 +217,7 @@ def run_triviaqa_eval(model_id, batch_size, limit, save_path=None, eval_mode: st
 
     return correct / max(1, total)
 
-def run_ifeval_eval(model_id, batch_size, limit, save_path=None):
-    tokenizer, model = load_gemma_model(model_id)
-
+def run_ifeval_eval(tokenizer, model, model_id, batch_size, limit, save_path=None):
     ds = load_dataset("google/IFEval", split="train")
 
     prompts = []
@@ -267,7 +263,7 @@ def main():
     ap.add_argument("--outdir", type=str, default="results/part1")
     ap.add_argument("--analysis", action="store_true")
     ap.add_argument("--test", action="store_true")
-    ap.add_argument("--batch_size", type=int, default=4)
+    ap.add_argument("--batch_size", type=int, default=32)
     ap.add_argument("--limit_pokemon", type=int, default=0)
     ap.add_argument("--limit_triviaqa", type=int, default=0)
     ap.add_argument("--limit_ifeval", type=int, default=0)
