@@ -29,7 +29,7 @@ def plot_memorization(sizes, trait2acc, out_png):
             label=label,
         )
         
-    plt.xscale("log")
+    # plt.xscale("log")
     plt.xlabel("Parameters (in billions)")
     plt.ylabel("Accuracy")
     plt.ylim(0.0, 1.0)

@@ -24,7 +24,6 @@ HIGHLIGHT_RE = re.compile(r"\*[^*\n]+\*")
 TITLE_RE = re.compile(r"<<[^<>]+>>")
 JSON_BLOCK_RE = re.compile(r"^\s*```(?:json)?\s*([\s\S]+?)\s*```\s*$", re.IGNORECASE)
 
-
 def compare_count(count, relation, target):
     """Compare count against target using the specified relation."""
     relation = relation.strip().lower() if relation else "at least"
@@ -38,11 +37,9 @@ def compare_count(count, relation, target):
     
     return count >= target
 
-
 def count_words(text):
     """Count the number of words in the text."""
     return len(WORD_RE.findall(text))
-
 
 def split_sentences(text):
     """Split text into sentences."""
@@ -51,11 +48,9 @@ def split_sentences(text):
         return []
     return [sentence for sentence in SENTENCE_SPLIT_RE.split(text) if sentence]
 
-
 def count_sentences(text):
     """Count the number of sentences in the text."""
     return len(split_sentences(text))
-
 
 def split_paragraphs(text):
     """Split text into paragraphs."""
@@ -65,21 +60,17 @@ def split_paragraphs(text):
         parts = re.split(r"\n\s*\n", text)
     return [p for p in parts if p.strip()]
 
-
 def count_paragraphs(text):
     """Count the number of paragraphs in the text."""
     return len(split_paragraphs(text))
-
 
 def count_bullets(text):
     """Count the number of bullet points in the text."""
     return sum(1 for line in text.splitlines() if line.strip().startswith("* "))
 
-
 def count_highlights(text):
     """Count the number of highlighted sections in the text."""
     return len(HIGHLIGHT_RE.findall(text))
-
 
 def count_sections(text, splitter):
     """Count the number of sections separated by the splitter."""
@@ -87,7 +78,6 @@ def count_sections(text, splitter):
         return 0
     pattern = re.compile(rf"\b{re.escape(splitter)}\b", re.IGNORECASE)
     return len(pattern.findall(text))
-
 
 def is_json_only(text):
     """Check if the text contains only valid JSON."""
@@ -109,27 +99,22 @@ def is_json_only(text):
     except Exception:
         return False
 
-
 def has_no_commas(text):
     """Check if the text contains no commas."""
     return "," not in text
 
-
 def is_all_lowercase_english(text):
     """Check if all English letters in the text are lowercase."""
     return not re.search(r"[A-Z]", text)
-
 
 def is_all_uppercase_english(text):
     """Check if all English letters in the text are uppercase."""
     letters = re.findall(r"[A-Za-z]", text)
     return bool(letters) and all(ch.isupper() for ch in letters)
 
-
 def count_capital_words(text):
     """Count words that are all capitals (2+ letters)."""
     return len(re.findall(r"\b[A-Z]{2,}\b", text))
-
 
 def count_keyword(text, keyword):
     """Count occurrences of a keyword (case-insensitive)."""
@@ -137,24 +122,20 @@ def count_keyword(text, keyword):
         return 0
     return len(re.findall(re.escape(keyword), text, flags=re.IGNORECASE))
 
-
 def count_letter(text, letter):
     """Count occurrences of a specific letter (case-insensitive)."""
     if not letter:
         return 0
     return sum(1 for ch in text if ch.lower() == letter.lower())
 
-
 def ends_with_phrase(text, phrase):
     """Check if the text ends with the specified phrase."""
     return text.rstrip().endswith(phrase)
-
 
 def is_quotation_wrapped(text):
     """Check if the text is wrapped in double quotes."""
     text = text.strip()
     return len(text) >= 2 and text[0] == '"' and text[-1] == '"'
-
 
 def has_postscript(text, marker):
     """Check if the text has a postscript with the given marker."""
@@ -169,7 +150,6 @@ def has_postscript(text, marker):
     
     return False
 
-
 def is_two_responses_split(text):
     """Check if the text contains exactly two responses split by '******'."""
     separator = "******"
@@ -178,7 +158,6 @@ def is_two_responses_split(text):
     
     part_a, part_b = text.split(separator)
     return bool(part_a.strip()) and bool(part_b.strip())
-
 
 def starts_with_prompt(text, prompt_to_repeat):
     """Check if the text starts with the given prompt."""
@@ -190,7 +169,6 @@ LANGUAGE_SCRIPTS = {
     "pa": [(0x0A00, 0x0A7F)],  # Punjabi
     "mr": [(0x0900, 0x097F)],  # Marathi
 }
-
 
 def calculate_char_ratio_in_ranges(text, ranges):
     """Calculate the ratio of characters in the specified Unicode ranges."""
@@ -210,7 +188,6 @@ def calculate_char_ratio_in_ranges(text, ranges):
     
     return in_range / len(letters)
 
-
 def is_language_valid(text, language):
     """Check if the text is primarily in the specified language."""
     language = language.lower()
@@ -225,7 +202,6 @@ def is_language_valid(text, language):
         return ascii_ratio >= 0.6
     
     return False
-
 
 def generate_loose_variants(text):
     """Generate variations of the text for loose matching."""
@@ -254,7 +230,6 @@ def generate_loose_variants(text):
         remove_last_line(no_first),
         remove_last_line(remove_first_line(no_emphasis))
     ]
-
 
 def check_instruction(instruction_id, kwargs, prompt_text, response_text):
     """Check if the response satisfies the given instruction."""
@@ -373,7 +348,6 @@ def check_instruction(instruction_id, kwargs, prompt_text, response_text):
             return starts_with_prompt(response, kwargs.get("prompt_to_repeat", ""))
 
     return False
-
 
 def check_instruction_loose(instruction_id, kwargs, prompt_text, response_text):
     """Check if the response satisfies the instruction using loose matching."""
