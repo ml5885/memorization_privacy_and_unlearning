@@ -18,12 +18,16 @@ from data.triviaqa import run_triviaqa_eval
 from data.ifeval import run_ifeval_eval
 from models.gemma import load_gemma_model, generate_batch
 from utils.part_1 import ensure_dir, sanitize_filename, open_jsonl, write_jsonl, save_table
+from utils.part_2 import (
+    default_refusal,
+    split_forget_holdout,
+    make_forget_pairs,
+    pack_result_row,
+    plot_grouped,
+)
 
 from unlearning.dpo import train_dpo_unlearning
 from unlearning.rmu import compute_pca_directions, train_rmu_unlearning
-
-def _default_refusal():
-    return "I cannot provide this information."
 
 def _load_or_build_benchmark(args):
     if args.pokemon_mcq:
@@ -41,29 +45,6 @@ def _load_or_build_benchmark(args):
         )
     
     return bench_path
-
-def _split_forget_holdout(items, held_out_trait):
-    forget = [r for r in items if r["trait"] in {"Type 1", "HP", "Defense"}]
-    holdout = [r for r in items if r["trait"] == held_out_trait]
-    return forget, holdout
-
-def _make_forget_pairs(records):
-    pairs = []
-    ref = _default_refusal()
-    
-    for r in records:
-        if r["format"] == "mcq":
-            prompt = r["prompt"]
-            rejected = r["answer_letter"]
-            chosen = ref
-        else:
-            prompt = r["prompt"]
-            rejected = r["answer"]
-            chosen = ref
-        
-        pairs.append((prompt, chosen, rejected))
-    
-    return pairs
 
 def _sample_text_prompts_for_pca(tokenizer, model, n, batch_size):
     ds = load_dataset("google/IFEval", split="train")
@@ -88,31 +69,6 @@ def _avg_forget_accuracy(trait_acc, held_out_trait):
     if not ks:
         return 0.0
     return sum(trait_acc[k] for k in ks) / len(ks)
-
-def plot_grouped(results, out_png):
-    plt.rcParams["font.family"] = "serif"
-    labels = ["Forget Traits", "Held-out Trait", "General Capability"]
-    keys = ["forget", "heldout", "general"]
-    methods = list(results.keys())
-    
-    x = range(len(labels))
-    w = 0.8 / max(1, len(methods))
-    
-    plt.figure(figsize=(7.5, 4.5))
-    for i, m in enumerate(methods):
-        vals = [results[m][k] for k in keys]
-        xs = [xx + (i - (len(methods)-1)/2)*w for xx in x]
-        plt.bar(xs, vals, width=w, label=m)
-    
-    plt.ylim(0.0, 1.0)
-    plt.xticks(list(x), labels)
-    plt.ylabel("Accuracy")
-    plt.legend(frameon=False)
-    
-    ensure_dir(os.path.dirname(out_png) or ".")
-    plt.tight_layout()
-    plt.savefig(out_png, dpi=220)
-    print(f"[info] Saved grouped plot to: {out_png}")
 
 def _evaluate_all(tokenizer, model, model_id, bench_path, outdir, limits, save_prefix):
     responses_dir = os.path.join(outdir, "responses")
@@ -142,20 +98,6 @@ def _evaluate_all(tokenizer, model, model_id, bench_path, outdir, limits, save_p
     )
     
     return trait_acc, tqa, ife
-
-def _pack_result_row(name, size_b, trait_acc, tqa, ife):
-    row = {"model": name, "size_b": size_b}
-    
-    for k, label in TRAIT_PLOT_LABELS.items():
-        row[label] = round(trait_acc.get(k, 0.0), 4)
-    
-    row["TriviaQA"] = round(tqa, 4)
-    row["IFEval_prompt_strict"] = round(ife["prompt_strict"], 4)
-    row["IFEval_inst_strict"] = round(ife["inst_strict"], 4)
-    row["IFEval_prompt_loose"] = round(ife["prompt_loose"], 4)
-    row["IFEval_inst_loose"] = round(ife["inst_loose"], 4)
-    
-    return row
 
 def main():
     ap = argparse.ArgumentParser()
@@ -192,25 +134,27 @@ def main():
         for fn in os.listdir(args.outdir):
             if fn.endswith(".json") and fn.startswith("part2_"):
                 with open(os.path.join(args.outdir, fn)) as f:
-                    rows.append(json.load(f))
-        
+                    obj = json.load(f)
+                if isinstance(obj, dict) and "model" in obj:
+                    rows.append(obj)
+
         if not rows:
             print("No Part 2 result files found.")
             return
-        
+
         rows.sort(key=lambda r: r["model"])
-        save_table(rows, os.path.join(args.outdir, "part2_results.csv"), 
-                   os.path.join(args.outdir, "part2_results.json"))
-        
+        save_table(rows, os.path.join(args.outdir, "part2_results.csv"), os.path.join(args.outdir, "part2_results.json"))
+
         grouped = {}
         for r in rows:
             forget = (r.get("Type1", 0.0) + r.get("HP", 0.0) + r.get("Defense", 0.0)) / 3.0
             heldout = r.get("Speed", 0.0)
             general = (r.get("TriviaQA", 0.0) + r.get("IFEval_inst_strict", 0.0)) / 2.0
             grouped[r["model"]] = {"forget": forget, "heldout": heldout, "general": general}
-        
+
         plot_grouped(grouped, os.path.join(args.outdir, "part2_grouped.png"))
         return
+
 
     bench_path = _load_or_build_benchmark(args)
     print(f"\n{'#'*80}\nUnlearning on: {args.model} | Held-out: {args.held_out_trait}\n{'#'*80}\n")
@@ -219,8 +163,8 @@ def main():
     mid_safe = sanitize_filename(args.model)
 
     all_items = load_pokemon_benchmark(bench_path)
-    forget_raw, holdout_raw = _split_forget_holdout(all_items, args.held_out_trait)
-    forget_pairs = _make_forget_pairs(forget_raw)
+    forget_raw, holdout_raw = split_forget_holdout(all_items, args.held_out_trait)
+    forget_pairs = make_forget_pairs(forget_raw)
 
     limits = {
         "batch_size": args.batch_size,
@@ -235,7 +179,7 @@ def main():
         limits, save_prefix=f"base_{mid_safe}"
     )
     
-    base_row = _pack_result_row("Base", args.model_size, trait_acc_b, tqa_b, ife_b)
+    base_row = pack_result_row("Base", args.model_size, trait_acc_b, tqa_b, ife_b, TRAIT_PLOT_LABELS)
     with open(os.path.join(args.outdir, f"part2_Base.json"), "w") as f:
         json.dump(base_row, f, indent=2)
 
@@ -265,7 +209,7 @@ def main():
             limits, save_prefix=f"dpo_{mid_safe}"
         )
         
-        dpo_row = _pack_result_row("DPO Unlearned", args.model_size, trait_acc_d, tqa_d, ife_d)
+        dpo_row = pack_result_row("DPO Unlearned", args.model_size, trait_acc_d, tqa_d, ife_d, TRAIT_PLOT_LABELS)
         with open(os.path.join(args.outdir, f"part2_DPO.json"), "w") as f:
             json.dump(dpo_row, f, indent=2)
         
@@ -290,7 +234,7 @@ def main():
             tokenizer=tokenizer,
             model=base_model,
             forget_records=forget_raw,
-            refusal=_default_refusal(),
+            refusal=default_refusal(),
             U=U,
             alpha=args.rmu_alpha,
             epochs=args.epochs,
@@ -306,7 +250,7 @@ def main():
             limits, save_prefix=f"rmu_{mid_safe}"
         )
         
-        rmu_row = _pack_result_row("RMU Unlearned", args.model_size, trait_acc_r, tqa_r, ife_r)
+        rmu_row = pack_result_row("RMU Unlearned", args.model_size, trait_acc_r, tqa_r, ife_r, TRAIT_PLOT_LABELS)
         with open(os.path.join(args.outdir, f"part2_RMU.json"), "w") as f:
             json.dump(rmu_row, f, indent=2)
         

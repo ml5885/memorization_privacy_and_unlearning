@@ -16,20 +16,21 @@ def sanitize_filename(s):
 
 def plot_memorization(sizes, trait2acc, out_png):
     plt.rcParams["font.family"] = "serif"
-    colors = ["#aec6cf", "#cdb4db", "#bde0fe", "#c3f0ca"]
     plt.figure(figsize=(7.2, 4.5))
 
+    fox = ["#FFC907","#C62027","#817F3E","#9F5831"]
+
     for i, (label, series) in enumerate(trait2acc.items()):
+        color = fox[i % len(fox)]
         plt.plot(
             sizes,
             series,
             marker="o",
             linewidth=2.0,
-            color=colors[i % len(colors)],
             label=label,
+            color=color,
         )
         
-    # plt.xscale("log")
     plt.xlabel("Parameters (in billions)")
     plt.ylabel("Accuracy")
     plt.ylim(0.0, 1.0)
@@ -38,6 +39,7 @@ def plot_memorization(sizes, trait2acc, out_png):
     plt.tight_layout()
     ensure_dir(os.path.dirname(out_png) or ".")
     plt.savefig(out_png, dpi=220)
+    plt.close()
     print(f"[info] Saved memorization plot to: {out_png}")
 
 def save_table(rows, out_csv, out_json):

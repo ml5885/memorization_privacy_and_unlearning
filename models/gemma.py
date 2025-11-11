@@ -23,16 +23,15 @@ def load_gemma_model(model_id):
     if device == "cuda":
         dtype = torch.bfloat16
     elif device == "mps":
-        dtype = torch.float16
+        dtype = torch.float32
     else:
         dtype = torch.float32
 
-    mdl = AutoModelForCausalLM.from_pretrained(model_id, torch_dtype=dtype)
-    mdl.to(device)
-    mdl.eval()
+    model = AutoModelForCausalLM.from_pretrained(model_id, dtype=dtype)
+    model.to(device)
+    model.eval()
     print(f"[info] Using device: {device}")
-    return tok, mdl
-
+    return tok, model
 
 def _prepare_inputs(tokenizer, prompts):
     has_template = getattr(tokenizer, "chat_template", None) is not None and hasattr(tokenizer, "apply_chat_template")
@@ -58,7 +57,6 @@ def _prepare_inputs(tokenizer, prompts):
             return_tensors="pt",
             padding=True,
         )
-
 
 def generate_batch(tokenizer, model, prompts):
     device = next(model.parameters()).device

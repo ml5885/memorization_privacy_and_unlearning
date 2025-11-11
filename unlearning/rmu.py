@@ -6,11 +6,11 @@ from torch.utils.data import DataLoader
 from accelerate import Accelerator
 from tqdm import tqdm
 
-def _hidden_for_prompts(tokenizer, model, prompts, layer, batch_size):
+def hidden_for_prompts(tokenizer, model, prompts, layer, batch_size):
     hs = []
     for i in range(0, len(prompts), batch_size):
         chunk = prompts[i:i+batch_size]
-        enc = tokenizer(chunk, return_tensors="pt", padding=True, truncation=True)
+        enc = tokenizer(chunk, return_tensors="pt", padding=True, truncation=True, max_length=512)
         enc = {k: v.to(model.device) for k, v in enc.items()}
         
         with torch.no_grad():
@@ -23,7 +23,7 @@ def _hidden_for_prompts(tokenizer, model, prompts, layer, batch_size):
     
     return torch.cat(hs, dim=0)
 
-def _pca_topk(X, k):
+def pca_topk(X, k):
     X = X - X.mean(dim=0, keepdim=True)
     C = X.T @ X / (X.size(0) - 1)
     U, S, V = torch.linalg.svd(C)
@@ -31,11 +31,11 @@ def _pca_topk(X, k):
 
 def compute_pca_directions(tokenizer, model, prompts, layer, k, batch_size):
     model.eval()
-    X = _hidden_for_prompts(tokenizer, model, prompts, layer=layer, batch_size=batch_size)
-    U = _pca_topk(X, k)
+    X = hidden_for_prompts(tokenizer, model, prompts, layer=layer, batch_size=batch_size)
+    U = pca_topk(X, k)
     return U.to(model.device)
 
-def _tokenize_ce(tokenizer, prompt, response):
+def tokenize_ce(tokenizer, prompt, response):
     text = prompt + " " + response
     enc = tokenizer(text, return_tensors="pt", padding=False, truncation=True)
     ids = enc["input_ids"][0]
@@ -43,7 +43,7 @@ def _tokenize_ce(tokenizer, prompt, response):
     labels = ids.clone()
     return ids, attn, labels
 
-def _proj_loss(h, U):
+def proj_loss(h, U):
     proj = h @ U
     return (proj.pow(2).sum(dim=1)).mean()
 
@@ -55,7 +55,7 @@ def train_rmu_unlearning(tokenizer, model, forget_records, refusal, U, alpha, ep
     data = []
     for r in forget_records:
         p = r["prompt"]
-        ids, attn, labels = _tokenize_ce(tokenizer, p, refusal)
+        ids, attn, labels = tokenize_ce(tokenizer, p, refusal)
         data.append((ids, attn, labels))
 
     def collate(batch):
@@ -83,7 +83,7 @@ def train_rmu_unlearning(tokenizer, model, forget_records, refusal, U, alpha, ep
             h = out.hidden_states[layer]
             idx = batch["attention_mask"].sum(dim=1) - 1
             reps = h[torch.arange(h.size(0), device=h.device), idx, :]
-            rloss = _proj_loss(reps, U)
+            rloss = proj_loss(reps, U)
             
             loss = ce + alpha * rloss
             optimizer.zero_grad()
