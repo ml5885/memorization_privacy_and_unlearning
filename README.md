@@ -5,10 +5,17 @@ Project code for Programming Assignment 2 for 15-783: Trustworthy AI - Theory & 
 ## Repository Structure
 
 - `part_1.py` – Runs Part 1 experiments (see below).
+- `part_2.py` – Part 2 targeted unlearning (Gemma-3-4b-it; held-out Speed; DPO & RMU).
+- `data/`
   - `data/pokemon.csv` – Original Kaggle Pokémon dataset.
   - `data/pokemon_benchmark.csv` – Generated evaluation benchmark.
   - `data/pokemon.py` – Code to build/load the Pokémon benchmark.
+  - `data/triviaqa.py` – Code to load and evaluate on TriviaQA.
+  - `data/ifeval.py` – Code to load and evaluate on IFEval
 - `models/gemma.py` – Helper to load Gemma models and batch generate text.
+- `unlearning/`
+  - `unlearning/dpo.py` – DPO-style unlearning
+  - `unlearning/rmu.py` – RMU unlearning
 - `utils/`
   - `utils/part_1.py` – Utility functions (directory creation, plotting, saving tables, JSONL logging).
 
@@ -43,6 +50,14 @@ python part_1.py --analysis
 
 ## Part 2: Targeted Unlearning
 
+We use `google/gemma-3-4b-it` for unlearning. The forget set is {Type 1, HP, Defense}, and we hold out Speed.
+
+To run both DPO and RMU unlearning on the held-out Speed trait, run:
+
+```bash
+python part_2.py --model google/gemma-3-4b-it --model_size 4 --held_out_trait Speed --method both
+```
+
 ## Part 3: Robustness Evaluation
 
 ## Quick Setup
@@ -54,3 +69,6 @@ pip install -r requirements.txt
 ```
 
 ## References
+
+- [RMU implementation](https://github.com/centerforaisafety/wmdp)
+- [DPO-style unlearning implementation](https://github.com/licong-lin/negative-preference-optimization)
