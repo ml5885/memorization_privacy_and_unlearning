@@ -338,15 +338,21 @@ def run_rmu_unlearning(
     adapter_dir = os.path.join(outdir, adapter_name)
     ensure_dir(adapter_dir)
 
-    # Merge LoRA into base model so the saved directory is a standard HF model.
+    merged_lora = False
     try:
         model = model.merge_and_unload()
+        merged_lora = True
         print("[rmu] Merged LoRA adapter into base model weights.")
-    except AttributeError:
+    except Exception:
         print(
-            "[rmu] Warning: merge_and_unload not available; "
-            "saving adapter-only model."
+            "[rmu] Warning: merge_and_unload not available or failed;"
+            " saving adapter-only model."
         )
+
+    try:
+        model.to("cpu")
+    except Exception:
+        pass
 
     print("[rmu] Saving model and tokenizer to %s ..." % adapter_dir)
     model.save_pretrained(adapter_dir)
@@ -371,7 +377,7 @@ def run_rmu_unlearning(
         "num_forget_examples": len(forget_dataset),
         "num_retain_examples": len(retain_dataset),
         "total_steps": total_steps,
-        "merged_lora": True,
+    "merged_lora": merged_lora,
     }
     meta_path = os.path.join(outdir, "%s_metadata.json" % adapter_name)
     with open(meta_path, "w") as f:

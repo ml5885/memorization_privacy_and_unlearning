@@ -309,14 +309,21 @@ def run_dpo_unlearning(
     adapter_dir = os.path.join(outdir, adapter_name)
     ensure_dir(adapter_dir)
 
+    merged_lora = False
     try:
         model = model.merge_and_unload()
+        merged_lora = True
         print("[dpo] Merged LoRA adapter into base model weights.")
-    except AttributeError:
+    except Exception:
         print(
-            "[dpo] Warning: merge_and_unload not available; "
-            "saving adapter-only model."
+            "[dpo] Warning: merge_and_unload not available or failed;"
+            " saving adapter-only model."
         )
+
+    try:
+        model.to("cpu")
+    except Exception:
+        pass
 
     print("[dpo] Saving model and tokenizer to %s ..." % adapter_dir)
     model.save_pretrained(adapter_dir)
@@ -337,7 +344,7 @@ def run_dpo_unlearning(
         "lora_dropout": lora_dropout,
         "num_examples": len(dataset),
         "total_steps": total_steps,
-        "merged_lora": True,
+    "merged_lora": merged_lora,
     }
     meta_path = os.path.join(outdir, "%s_metadata.json" % adapter_name)
     with open(meta_path, "w") as f:
