@@ -1,147 +1,365 @@
+"""
+DPO-style unlearning using Negative Preference Optimization (NPO).
+
+References:
+- Licong Lin, Zihao Zhao, Zhaofeng Wu, et al.
+  "Negative Preference Optimization: From Catastrophic Collapse to Harmless Unlearning."
+  arXiv:2404.05868, 2024. https://arxiv.org/abs/2404.05868
+- Reference implementation:
+  https://github.com/licong-lin/negative-preference-optimization
+"""
+
+import csv
+import json
 import os
-import math
 
 import torch
-from torch.utils.data import DataLoader
-from torch.optim import AdamW
-from accelerate import Accelerator
-from tqdm import tqdm
-from transformers import get_linear_schedule_with_warmup
+from torch.utils.data import Dataset, DataLoader
+from transformers import AutoTokenizer, AutoModelForCausalLM
+from peft import LoraConfig, get_peft_model
 
-MAXLEN = 512
+from utils.part_1 import ensure_dir, sanitize_filename
 
-def _tokenize_pair(tokenizer, prompt, response):
-    enc = tokenizer(
-        prompt + " " + response,
-        return_tensors="pt",
-        truncation=True,
-        max_length=MAXLEN,
-    )
-    ids = enc["input_ids"][0]
-    attn = enc["attention_mask"][0]
 
-    tgt = tokenizer(
-        response,
-        return_tensors="pt",
-        truncation=True,
-        max_length=MAXLEN,
-    )["input_ids"][0]
+def _auto_device():
+    if torch.cuda.is_available():
+        return "cuda"
+    if torch.backends.mps.is_available():
+        return "mps"
+    return "cpu"
 
-    return ids, attn, tgt
+class PokemonForgetExample:
+    def __init__(self, trait, name, prompt, answer):
+        self.trait = trait
+        self.name = name
+        self.prompt = prompt
+        self.answer = answer
 
-def _sum_logprob(model, tokenizer, prompt, response, use_grad):
-    ids, attn, tgt = _tokenize_pair(tokenizer, prompt, response)
+def load_pokemon_forget_examples(csv_path, forget_traits, use_answer_letter=True):
+    examples = []
+    with open(csv_path) as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            trait = (row.get("trait") or "").strip()
+            if trait not in forget_traits:
+                continue
+            name = (row.get("name") or "").strip()
+            prompt = (row.get("prompt") or "").strip()
+            if use_answer_letter:
+                answer = (row.get("answer_letter") or "").strip()
+            else:
+                answer = (row.get("answer") or "").strip()
+            if not prompt or not answer:
+                continue
+            examples.append(
+                PokemonForgetExample(
+                    trait=trait,
+                    name=name,
+                    prompt=prompt,
+                    answer=answer,
+                )
+            )
+    return examples
 
-    ids = ids.unsqueeze(0).to(model.device)
-    attn = attn.unsqueeze(0).to(model.device)
+class PromptAnswerDataset(Dataset):
+    """Dataset of (prompt, answer) pairs, tokenized for causal LM training."""
 
-    if use_grad:
-        out = model(input_ids=ids, attention_mask=attn, labels=ids)
-    else:
-        with torch.no_grad():
-            out = model(input_ids=ids, attention_mask=attn, labels=ids)
+    def __init__(self, examples, tokenizer):
+        self.input_ids = []
+        self.labels = []
 
-    logits = out.logits[0, -tgt.size(0) - 1 : -1, :]
-    logp = torch.log_softmax(logits, dim=-1)
+        for ex in examples:
+            prompt_text = ex.prompt
+            answer_text = ex.answer
+            # For single-letter answers, prefix with a space so the tokenizer
+            # treats it as a separate token where appropriate.
+            if not answer_text.startswith(" "):
+                answer_text = " " + answer_text
 
-    return logp.gather(-1, tgt.to(model.device).unsqueeze(-1)).squeeze(-1).sum()
+            prompt_enc = tokenizer(
+                prompt_text,
+                add_special_tokens=False,
+            )
+            answer_enc = tokenizer(
+                answer_text,
+                add_special_tokens=False,
+            )
 
-def _batch_sum_logprob(model, tokenizer, ps, rs, use_grad):
-    return torch.stack(
-        [
-            _sum_logprob(model, tokenizer, p, r, use_grad)
-            for p, r in zip(ps, rs)
-        ],
-        dim=0,
-    )
+            prompt_ids = prompt_enc["input_ids"]
+            answer_ids = answer_enc["input_ids"]
 
-def train_dpo_unlearning(
-    tokenizer,
-    model,
-    ref_model,
-    pairs,
-    epochs,
-    lr,
-    beta,
-    batch_size,
-    save_dir,
-    effective_bsz=32,
-    weight_decay=0.01,
-    warmup_epochs=1,
-):
-    grad_accum = max(1, math.ceil(effective_bsz / (batch_size * accelerator.num_processes)))
-    accelerator = Accelerator(gradient_accumulation_steps=grad_accum)
+            ids = prompt_ids + answer_ids
+            labels = [-100] * len(prompt_ids) + answer_ids
 
-    model.train()
-    model.config.use_cache = False
-    try:
-        model.gradient_checkpointing_enable()
-    except Exception:
-        pass
+            self.input_ids.append(torch.tensor(ids, dtype=torch.long))
+            self.labels.append(torch.tensor(labels, dtype=torch.long))
 
-    ref_model.eval()
-    ref_model.to(next(model.parameters()).device)
-    for p in ref_model.parameters():
-        p.requires_grad_(False)
+    def __len__(self):
+        return len(self.input_ids)
 
-    optimizer = AdamW(model.parameters(), lr=lr, weight_decay=weight_decay)
+    def __getitem__(self, idx):
+        return self.input_ids[idx], self.labels[idx]
 
+def make_collate_fn(pad_token_id):
     def collate(batch):
-        ps = [b[0] for b in batch]
-        chosen = [b[1] for b in batch]
-        rejected = [b[2] for b in batch]
-        return ps, chosen, rejected
+        input_ids_list, labels_list = zip(*batch)
+        max_len = max(t.size(0) for t in input_ids_list)
+        bsz = len(input_ids_list)
 
-    dl = DataLoader(
-        pairs,
+        input_ids = torch.full(
+            (bsz, max_len),
+            pad_token_id,
+            dtype=torch.long,
+        )
+        labels = torch.full(
+            (bsz, max_len),
+            -100,
+            dtype=torch.long,
+        )
+        attention_mask = torch.zeros(
+            (bsz, max_len),
+            dtype=torch.long,
+        )
+
+        for i, (ids, lbl) in enumerate(zip(input_ids_list, labels_list)):
+            L = ids.size(0)
+            input_ids[i, :L] = ids
+            attention_mask[i, :L] = 1
+            labels[i, :L] = lbl
+
+        return {
+            "input_ids": input_ids,
+            "attention_mask": attention_mask,
+            "labels": labels,
+        }
+
+    return collate
+
+def load_lora_causal_lm(model_id, local_files_only, lora_r=8, lora_alpha=16, lora_dropout=0.0):
+    device = _auto_device()
+    tokenizer = AutoTokenizer.from_pretrained(
+        model_id,
+        local_files_only=local_files_only,
+    )
+
+    if tokenizer.pad_token_id is None and tokenizer.eos_token_id is not None:
+        tokenizer.pad_token = tokenizer.eos_token
+
+    tokenizer.padding_side = "left"
+
+    if device == "cuda":
+        dtype = torch.bfloat16
+    elif device == "mps":
+        dtype = torch.float32
+    else:
+        dtype = torch.float32
+
+    base_model = AutoModelForCausalLM.from_pretrained(
+        model_id,
+        torch_dtype=dtype,
+        local_files_only=local_files_only,
+    )
+    base_model.to(device)
+    base_model.train()
+    base_model.config.use_cache = False
+
+    lora_config = LoraConfig(
+        r=lora_r,
+        lora_alpha=lora_alpha,
+        lora_dropout=lora_dropout,
+        bias="none",
+        task_type="CAUSAL_LM",
+        target_modules=[
+            "q_proj",
+            "k_proj",
+            "v_proj",
+            "o_proj",
+            "gate_proj",
+            "up_proj",
+            "down_proj",
+        ],
+    )
+    model = get_peft_model(base_model, lora_config)
+    return tokenizer, model, device
+
+def compute_sequence_logprobs(logits, labels):
+    """
+    Compute summed log probabilities of the label tokens for each sequence.
+
+    logits: [B, T, V]
+    labels: [B, T] with -100 marking positions to ignore.
+    """
+    logprobs = torch.log_softmax(logits, dim=-1)  # [B, T, V]
+
+    # Shift for causal language modeling: token at position t is predicted from logits at t-1.
+    labels_shifted = labels[:, 1:]  # [B, T-1]
+    logprobs_shifted = logprobs[:, :-1, :]  # [B, T-1, V]
+
+    mask = labels_shifted != -100
+    safe_labels = labels_shifted.clone()
+    safe_labels[~mask] = 0
+
+    gathered = torch.gather(
+        logprobs_shifted,
+        dim=2,
+        index=safe_labels.unsqueeze(-1),
+    ).squeeze(-1)
+
+    gathered = gathered * mask
+    seq_logps = gathered.sum(dim=1)
+    return seq_logps
+
+def run_dpo_unlearning(
+    model_id,
+    pokemon_bench_path,
+    outdir,
+    forget_traits,
+    lr=2e-5,
+    batch_size=4,
+    num_epochs=1,
+    beta=0.1,
+    local_files_only=False,
+    lora_r=8,
+    lora_alpha=16,
+    lora_dropout=0.0,
+):
+    """
+    Run DPO-style unlearning on Pokemon forget traits using NPO loss.
+
+    Args:
+        model_id: Base model ID or local path (e.g., google/gemma-3-4b-it).
+        pokemon_bench_path: Path to the MCQ Pokemon benchmark CSV.
+        outdir: Directory where the adapter and metadata will be saved.
+        forget_traits: Sequence of trait names to treat as the forget set.
+        lr: Learning rate.
+        batch_size: Batch size for unlearning.
+        num_epochs: Number of passes over the forget set.
+        beta: Temperature parameter in the NPO loss.
+        local_files_only: If True, load model/tokenizer only from local files.
+        lora_r, lora_alpha, lora_dropout: LoRA hyperparameters.
+
+    Returns:
+        Path to the adapter directory inside outdir.
+    """
+    ensure_dir(outdir)
+
+    print(f"[dpo] Loading base model {model_id} with LoRA adapters...")
+    tokenizer, model, device = load_lora_causal_lm(
+        model_id=model_id,
+        local_files_only=local_files_only,
+        lora_r=lora_r,
+        lora_alpha=lora_alpha,
+        lora_dropout=lora_dropout,
+    )
+    print("[dpo] Model loaded.")
+
+    examples = load_pokemon_forget_examples(
+        pokemon_bench_path,
+        forget_traits=forget_traits,
+        use_answer_letter=True,
+    )
+    if not examples:
+        raise ValueError(
+            f"No forget examples found in {pokemon_bench_path} "
+            f"for traits {forget_traits}"
+        )
+
+    print(f"[dpo] Loaded {len(examples)} forget examples.")
+
+    dataset = PromptAnswerDataset(examples, tokenizer)
+    collate_fn = make_collate_fn(tokenizer.pad_token_id)
+    dataloader = DataLoader(
+        dataset,
         batch_size=batch_size,
         shuffle=True,
-        collate_fn=collate,
-        drop_last=False,
+        collate_fn=collate_fn,
     )
 
-    model, ref_model, optimizer, dl = accelerator.prepare(
-        model, ref_model, optimizer, dl
+    optimizer = torch.optim.AdamW(
+        model.parameters(),
+        lr=lr,
+        betas=(0.9, 0.999),
+        weight_decay=0.0,
     )
 
-    steps_per_epoch = len(dl)
-    total_steps = steps_per_epoch * max(1, epochs)
-    warmup_steps = steps_per_epoch * max(1, warmup_epochs)
-    scheduler = get_linear_schedule_with_warmup(
-        optimizer,
-        num_warmup_steps=warmup_steps,
-        num_training_steps=total_steps,
+    model.train()
+
+    total_steps = num_epochs * len(dataloader)
+    print(
+        f"[dpo] Starting unlearning: epochs={num_epochs}, "
+        f"steps per epoch={len(dataloader)}, total_steps={total_steps}"
     )
 
-    for _ in range(epochs):
-        for ps, chosen, rejected in tqdm(dl, desc="DPO"):
-            with accelerator.accumulate(model):
-                lp_c = _batch_sum_logprob(
-                    model, tokenizer, ps, chosen, use_grad=True
-                )
-                lp_r = _batch_sum_logprob(
-                    model, tokenizer, ps, rejected, use_grad=True
-                )
-                lpr_c = _batch_sum_logprob(
-                    ref_model, tokenizer, ps, chosen, use_grad=False
-                )
-                lpr_r = _batch_sum_logprob(
-                    ref_model, tokenizer, ps, rejected, use_grad=False
+    global_step = 0
+    for epoch in range(num_epochs):
+        for step, batch in enumerate(dataloader):
+            input_ids = batch["input_ids"].to(device)
+            attention_mask = batch["attention_mask"].to(device)
+            labels = batch["labels"].to(device)
+
+            # Updated model log-probs
+            outputs = model(
+                input_ids=input_ids,
+                attention_mask=attention_mask,
+            )
+            logps_updated = compute_sequence_logprobs(outputs.logits, labels)
+
+            # Reference log-probs from the frozen base model (LoRA disabled)
+            with model.disable_adapter():
+                with torch.no_grad():
+                    ref_outputs = model(
+                        input_ids=input_ids,
+                        attention_mask=attention_mask,
+                    )
+                    logps_ref = compute_sequence_logprobs(
+                        ref_outputs.logits,
+                        labels,
+                    )
+
+            log_ratio = logps_updated - logps_ref
+            loss = -(2.0 / beta) * torch.mean(
+                torch.log(torch.sigmoid(-beta * log_ratio))
+            )
+
+            loss.backward()
+            optimizer.step()
+            optimizer.zero_grad()
+            global_step += 1
+
+            if (step + 1) % 10 == 0 or step == len(dataloader) - 1:
+                print(
+                    f"[dpo] epoch={epoch+1} step={step+1}/{len(dataloader)} "
+                    f"global_step={global_step} loss={loss.item():.4f}"
                 )
 
-                pref = beta * ((lp_c - lp_r) - (lpr_c - lpr_r))
-                loss = -torch.nn.functional.logsigmoid(pref).mean()
+    adapter_name = f"dpo_{sanitize_filename(model_id)}"
+    adapter_dir = os.path.join(outdir, adapter_name)
+    ensure_dir(adapter_dir)
 
-                optimizer.zero_grad()
-                accelerator.backward(loss)
+    print(f"[dpo] Saving LoRA adapter and tokenizer to {adapter_dir} ...")
+    model.save_pretrained(adapter_dir)
+    tokenizer.save_pretrained(adapter_dir)
 
-                if accelerator.sync_gradients:
-                    optimizer.step()
-                    scheduler.step()
+    meta = {
+        "algo": "dpo",
+        "model": model_id,
+        "adapter_dir": adapter_dir,
+        "forget_traits": list(forget_traits),
+        "lr": lr,
+        "batch_size": batch_size,
+        "num_epochs": num_epochs,
+        "beta": beta,
+        "local_files_only": bool(local_files_only),
+        "lora_r": lora_r,
+        "lora_alpha": lora_alpha,
+        "lora_dropout": lora_dropout,
+        "num_examples": len(dataset),
+        "total_steps": total_steps,
+    }
+    meta_path = os.path.join(outdir, f"{adapter_name}_metadata.json")
+    with open(meta_path, "w") as f:
+        json.dump(meta, f, indent=2)
+    print(f"[dpo] Metadata saved to {meta_path}")
+    print(f"[dpo] Finished unlearning. Adapter directory: {adapter_dir}")
 
-    accelerator.wait_for_everyone()
-    os.makedirs(save_dir, exist_ok=True)
-    accelerator.unwrap_model(model).save_pretrained(save_dir)
-    tokenizer.save_pretrained(save_dir)
-    model.eval()
-    return accelerator.unwrap_model(model)
+    return adapter_dir

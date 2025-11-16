@@ -1,286 +1,341 @@
+from __future__ import annotations
+
 import argparse
 import json
 import os
-IS_MAIN = os.environ.get("RANK", "0") == "0" or os.environ.get("LOCAL_RANK", "0") == "0"
+from typing import List
 
-import random
+from data.pokemon import build_pokemon_benchmark
+from unlearning.dpo import run_dpo_unlearning
+from unlearning.rmu import run_rmu_unlearning
+from utils.part_1 import ensure_dir, sanitize_filename, save_table
+from utils.part_2 import plot_ifeval_inst_strict_by_model
 
-import matplotlib.pyplot as plt
-import torch
-from datasets import load_dataset
-from tqdm import tqdm
 
-from data.pokemon import (
-    build_pokemon_benchmark,
-    load_pokemon_benchmark,
-    TRAIT_PLOT_LABELS,
-    run_pokemon_eval,
-)
-from data.triviaqa import run_triviaqa_eval
-from data.ifeval import run_ifeval_eval
-from models.gemma import load_gemma_model, generate_batch
-from utils.part_1 import ensure_dir, sanitize_filename, open_jsonl, write_jsonl, save_table
-from utils.part_2 import (
-    default_refusal,
-    split_forget_holdout,
-    make_forget_pairs,
-    pack_result_row,
-    plot_grouped,
-)
+FORGET_TRAITS = ["Type 1", "HP", "Defense"]
+RETAIN_TRAITS = ["Speed"]
 
-from unlearning.dpo import train_dpo_unlearning
-from unlearning.rmu import compute_pca_directions, train_rmu_unlearning
+def run_training(args):
+    ensure_dir(args.outdir)
 
-def _load_or_build_benchmark(args):
-    if args.pokemon_mcq:
-        bench_path = os.path.join("data", "pokemon_benchmark_mcq.csv")
-    else:
-        bench_path = os.path.join("data", "pokemon_benchmark.csv")
-    
+    bench_path = args.pokemon_bench
     if not os.path.exists(bench_path):
+        print(f"[part2] Pokemon MCQ benchmark not found at {bench_path}, building it...")
         ensure_dir(os.path.dirname(bench_path) or ".")
         build_pokemon_benchmark(
             raw_csv_path=args.pokemon_csv,
             out_csv_path=bench_path,
-            use_mcq=args.pokemon_mcq,
+            use_mcq=True,
             min_per_trait=args.min_per_trait,
         )
-    
-    return bench_path
+        print("[part2] Pokemon MCQ benchmark created.")
 
-def _sample_text_prompts_for_pca(tokenizer, model, n, batch_size):
-    ds = load_dataset("google/IFEval", split="train")
-    prompts = []
-    
-    for it in ds:
-        p = str(it.get("prompt") or "").strip()
-        if p:
-            prompts.append(p)
-        if len(prompts) >= n:
-            break
-    
-    outs = []
-    for i in range(0, len(prompts), batch_size):
-        chunk = prompts[i:i+batch_size]
-        outs.extend(generate_batch(tokenizer, model, chunk))
-    
-    return prompts
+    algo = args.algo.lower()
+    if algo not in {"dpo", "rmu"}:
+        raise ValueError(f"Unknown algo: {algo}")
 
-def _avg_forget_accuracy(trait_acc, held_out_trait):
-    ks = [k for k in trait_acc if k != held_out_trait]
-    if not ks:
-        return 0.0
-    return sum(trait_acc[k] for k in ks) / len(ks)
+    model_tag = sanitize_filename(args.model)
+    run_tag = f"{algo}_pokemon_{model_tag}"
+    run_dir = os.path.join(args.outdir, run_tag)
+    ensure_dir(run_dir)
 
-def evaluate_all(tokenizer, model, model_id, bench_path, outdir, limits, save_prefix):
-    responses_dir = os.path.join(outdir, "responses")
-    ensure_dir(responses_dir)
-    
-    trait_acc = run_pokemon_eval(
-        tokenizer, model, model_id, bench_path,
-        batch_size=limits["batch_size"],
-        limit=limits["limit_pokemon"],
-        save_path=os.path.join(responses_dir, f"{save_prefix}_pokemon.jsonl"),
-        eval_mode="auto",
+    print(f"[part2] Running {algo.upper()} unlearning for model={args.model}")
+    print(f"[part2] Forget traits: {FORGET_TRAITS}, retain traits: {RETAIN_TRAITS}")
+    print(f"[part2] Output directory: {run_dir}")
+
+    if algo == "dpo":
+        adapter_dir = run_dpo_unlearning(
+            model_id=args.model,
+            pokemon_bench_path=bench_path,
+            outdir=run_dir,
+            forget_traits=FORGET_TRAITS,
+            lr=args.lr,
+            batch_size=args.batch_size,
+            num_epochs=args.num_epochs,
+            beta=args.beta,
+            local_files_only=args.local_model,
+            lora_r=args.lora_r,
+            lora_alpha=args.lora_alpha,
+            lora_dropout=args.lora_dropout,
+        )
+    else:
+        adapter_dir = run_rmu_unlearning(
+            model_id=args.model,
+            pokemon_bench_path=bench_path,
+            outdir=run_dir,
+            forget_traits=FORGET_TRAITS,
+            retain_traits=RETAIN_TRAITS,
+            lr=args.lr,
+            batch_size=args.batch_size,
+            num_epochs=args.num_epochs,
+            layer_index=args.layer_index,
+            c=args.rmu_c,
+            alpha=args.rmu_alpha,
+            local_files_only=args.local_model,
+            lora_r=args.lora_r,
+            lora_alpha=args.lora_alpha,
+            lora_dropout=args.lora_dropout,
+        )
+
+    summary = {
+        "algo": algo,
+        "model": args.model,
+        "run_dir": run_dir,
+        "adapter_dir": adapter_dir,
+        "pokemon_bench": bench_path,
+        "forget_traits": FORGET_TRAITS,
+        "retain_traits": RETAIN_TRAITS,
+        "lr": args.lr,
+        "batch_size": args.batch_size,
+        "num_epochs": args.num_epochs,
+        "beta": args.beta if algo == "dpo" else None,
+        "layer_index": args.layer_index if algo == "rmu" else None,
+        "rmu_c": args.rmu_c if algo == "rmu" else None,
+        "rmu_alpha": args.rmu_alpha if algo == "rmu" else None,
+        "local_model": bool(args.local_model),
+        "lora_r": args.lora_r,
+        "lora_alpha": args.lora_alpha,
+        "lora_dropout": args.lora_dropout,
+    }
+    summary_path = os.path.join(run_dir, "part2_run_summary.json")
+    with open(summary_path, "w") as f:
+        json.dump(summary, f, indent=2)
+
+    print(f"[part2] Run summary saved to {summary_path}")
+    print(
+        "[part2] To evaluate this unlearned model with Part 1, "
+        "call part_1.py with --model pointing to the adapter directory "
+        "and --local_model."
     )
-    
-    tqa = run_triviaqa_eval(
-        tokenizer, model, model_id,
-        batch_size=limits["batch_size"],
-        limit=limits["limit_triviaqa"],
-        save_path=os.path.join(responses_dir, f"{save_prefix}_triviaqa.jsonl"),
-        eval_mode="contains",
-    )
-    
-    ife = run_ifeval_eval(
-        tokenizer, model, model_id,
-        batch_size=limits["batch_size"],
-        limit=limits["limit_ifeval"],
-        save_path=os.path.join(responses_dir, f"{save_prefix}_ifeval.jsonl"),
-    )
-    
-    return trait_acc, tqa, ife
+    print(f"[part2] Example model path: {adapter_dir}")
 
-import os
-from accelerate import Accelerator
+def _load_part1_results(part1_dir: str) -> List[dict]:
+    files = []
+    for fname in os.listdir(part1_dir):
+        if fname.startswith("model_") and fname.endswith(".json"):
+            files.append(os.path.join(part1_dir, fname))
 
-IS_MAIN = os.environ.get("RANK", "0") == "0"
+    if not files:
+        raise FileNotFoundError(
+            f"No model_*.json files found in {part1_dir}; "
+            f"run part_1.py evaluations first."
+        )
+
+    records: List[dict] = []
+    for path in files:
+        with open(path) as f:
+            rec = json.load(f)
+            records.append(rec)
+    return records
+
+def run_analysis(args):
+    ensure_dir(args.outdir)
+
+    print(f"[part2] Loading Part 1 results from {args.part1_dir} ...")
+    all_results = _load_part1_results(args.part1_dir)
+
+    if args.analysis_models:
+        selected = []
+        by_model = {r["model"]: r for r in all_results}
+        for m in args.analysis_models:
+            if m not in by_model:
+                print(
+                    f"[part2] Warning: requested model '{m}' not found "
+                    f"in Part 1 results."
+                )
+                continue
+            selected.append(by_model[m])
+        all_results = selected
+
+    if not all_results:
+        print("[part2] No results left after filtering; nothing to analyze.")
+        return
+
+    all_results.sort(key=lambda x: x.get("size_b", 0.0))
+
+    if args.analysis_labels:
+        if len(args.analysis_labels) != len(all_results):
+            raise ValueError(
+                "Number of --analysis_labels must match number "
+                "of selected models (after any filtering)."
+            )
+        labels = list(args.analysis_labels)
+    else:
+        labels = [r["model"] for r in all_results]
+
+    summary_rows = []
+    for label, rec in zip(labels, all_results):
+        row = {
+            "label": label,
+            "model": rec["model"],
+            "size_b": rec.get("size_b", 0.0),
+            "Type1": rec.get("Type1", 0.0),
+            "HP": rec.get("HP", 0.0),
+            "Speed": rec.get("Speed", 0.0),
+            "Defense": rec.get("Defense", 0.0),
+            "IFEval_inst_strict": rec.get("IFEval_inst_strict", 0.0),
+        }
+        summary_rows.append(row)
+
+    csv_path = os.path.join(args.outdir, "part2_unlearning_summary.csv")
+    json_path = os.path.join(args.outdir, "part2_unlearning_summary.json")
+    save_table(summary_rows, csv_path, json_path)
+
+    print("\nIFEval instruction-level strict accuracy (used for Part 2 tables/plots):")
+    label_width = max(len("Label"), max(len(r["label"]) for r in summary_rows)) + 2
+    model_width = max(len("Model"), max(len(r["model"]) for r in summary_rows)) + 2
+    header = (
+        f"{'Label':<{label_width}} {'Model':<{model_width}} "
+        f"{'InstStrict':>12}"
+    )
+    print(header)
+    print("-" * len(header))
+    for row in summary_rows:
+        print(
+            f"{row['label']:<{label_width}} "
+            f"{row['model']:<{model_width}} "
+            f"{row['IFEval_inst_strict']:>12.4f}"
+        )
+
+    print("\nFull IFEval metrics per model (printed only, not used for Part 2 plots):")
+    header_full = (
+        f"{'Label':<{label_width}} "
+        f"{'PromptStrict':>14} {'InstStrict':>12} "
+        f"{'PromptLoose':>14} {'InstLoose':>12}"
+    )
+    print(header_full)
+    print("-" * len(header_full))
+    for label, rec in zip(labels, all_results):
+        ps = rec.get("IFEval_prompt_strict", 0.0)
+        is_ = rec.get("IFEval_inst_strict", 0.0)
+        pl = rec.get("IFEval_prompt_loose", 0.0)
+        il = rec.get("IFEval_inst_loose", 0.0)
+        print(
+            f"{label:<{label_width}} "
+            f"{ps:>14.4f} {is_:>12.4f} {pl:>14.4f} {il:>12.4f}"
+        )
+
+    inst_values = [r["IFEval_inst_strict"] for r in summary_rows]
+    plot_path = os.path.join(args.outdir, "part2_ifeval_inst_strict.png")
+    plot_ifeval_inst_strict_by_model(labels, inst_values, plot_path)
+
+    print(
+        f"\n[part2] Part 2 summary saved to:\n"
+        f"  - {csv_path}\n"
+        f"  - {json_path}\n"
+        f"  - {plot_path}"
+    )
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--outdir", type=str, default="results/part2")
-    ap.add_argument("--analysis", action="store_true")
-    ap.add_argument("--model", type=str, default="google/gemma-3-4b-it")
-    ap.add_argument("--model_size", type=float, default=4.0)
-    ap.add_argument("--held_out_trait", type=str, default="Speed")
+    ap.add_argument("--outdir", type=str, default="results/part_2")
+    ap.add_argument(
+        "--analysis",
+        action="store_true",
+        help="Run analysis using results from part_1 (no training).",
+    )
+
+    # Shared
+    ap.add_argument(
+        "--model",
+        type=str,
+        default="google/gemma-3-4b-it",
+        help="Base model ID or local path for unlearning.",
+    )
+    ap.add_argument(
+        "--local_model",
+        action="store_true",
+        help="Treat --model as a local directory for loading weights/tokenizer.",
+    )
+    ap.add_argument("--batch_size", type=int, default=4)
+    ap.add_argument("--num_epochs", type=int, default=1)
+    ap.add_argument("--lr", type=float, default=2e-5)
+
+    # LoRA
+    ap.add_argument("--lora_r", type=int, default=8)
+    ap.add_argument("--lora_alpha", type=int, default=16)
+    ap.add_argument("--lora_dropout", type=float, default=0.0)
+
+    # Pokemon benchmark configuration
     ap.add_argument("--pokemon_csv", type=str, default="data/pokemon.csv")
-    ap.add_argument("--pokemon_mcq", action="store_true")
+    ap.add_argument(
+        "--pokemon_bench",
+        type=str,
+        default="data/pokemon_benchmark_mcq.csv",
+        help="MCQ benchmark CSV used for forget/retain sets.",
+    )
     ap.add_argument("--min_per_trait", type=int, default=500)
-    ap.add_argument("--batch_size", type=int, default=16)
-    ap.add_argument("--limit_pokemon", type=int, default=0)
-    ap.add_argument("--limit_triviaqa", type=int, default=0)
-    ap.add_argument("--limit_ifeval", type=int, default=0)
-    ap.add_argument("--epochs", type=int, default=1)
-    ap.add_argument("--lr", type=float, default=1e-5)
-    ap.add_argument("--beta", type=float, default=0.1)
-    ap.add_argument("--rmu_k", type=int, default=16)
-    ap.add_argument("--rmu_layer", type=int, default=-2)
-    ap.add_argument("--rmu_alpha", type=float, default=1.0)
-    ap.add_argument("--pca_examples", type=int, default=1024)
-    ap.add_argument("--method", type=str, default="both", choices=["both", "dpo", "rmu"])
+
+    # DPO/NPO-specific
+    ap.add_argument(
+        "--beta",
+        type=float,
+        default=0.1,
+        help="NPO temperature parameter for DPO-style unlearning.",
+    )
+
+    # RMU-specific
+    ap.add_argument(
+        "--layer_index",
+        type=int,
+        default=4,
+        help="Hidden layer index used in RMU representation loss.",
+    )
+    ap.add_argument(
+        "--rmu_c",
+        type=float,
+        default=6.5,
+        help="Scaling factor c in the RMU forget loss.",
+    )
+    ap.add_argument(
+        "--rmu_alpha",
+        type=float,
+        default=1200.0,
+        help="Weight on the RMU retain loss.",
+    )
+
+    # Analysis settings
+    ap.add_argument(
+        "--part1_dir",
+        type=str,
+        default="results/part1",
+        help="Directory holding part_1 model_*.json result files.",
+    )
+    ap.add_argument(
+        "--analysis_models",
+        type=str,
+        nargs="*",
+        default=None,
+        help=(
+            "Optional list of model identifiers (as stored in part_1 results) "
+            "to include in Part 2 analysis. If omitted, all models are used."
+        ),
+    )
+    ap.add_argument(
+        "--analysis_labels",
+        type=str,
+        nargs="*",
+        default=None,
+        help=(
+            "Optional list of labels for the selected models, used in tables "
+            "and plots. Must match the number of selected models."
+        ),
+    )
+
+    ap.add_argument(
+        "--algo",
+        type=str,
+        default="dpo",
+        choices=["dpo", "rmu"],
+        help="Unlearning algorithm to run (training mode).",
+    )
+
     args = ap.parse_args()
 
-    accel = Accelerator()
-    ensure_dir(args.outdir)
-
-    # Analysis-only: rank 0 aggregates/plots; others idle
     if args.analysis:
-        if IS_MAIN:
-            rows = []
-            for fn in os.listdir(args.outdir):
-                if fn.endswith(".json") and fn.startswith("part2_"):
-                    with open(os.path.join(args.outdir, fn)) as f:
-                        obj = json.load(f)
-                    if isinstance(obj, dict) and "model" in obj:
-                        rows.append(obj)
-            if not rows:
-                print("No Part 2 result files found.")
-                return
-            rows.sort(key=lambda r: r["model"])
-            save_table(
-                rows,
-                os.path.join(args.outdir, "part2_results.csv"),
-                os.path.join(args.outdir, "part2_results.json"),
-            )
-            grouped = {}
-            for r in rows:
-                forget = (r.get("Type1", 0.0) + r.get("HP", 0.0) + r.get("Defense", 0.0)) / 3.0
-                heldout = r.get("Speed", 0.0)
-                general = (r.get("TriviaQA", 0.0) + r.get("IFEval_inst_strict", 0.0)) / 2.0
-                grouped[r["model"]] = {"forget": forget, "heldout": heldout, "general": general}
-            plot_grouped(grouped, os.path.join(args.outdir, "part2_grouped.png"))
-        accel.wait_for_everyone()
-        return
-
-    # Benchmark path + build only on rank 0, then sync
-    if args.pokemon_mcq:
-        bench_path = os.path.join("data", "pokemon_benchmark_mcq.csv")
+        run_analysis(args)
     else:
-        bench_path = os.path.join("data", "pokemon_benchmark.csv")
-    if IS_MAIN and not os.path.exists(bench_path):
-        ensure_dir(os.path.dirname(bench_path) or ".")
-        build_pokemon_benchmark(
-            raw_csv_path=args.pokemon_csv,
-            out_csv_path=bench_path,
-            use_mcq=args.pokemon_mcq,
-            min_per_trait=args.min_per_trait,
-        )
-    accel.wait_for_everyone()
-
-    print(f"\n{'#'*80}\nUnlearning on: {args.model} | Held-out: {args.held_out_trait}\n{'#'*80}\n")
-    tokenizer, base_model = load_gemma_model(args.model)
-    mid_safe = sanitize_filename(args.model)
-
-    all_items = load_pokemon_benchmark(bench_path)
-    forget_raw, holdout_raw = split_forget_holdout(all_items, args.held_out_trait)
-    forget_pairs = make_forget_pairs(forget_raw)
-
-    limits = {
-        "batch_size": args.batch_size,
-        "limit_pokemon": args.limit_pokemon,
-        "limit_triviaqa": args.limit_triviaqa,
-        "limit_ifeval": args.limit_ifeval,
-    }
-
-    rows = []
-
-    # Baseline eval only on rank 0
-    if IS_MAIN:
-        print("\n[base] Evaluating baseline...")
-        trait_acc_b, tqa_b, ife_b = evaluate_all(
-            tokenizer, base_model, f"{args.model}", bench_path, args.outdir, limits, save_prefix=f"base_{mid_safe}"
-        )
-        base_row = pack_result_row("Base", args.model_size, trait_acc_b, tqa_b, ife_b)
-        with open(os.path.join(args.outdir, f"part2_Base.json"), "w") as f:
-            json.dump(base_row, f, indent=2)
-        rows.append(base_row)
-    accel.wait_for_everyone()
-
-    # DPO
-    if args.method in {"both", "dpo"}:
-        print("\n[DPO] Training...")
-        ref_model = load_gemma_model(args.model)[1]
-        dpo_ckpt = os.path.join(args.outdir, "checkpoints", "dpo")
-        ensure_dir(dpo_ckpt)
-        dpo_model = train_dpo_unlearning(
-            tokenizer=tokenizer,
-            model=base_model,
-            ref_model=ref_model,
-            pairs=forget_pairs,
-            epochs=args.epochs,
-            lr=args.lr,
-            beta=args.beta,
-            batch_size=args.batch_size,
-            save_dir=dpo_ckpt,
-        )
-        accel.wait_for_everyone()
-        if IS_MAIN:
-            print("\n[DPO] Evaluating...")
-            trait_acc_d, tqa_d, ife_d = evaluate_all(
-                tokenizer, dpo_model, f"{args.model}-dpo", bench_path, args.outdir, limits, save_prefix=f"dpo_{mid_safe}"
-            )
-            dpo_row = pack_result_row("DPO Unlearned", args.model_size, trait_acc_d, tqa_d, ife_d)
-            with open(os.path.join(args.outdir, f"part2_DPO.json"), "w") as f:
-                json.dump(dpo_row, f, indent=2)
-            rows.append(dpo_row)
-        accel.wait_for_everyone()
-
-    # RMU
-    if args.method in {"both", "rmu"}:
-        print("\n[RMU] Computing PCA directions...")
-        pca_prompts = _sample_text_prompts_for_pca(tokenizer, base_model, args.pca_examples, args.batch_size)
-        U = compute_pca_directions(tokenizer, base_model, pca_prompts, layer=args.rmu_layer, k=args.rmu_k, batch_size=args.batch_size)
-        rmu_ckpt = os.path.join(args.outdir, "checkpoints", "rmu")
-        ensure_dir(rmu_ckpt)
-        print("\n[RMU] Training...")
-        rmu_model = train_rmu_unlearning(
-            tokenizer=tokenizer,
-            model=base_model,
-            forget_records=forget_raw,
-            refusal=default_refusal(),
-            U=U,
-            alpha=args.rmu_alpha,
-            epochs=args.epochs,
-            lr=args.lr,
-            batch_size=args.batch_size,
-            layer=args.rmu_layer,
-            save_dir=rmu_ckpt,
-        )
-        accel.wait_for_everyone()
-        if IS_MAIN:
-            print("\n[RMU] Evaluating...")
-            trait_acc_r, tqa_r, ife_r = evaluate_all(
-                tokenizer, rmu_model, f"{args.model}-rmu", bench_path, args.outdir, limits, save_prefix=f"rmu_{mid_safe}"
-            )
-            rmu_row = pack_result_row("RMU Unlearned", args.model_size, trait_acc_r, tqa_r, ife_r)
-            with open(os.path.join(args.outdir, f"part2_RMU.json"), "w") as f:
-                json.dump(rmu_row, f, indent=2)
-            rows.append(rmu_row)
-        accel.wait_for_everyone()
-
-    if IS_MAIN and rows:
-        save_table(
-            rows,
-            os.path.join(args.outdir, "part2_results.csv"),
-            os.path.join(args.outdir, "part2_results.json"),
-        )
-        grouped = {}
-        for r in rows:
-            forget = (r.get("Type1", 0.0) + r.get("HP", 0.0) + r.get("Defense", 0.0)) / 3.0
-            heldout = r.get("Speed", 0.0)
-            general = (r.get("TriviaQA", 0.0) + r.get("IFEval_inst_strict", 0.0)) / 2.0
-            grouped[r["model"]] = {"forget": forget, "heldout": heldout, "general": general}
-        plot_grouped(grouped, os.path.join(args.outdir, "part2_grouped.png"))
+        run_training(args)
 
 if __name__ == "__main__":
     main()

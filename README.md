@@ -50,12 +50,17 @@ python part_1.py --analysis
 
 ## Part 2: Targeted Unlearning
 
-We use `google/gemma-3-4b-it` for unlearning. The forget set is {Type 1, HP, Defense}, and we hold out Speed.
+In Part 2, we perform targeted unlearning on **Gemma-3-4b-it** using the Pokémon MCQ benchmark:
 
-To run both DPO and RMU unlearning on the held-out Speed trait, run:
+- **Forget set**: Type 1, HP, Defense
+- **Hold-out (retain) attribute**: Speed
+- **Methods**: DPO-style unlearning (NPO) and RMU, both using LoRA adapters (rank 8)
+
+To run unlearning:
 
 ```bash
-python part_2.py --model google/gemma-3-4b-it --model_size 4 --held_out_trait Speed --method both
+python part_2.py --algo dpo --model google/gemma-3-4b-it
+python part_2.py --algo rmu --model google/gemma-3-4b-it
 ```
 
 ## Part 3: Robustness Evaluation

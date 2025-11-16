@@ -1,24 +1,25 @@
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
-def _auto_device() -> str:
+
+def _auto_device():
     if torch.cuda.is_available():
         return "cuda"
     if torch.backends.mps.is_available():
         return "mps"
     return "cpu"
 
-def load_gemma_model(model_id):
+def load_gemma_model(model_id, local_files_only=False):
     device = _auto_device()
-    tok = AutoTokenizer.from_pretrained(model_id)
+    tok = AutoTokenizer.from_pretrained(
+        model_id,
+        local_files_only=local_files_only,
+    )
 
     if tok.pad_token_id is None and tok.eos_token_id is not None:
         tok.pad_token = tok.eos_token
 
-    try:
-        tok.padding_side = "left"
-    except Exception:
-        pass
+    tok.padding_side = "left"
 
     if device == "cuda":
         dtype = torch.bfloat16
@@ -27,14 +28,20 @@ def load_gemma_model(model_id):
     else:
         dtype = torch.float32
 
-    model = AutoModelForCausalLM.from_pretrained(model_id, dtype=dtype)
+    model = AutoModelForCausalLM.from_pretrained(
+        model_id,
+        torch_dtype=dtype,
+        local_files_only=local_files_only,
+    )
     model.to(device)
     model.eval()
     print(f"[info] Using device: {device}")
     return tok, model
 
 def _prepare_inputs(tokenizer, prompts):
-    has_template = getattr(tokenizer, "chat_template", None) is not None and hasattr(tokenizer, "apply_chat_template")
+    has_template = getattr(tokenizer, "chat_template", None) is not None and hasattr(
+        tokenizer, "apply_chat_template"
+    )
 
     if has_template:
         rendered = [
