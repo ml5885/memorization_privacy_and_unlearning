@@ -20,7 +20,6 @@ from peft import LoraConfig, get_peft_model
 
 from utils.part_1 import ensure_dir, sanitize_filename
 
-
 def _auto_device():
     if torch.cuda.is_available():
         return "cuda"
@@ -62,7 +61,6 @@ def load_pokemon_forget_examples(csv_path, forget_traits, use_answer_letter=True
     return examples
 
 class PromptAnswerDataset(Dataset):
-    """Dataset of (prompt, answer) pairs, tokenized for causal LM training."""
 
     def __init__(self, examples, tokenizer):
         self.input_ids = []
@@ -71,8 +69,6 @@ class PromptAnswerDataset(Dataset):
         for ex in examples:
             prompt_text = ex.prompt
             answer_text = ex.answer
-            # For single-letter answers, prefix with a space so the tokenizer
-            # treats it as a separate token where appropriate.
             if not answer_text.startswith(" "):
                 answer_text = " " + answer_text
 
@@ -163,6 +159,10 @@ def load_lora_causal_lm(model_id, local_files_only, lora_r=8, lora_alpha=16, lor
     base_model.train()
     base_model.config.use_cache = False
 
+    # Freeze base model parameters; train only LoRA adapters.
+    for param in base_model.parameters():
+        param.requires_grad = False
+
     lora_config = LoraConfig(
         r=lora_r,
         lora_alpha=lora_alpha,
@@ -183,17 +183,10 @@ def load_lora_causal_lm(model_id, local_files_only, lora_r=8, lora_alpha=16, lor
     return tokenizer, model, device
 
 def compute_sequence_logprobs(logits, labels):
-    """
-    Compute summed log probabilities of the label tokens for each sequence.
+    logprobs = torch.log_softmax(logits, dim=-1)
 
-    logits: [B, T, V]
-    labels: [B, T] with -100 marking positions to ignore.
-    """
-    logprobs = torch.log_softmax(logits, dim=-1)  # [B, T, V]
-
-    # Shift for causal language modeling: token at position t is predicted from logits at t-1.
-    labels_shifted = labels[:, 1:]  # [B, T-1]
-    logprobs_shifted = logprobs[:, :-1, :]  # [B, T-1, V]
+    labels_shifted = labels[:, 1:]
+    logprobs_shifted = logprobs[:, :-1, :]
 
     mask = labels_shifted != -100
     safe_labels = labels_shifted.clone()
@@ -223,27 +216,9 @@ def run_dpo_unlearning(
     lora_alpha=16,
     lora_dropout=0.0,
 ):
-    """
-    Run DPO-style unlearning on Pokemon forget traits using NPO loss.
-
-    Args:
-        model_id: Base model ID or local path (e.g., google/gemma-3-4b-it).
-        pokemon_bench_path: Path to the MCQ Pokemon benchmark CSV.
-        outdir: Directory where the adapter and metadata will be saved.
-        forget_traits: Sequence of trait names to treat as the forget set.
-        lr: Learning rate.
-        batch_size: Batch size for unlearning.
-        num_epochs: Number of passes over the forget set.
-        beta: Temperature parameter in the NPO loss.
-        local_files_only: If True, load model/tokenizer only from local files.
-        lora_r, lora_alpha, lora_dropout: LoRA hyperparameters.
-
-    Returns:
-        Path to the adapter directory inside outdir.
-    """
     ensure_dir(outdir)
 
-    print(f"[dpo] Loading base model {model_id} with LoRA adapters...")
+    print("[dpo] Loading base model %s with LoRA adapters..." % model_id)
     tokenizer, model, device = load_lora_causal_lm(
         model_id=model_id,
         local_files_only=local_files_only,
@@ -260,11 +235,11 @@ def run_dpo_unlearning(
     )
     if not examples:
         raise ValueError(
-            f"No forget examples found in {pokemon_bench_path} "
-            f"for traits {forget_traits}"
+            "No forget examples found in %s for traits %s"
+            % (pokemon_bench_path, forget_traits)
         )
 
-    print(f"[dpo] Loaded {len(examples)} forget examples.")
+    print("[dpo] Loaded %d forget examples." % len(examples))
 
     dataset = PromptAnswerDataset(examples, tokenizer)
     collate_fn = make_collate_fn(tokenizer.pad_token_id)
@@ -286,8 +261,8 @@ def run_dpo_unlearning(
 
     total_steps = num_epochs * len(dataloader)
     print(
-        f"[dpo] Starting unlearning: epochs={num_epochs}, "
-        f"steps per epoch={len(dataloader)}, total_steps={total_steps}"
+        "[dpo] Starting unlearning: epochs=%d, steps per epoch=%d, total_steps=%d"
+        % (num_epochs, len(dataloader), total_steps)
     )
 
     global_step = 0
@@ -297,14 +272,12 @@ def run_dpo_unlearning(
             attention_mask = batch["attention_mask"].to(device)
             labels = batch["labels"].to(device)
 
-            # Updated model log-probs
             outputs = model(
                 input_ids=input_ids,
                 attention_mask=attention_mask,
             )
             logps_updated = compute_sequence_logprobs(outputs.logits, labels)
 
-            # Reference log-probs from the frozen base model (LoRA disabled)
             with model.disable_adapter():
                 with torch.no_grad():
                     ref_outputs = model(
@@ -328,15 +301,24 @@ def run_dpo_unlearning(
 
             if (step + 1) % 10 == 0 or step == len(dataloader) - 1:
                 print(
-                    f"[dpo] epoch={epoch+1} step={step+1}/{len(dataloader)} "
-                    f"global_step={global_step} loss={loss.item():.4f}"
+                    "[dpo] epoch=%d step=%d/%d global_step=%d loss=%.4f"
+                    % (epoch + 1, step + 1, len(dataloader), global_step, loss.item())
                 )
 
-    adapter_name = f"dpo_{sanitize_filename(model_id)}"
+    adapter_name = "dpo_%s" % sanitize_filename(model_id)
     adapter_dir = os.path.join(outdir, adapter_name)
     ensure_dir(adapter_dir)
 
-    print(f"[dpo] Saving LoRA adapter and tokenizer to {adapter_dir} ...")
+    try:
+        model = model.merge_and_unload()
+        print("[dpo] Merged LoRA adapter into base model weights.")
+    except AttributeError:
+        print(
+            "[dpo] Warning: merge_and_unload not available; "
+            "saving adapter-only model."
+        )
+
+    print("[dpo] Saving model and tokenizer to %s ..." % adapter_dir)
     model.save_pretrained(adapter_dir)
     tokenizer.save_pretrained(adapter_dir)
 
@@ -355,11 +337,12 @@ def run_dpo_unlearning(
         "lora_dropout": lora_dropout,
         "num_examples": len(dataset),
         "total_steps": total_steps,
+        "merged_lora": True,
     }
-    meta_path = os.path.join(outdir, f"{adapter_name}_metadata.json")
+    meta_path = os.path.join(outdir, "%s_metadata.json" % adapter_name)
     with open(meta_path, "w") as f:
         json.dump(meta, f, indent=2)
-    print(f"[dpo] Metadata saved to {meta_path}")
-    print(f"[dpo] Finished unlearning. Adapter directory: {adapter_dir}")
+    print("[dpo] Metadata saved to %s" % meta_path)
+    print("[dpo] Finished unlearning. Model directory: %s" % adapter_dir)
 
     return adapter_dir

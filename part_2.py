@@ -1,16 +1,12 @@
-from __future__ import annotations
-
 import argparse
 import json
 import os
-from typing import List
 
 from data.pokemon import build_pokemon_benchmark
 from unlearning.dpo import run_dpo_unlearning
 from unlearning.rmu import run_rmu_unlearning
-from utils.part_1 import ensure_dir, sanitize_filename, save_table
+from utils.part_1 import ensure_dir, sanitize_filename, save_table, get_model_label
 from utils.part_2 import plot_ifeval_inst_strict_by_model
-
 
 FORGET_TRAITS = ["Type 1", "HP", "Defense"]
 RETAIN_TRAITS = ["Speed"]
@@ -20,7 +16,7 @@ def run_training(args):
 
     bench_path = args.pokemon_bench
     if not os.path.exists(bench_path):
-        print(f"[part2] Pokemon MCQ benchmark not found at {bench_path}, building it...")
+        print("[part2] Pokemon MCQ benchmark not found at %s, building it..." % bench_path)
         ensure_dir(os.path.dirname(bench_path) or ".")
         build_pokemon_benchmark(
             raw_csv_path=args.pokemon_csv,
@@ -32,16 +28,16 @@ def run_training(args):
 
     algo = args.algo.lower()
     if algo not in {"dpo", "rmu"}:
-        raise ValueError(f"Unknown algo: {algo}")
+        raise ValueError("Unknown algo: %s" % algo)
 
     model_tag = sanitize_filename(args.model)
-    run_tag = f"{algo}_pokemon_{model_tag}"
+    run_tag = "%s_pokemon_%s" % (algo, model_tag)
     run_dir = os.path.join(args.outdir, run_tag)
     ensure_dir(run_dir)
 
-    print(f"[part2] Running {algo.upper()} unlearning for model={args.model}")
-    print(f"[part2] Forget traits: {FORGET_TRAITS}, retain traits: {RETAIN_TRAITS}")
-    print(f"[part2] Output directory: {run_dir}")
+    print("[part2] Running %s unlearning for model=%s" % (algo.upper(), args.model))
+    print("[part2] Forget traits: %s, retain traits: %s" % (FORGET_TRAITS, RETAIN_TRAITS))
+    print("[part2] Output directory: %s" % run_dir)
 
     if algo == "dpo":
         adapter_dir = run_dpo_unlearning(
@@ -101,15 +97,15 @@ def run_training(args):
     with open(summary_path, "w") as f:
         json.dump(summary, f, indent=2)
 
-    print(f"[part2] Run summary saved to {summary_path}")
+    print("[part2] Run summary saved to %s" % summary_path)
     print(
         "[part2] To evaluate this unlearned model with Part 1, "
-        "call part_1.py with --model pointing to the adapter directory "
+        "call part_1.py with --model pointing to the model directory "
         "and --local_model."
     )
-    print(f"[part2] Example model path: {adapter_dir}")
+    print("[part2] Example model path: %s" % adapter_dir)
 
-def _load_part1_results(part1_dir: str) -> List[dict]:
+def _load_part1_results(part1_dir):
     files = []
     for fname in os.listdir(part1_dir):
         if fname.startswith("model_") and fname.endswith(".json"):
@@ -117,11 +113,10 @@ def _load_part1_results(part1_dir: str) -> List[dict]:
 
     if not files:
         raise FileNotFoundError(
-            f"No model_*.json files found in {part1_dir}; "
-            f"run part_1.py evaluations first."
+            "No model_*.json files found in %s; run part_1.py evaluations first." % part1_dir
         )
 
-    records: List[dict] = []
+    records = []
     for path in files:
         with open(path) as f:
             rec = json.load(f)
@@ -131,7 +126,7 @@ def _load_part1_results(part1_dir: str) -> List[dict]:
 def run_analysis(args):
     ensure_dir(args.outdir)
 
-    print(f"[part2] Loading Part 1 results from {args.part1_dir} ...")
+    print("[part2] Loading Part 1 results from %s ..." % args.part1_dir)
     all_results = _load_part1_results(args.part1_dir)
 
     if args.analysis_models:
@@ -140,8 +135,8 @@ def run_analysis(args):
         for m in args.analysis_models:
             if m not in by_model:
                 print(
-                    f"[part2] Warning: requested model '{m}' not found "
-                    f"in Part 1 results."
+                    "[part2] Warning: requested model '%s' not found in Part 1 results."
+                    % m
                 )
                 continue
             selected.append(by_model[m])
@@ -156,12 +151,12 @@ def run_analysis(args):
     if args.analysis_labels:
         if len(args.analysis_labels) != len(all_results):
             raise ValueError(
-                "Number of --analysis_labels must match number "
-                "of selected models (after any filtering)."
+                "Number of --analysis_labels must match number of selected models "
+                "(after any filtering)."
             )
         labels = list(args.analysis_labels)
     else:
-        labels = [r["model"] for r in all_results]
+        labels = [get_model_label(r["model"]) for r in all_results]
 
     summary_rows = []
     for label, rec in zip(labels, all_results):
@@ -185,23 +180,35 @@ def run_analysis(args):
     label_width = max(len("Label"), max(len(r["label"]) for r in summary_rows)) + 2
     model_width = max(len("Model"), max(len(r["model"]) for r in summary_rows)) + 2
     header = (
-        f"{'Label':<{label_width}} {'Model':<{model_width}} "
-        f"{'InstStrict':>12}"
+        "%s %s %s"
+        % (
+            "Label".ljust(label_width),
+            "Model".ljust(model_width),
+            "InstStrict".rjust(12),
+        )
     )
     print(header)
     print("-" * len(header))
     for row in summary_rows:
         print(
-            f"{row['label']:<{label_width}} "
-            f"{row['model']:<{model_width}} "
-            f"{row['IFEval_inst_strict']:>12.4f}"
+            "%s %s %s"
+            % (
+                row["label"].ljust(label_width),
+                row["model"].ljust(model_width),
+                ("%.4f" % row["IFEval_inst_strict"]).rjust(12),
+            )
         )
 
     print("\nFull IFEval metrics per model (printed only, not used for Part 2 plots):")
     header_full = (
-        f"{'Label':<{label_width}} "
-        f"{'PromptStrict':>14} {'InstStrict':>12} "
-        f"{'PromptLoose':>14} {'InstLoose':>12}"
+        "%s %s %s %s %s"
+        % (
+            "Label".ljust(label_width),
+            "PromptStrict".rjust(14),
+            "InstStrict".rjust(12),
+            "PromptLoose".rjust(14),
+            "InstLoose".rjust(12),
+        )
     )
     print(header_full)
     print("-" * len(header_full))
@@ -211,8 +218,14 @@ def run_analysis(args):
         pl = rec.get("IFEval_prompt_loose", 0.0)
         il = rec.get("IFEval_inst_loose", 0.0)
         print(
-            f"{label:<{label_width}} "
-            f"{ps:>14.4f} {is_:>12.4f} {pl:>14.4f} {il:>12.4f}"
+            "%s %s %s %s %s"
+            % (
+                label.ljust(label_width),
+                ("%.4f" % ps).rjust(14),
+                ("%.4f" % is_).rjust(12),
+                ("%.4f" % pl).rjust(14),
+                ("%.4f" % il).rjust(12),
+            )
         )
 
     inst_values = [r["IFEval_inst_strict"] for r in summary_rows]
@@ -220,10 +233,11 @@ def run_analysis(args):
     plot_ifeval_inst_strict_by_model(labels, inst_values, plot_path)
 
     print(
-        f"\n[part2] Part 2 summary saved to:\n"
-        f"  - {csv_path}\n"
-        f"  - {json_path}\n"
-        f"  - {plot_path}"
+        "\n[part2] Part 2 summary saved to:\n"
+        "  - %s\n"
+        "  - %s\n"
+        "  - %s"
+        % (csv_path, json_path, plot_path)
     )
 
 def main():

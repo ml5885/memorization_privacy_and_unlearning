@@ -4,15 +4,11 @@ Utilities for Part 2 analysis: plotting unlearning results.
 This module only adds plotting utilities on top of the Part 1 helpers.
 """
 
-from __future__ import annotations
-
 import os
-from typing import Sequence
 
 import matplotlib.pyplot as plt
 
 from utils.part_1 import ensure_dir
-
 
 def plot_ifeval_inst_strict_by_model(labels, inst_values, out_png):
     plt.rcParams["font.family"] = "serif"
@@ -30,4 +26,4 @@ def plot_ifeval_inst_strict_by_model(labels, inst_values, out_png):
     ensure_dir(os.path.dirname(out_png) or ".")
     plt.savefig(out_png, dpi=220)
     plt.close()
-    print(f"[info] Saved IFEval inst-strict plot to: {out_png}")
+    print("[info] Saved IFEval inst-strict plot to: %s" % out_png)

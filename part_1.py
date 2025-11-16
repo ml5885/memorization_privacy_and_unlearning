@@ -89,7 +89,7 @@ def main():
     )
     ap.add_argument("--batch_size", type=int, default=32)
     ap.add_argument("--limit_pokemon", type=int, default=0)
-    ap.add_argument("--limit_triviaqa", type=int, default=0)
+    ap.add_argument("--limit_triviaqa", type=int, default=5000)
     ap.add_argument("--limit_ifeval", type=int, default=0)
     ap.add_argument("--pokemon_csv", type=str, default="data/pokemon.csv")
     ap.add_argument("--pokemon_mcq", action="store_true")

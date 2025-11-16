@@ -10,13 +10,9 @@ References:
   https://github.com/centerforaisafety/wmdp/tree/main/rmu
 """
 
-from __future__ import annotations
-
 import csv
 import json
 import os
-from dataclasses import dataclass
-from typing import List, Sequence, Tuple
 
 import torch
 from torch.utils.data import Dataset, DataLoader
@@ -25,7 +21,6 @@ from peft import LoraConfig, get_peft_model
 
 from utils.part_1 import ensure_dir, sanitize_filename
 
-
 def _auto_device():
     if torch.cuda.is_available():
         return "cuda"
@@ -33,14 +28,14 @@ def _auto_device():
         return "mps"
     return "cpu"
 
-@dataclass
-class PokemonPromptExample:
-    trait: str
-    name: str
-    prompt: str
+class PokemonPromptExample(object):
+    def __init__(self, trait, name, prompt):
+        self.trait = trait
+        self.name = name
+        self.prompt = prompt
 
 def load_pokemon_prompts(csv_path, traits):
-    examples: List[PokemonPromptExample] = []
+    examples = []
     with open(csv_path) as f:
         reader = csv.DictReader(f)
         for row in reader:
@@ -64,8 +59,8 @@ class PromptOnlyDataset(Dataset):
     """Dataset of prompts only, for RMU representation-level training."""
 
     def __init__(self, examples, tokenizer):
-        self.input_ids: List[torch.Tensor] = []
-        self.attention_mask: List[torch.Tensor] = []
+        self.input_ids = []
+        self.attention_mask = []
 
         for ex in examples:
             enc = tokenizer(
@@ -83,8 +78,7 @@ class PromptOnlyDataset(Dataset):
     def __getitem__(self, idx):
         return self.input_ids[idx], self.attention_mask[idx]
 
-
-def make_collate_fn(pad_token_id: int):
+def make_collate_fn(pad_token_id):
     def collate(batch):
         input_ids_list, mask_list = zip(*batch)
         max_len = max(t.size(0) for t in input_ids_list)
@@ -112,7 +106,7 @@ def make_collate_fn(pad_token_id: int):
 
     return collate
 
-def load_lora_causal_lm(model_id, local_files_only, lora_r = 8, lora_alpha = 16, lora_dropout = 0.0):
+def load_lora_causal_lm(model_id, local_files_only, lora_r=8, lora_alpha=16, lora_dropout=0.0):
     device = _auto_device()
     tokenizer = AutoTokenizer.from_pretrained(
         model_id,
@@ -139,6 +133,10 @@ def load_lora_causal_lm(model_id, local_files_only, lora_r = 8, lora_alpha = 16,
     base_model.to(device)
     base_model.train()
     base_model.config.use_cache = False
+
+    # Freeze base model parameters; train only LoRA adapters.
+    for param in base_model.parameters():
+        param.requires_grad = False
 
     lora_config = LoraConfig(
         r=lora_r,
@@ -190,24 +188,13 @@ def run_rmu_unlearning(
     Args:
         model_id: Base model ID or local path (e.g., google/gemma-3-4b-it).
         pokemon_bench_path: Path to the MCQ Pokemon benchmark CSV.
-        outdir: Directory where the adapter and metadata will be saved.
-        forget_traits: Traits forming the forget distribution (e.g., Type1, HP, Defense).
-        retain_traits: Traits forming the retain distribution (e.g., Speed).
-        lr: Learning rate for RMU.
-        batch_size: Batch size for forget and retain minibatches.
-        num_epochs: Number of passes over the datasets.
-        layer_index: Index of the hidden layer whose activations are used in the loss.
-        c: Scaling factor for the random direction in the forget loss.
-        alpha: Weight on the retain loss term.
-        local_files_only: If True, load model/tokenizer only from local files.
-        lora_r, lora_alpha, lora_dropout: LoRA hyperparameters.
-
-    Returns:
-        Path to the adapter directory inside outdir.
+        outdir: Directory where the model and metadata will be saved.
+        forget_traits: Traits forming the forget distribution.
+        retain_traits: Traits forming the retain distribution.
     """
     ensure_dir(outdir)
 
-    print(f"[rmu] Loading base model {model_id} with LoRA adapters...")
+    print("[rmu] Loading base model %s with LoRA adapters..." % model_id)
     tokenizer, model, device = load_lora_causal_lm(
         model_id=model_id,
         local_files_only=local_files_only,
@@ -227,18 +214,18 @@ def run_rmu_unlearning(
     )
     if not forget_examples:
         raise ValueError(
-            f"No forget examples found in {pokemon_bench_path} "
-            f"for traits {forget_traits}"
+            "No forget examples found in %s for traits %s"
+            % (pokemon_bench_path, forget_traits)
         )
     if not retain_examples:
         raise ValueError(
-            f"No retain examples found in {pokemon_bench_path} "
-            f"for traits {retain_traits}"
+            "No retain examples found in %s for traits %s"
+            % (pokemon_bench_path, retain_traits)
         )
 
     print(
-        f"[rmu] Loaded {len(forget_examples)} forget examples and "
-        f"{len(retain_examples)} retain examples."
+        "[rmu] Loaded %d forget examples and %d retain examples."
+        % (len(forget_examples), len(retain_examples))
     )
 
     forget_dataset = PromptOnlyDataset(forget_examples, tokenizer)
@@ -260,10 +247,8 @@ def run_rmu_unlearning(
 
     model.train()
 
-    # u is instantiated lazily once we see the first batch, using the actual
-    # hidden dimension from the chosen layer's activations.
+    # Random direction u is instantiated lazily once we see the first forget batch.
     u = None
-
     layer_idx = _layer_index_from_config(model, layer_index)
 
     optimizer = torch.optim.AdamW(
@@ -276,9 +261,9 @@ def run_rmu_unlearning(
     steps_per_epoch = min(len(forget_loader), len(retain_loader))
     total_steps = num_epochs * steps_per_epoch
     print(
-        f"[rmu] Starting unlearning: epochs={num_epochs}, "
-        f"steps per epoch={steps_per_epoch}, total_steps={total_steps}, "
-        f"layer_index={layer_idx}, c={c}, alpha={alpha}"
+        "[rmu] Starting unlearning: epochs=%d, steps per epoch=%d, total_steps=%d, "
+        "layer_index=%d, c=%.3f, alpha=%.1f"
+        % (num_epochs, steps_per_epoch, total_steps, layer_idx, c, alpha)
     )
 
     for epoch in range(num_epochs):
@@ -317,6 +302,7 @@ def run_rmu_unlearning(
             )
             hidden_updated = outputs_r.hidden_states[layer_idx]
 
+            # Frozen reference hidden states (LoRA disabled)
             with model.disable_adapter():
                 with torch.no_grad():
                     frozen_outputs = model(
@@ -337,17 +323,32 @@ def run_rmu_unlearning(
 
             if (step + 1) % 10 == 0 or step == steps_per_epoch - 1:
                 print(
-                    f"[rmu] epoch={epoch+1} step={step+1}/{steps_per_epoch} "
-                    f"loss={loss.item():.4f} "
-                    f"forget={loss_forget.item():.4f} "
-                    f"retain={loss_retain.item():.4f}"
+                    "[rmu] epoch=%d step=%d/%d loss=%.4f forget=%.4f retain=%.4f"
+                    % (
+                        epoch + 1,
+                        step + 1,
+                        steps_per_epoch,
+                        loss.item(),
+                        loss_forget.item(),
+                        loss_retain.item(),
+                    )
                 )
 
-    adapter_name = f"rmu_{sanitize_filename(model_id)}"
+    adapter_name = "rmu_%s" % sanitize_filename(model_id)
     adapter_dir = os.path.join(outdir, adapter_name)
     ensure_dir(adapter_dir)
 
-    print(f"[rmu] Saving LoRA adapter and tokenizer to {adapter_dir} ...")
+    # Merge LoRA into base model so the saved directory is a standard HF model.
+    try:
+        model = model.merge_and_unload()
+        print("[rmu] Merged LoRA adapter into base model weights.")
+    except AttributeError:
+        print(
+            "[rmu] Warning: merge_and_unload not available; "
+            "saving adapter-only model."
+        )
+
+    print("[rmu] Saving model and tokenizer to %s ..." % adapter_dir)
     model.save_pretrained(adapter_dir)
     tokenizer.save_pretrained(adapter_dir)
 
@@ -370,11 +371,12 @@ def run_rmu_unlearning(
         "num_forget_examples": len(forget_dataset),
         "num_retain_examples": len(retain_dataset),
         "total_steps": total_steps,
+        "merged_lora": True,
     }
-    meta_path = os.path.join(outdir, f"{adapter_name}_metadata.json")
+    meta_path = os.path.join(outdir, "%s_metadata.json" % adapter_name)
     with open(meta_path, "w") as f:
         json.dump(meta, f, indent=2)
-    print(f"[rmu] Metadata saved to {meta_path}")
-    print(f"[rmu] Finished unlearning. Adapter directory: {adapter_dir}")
+    print("[rmu] Metadata saved to %s" % meta_path)
+    print("[rmu] Finished unlearning. Model directory: %s" % adapter_dir)
 
     return adapter_dir
