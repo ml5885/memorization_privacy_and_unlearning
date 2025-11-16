@@ -10,9 +10,13 @@ References:
   https://github.com/centerforaisafety/wmdp/tree/main/rmu
 """
 
+from __future__ import annotations
+
 import csv
 import json
 import os
+from dataclasses import dataclass
+from typing import List, Sequence, Tuple
 
 import torch
 from torch.utils.data import Dataset, DataLoader
@@ -29,14 +33,14 @@ def _auto_device():
         return "mps"
     return "cpu"
 
+@dataclass
 class PokemonPromptExample:
-    def __init__(self, trait, name, prompt):
-        self.trait = trait
-        self.name = name
-        self.prompt = prompt
+    trait: str
+    name: str
+    prompt: str
 
 def load_pokemon_prompts(csv_path, traits):
-    examples = []
+    examples: List[PokemonPromptExample] = []
     with open(csv_path) as f:
         reader = csv.DictReader(f)
         for row in reader:
@@ -60,8 +64,8 @@ class PromptOnlyDataset(Dataset):
     """Dataset of prompts only, for RMU representation-level training."""
 
     def __init__(self, examples, tokenizer):
-        self.input_ids = []
-        self.attention_mask = []
+        self.input_ids: List[torch.Tensor] = []
+        self.attention_mask: List[torch.Tensor] = []
 
         for ex in examples:
             enc = tokenizer(
@@ -79,7 +83,8 @@ class PromptOnlyDataset(Dataset):
     def __getitem__(self, idx):
         return self.input_ids[idx], self.attention_mask[idx]
 
-def make_collate_fn(pad_token_id):
+
+def make_collate_fn(pad_token_id: int):
     def collate(batch):
         input_ids_list, mask_list = zip(*batch)
         max_len = max(t.size(0) for t in input_ids_list)
@@ -107,7 +112,7 @@ def make_collate_fn(pad_token_id):
 
     return collate
 
-def load_lora_causal_lm(model_id, local_files_only, lora_r=8, lora_alpha=16, lora_dropout=0.0):
+def load_lora_causal_lm(model_id, local_files_only, lora_r = 8, lora_alpha = 16, lora_dropout = 0.0):
     device = _auto_device()
     tokenizer = AutoTokenizer.from_pretrained(
         model_id,
@@ -255,12 +260,9 @@ def run_rmu_unlearning(
 
     model.train()
 
-    hidden_size = int(getattr(model.config, "hidden_size", 0))
-    if hidden_size <= 0:
-        raise ValueError("Model config missing a valid hidden_size for RMU.")
-
-    u = torch.rand(hidden_size, device=device)
-    u = u / u.norm(p=2)
+    # u is instantiated lazily once we see the first batch, using the actual
+    # hidden dimension from the chosen layer's activations.
+    u = None
 
     layer_idx = _layer_index_from_config(model, layer_index)
 
@@ -287,7 +289,6 @@ def run_rmu_unlearning(
             forget_batch = next(forget_iter)
             retain_batch = next(retain_iter)
 
-            # Forget loss
             input_ids_f = forget_batch["input_ids"].to(device)
             attention_mask_f = forget_batch["attention_mask"].to(device)
 
@@ -297,10 +298,15 @@ def run_rmu_unlearning(
                 output_hidden_states=True,
             )
             hidden_states_f = outputs_f.hidden_states[layer_idx]  # [B, L, H]
+
+            if u is None:
+                hidden_size = hidden_states_f.size(-1)
+                u = torch.rand(hidden_size, device=device)
+                u = u / u.norm(p=2)
+
             diff_f = hidden_states_f - c * u
             loss_forget = (diff_f * diff_f).mean()
 
-            # Retain loss
             input_ids_r = retain_batch["input_ids"].to(device)
             attention_mask_r = retain_batch["attention_mask"].to(device)
 
