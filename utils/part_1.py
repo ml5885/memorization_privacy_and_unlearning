@@ -68,9 +68,9 @@ def write_jsonl(f, record):
 def get_model_label(model_str):
     if model_str == "google/gemma-3-4b-it":
         return "Gemma-3-4b-it"
-    elif "dpo_" in model_str and "gemma-3-4b-it" in model_str:
-        return "Gemma-3-4b-it (DPO)"
-    elif "rmu_" in model_str and "gemma-3-4b-it" in model_str:
-        return "Gemma-3-4b-it (RMU)"
+    elif "ga_" in model_str and "gemma-3-4b-it" in model_str:
+        return "Gemma-3-4b-it (GA)"
+    elif "gd_" in model_str and "gemma-3-4b-it" in model_str:
+        return "Gemma-3-4b-it (GD)"
     else:
         return model_str

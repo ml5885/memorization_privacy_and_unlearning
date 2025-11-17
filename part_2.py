@@ -3,20 +3,23 @@ import json
 import os
 
 from data.pokemon import build_pokemon_benchmark
-from unlearning.dpo import run_dpo_unlearning
-from unlearning.rmu import run_rmu_unlearning
+from unlearning.ga import run_ga_unlearning
+from unlearning.gd import run_gd_unlearning
 from utils.part_1 import ensure_dir, sanitize_filename, save_table, get_model_label
 from utils.part_2 import plot_ifeval_inst_strict_by_model
 
 FORGET_TRAITS = ["Type 1", "HP", "Defense"]
-RETAIN_TRAITS = ["Speed"]
 
 def run_training(args):
     ensure_dir(args.outdir)
 
     bench_path = args.pokemon_bench
     if not os.path.exists(bench_path):
-        print("[part2] Pokemon MCQ benchmark not found at %s, building it..." % bench_path)
+        print(
+            "[part2] Pokemon MCQ benchmark not found at {}, building it...".format(
+                bench_path
+            )
+        )
         ensure_dir(os.path.dirname(bench_path) or ".")
         build_pokemon_benchmark(
             raw_csv_path=args.pokemon_csv,
@@ -27,20 +30,20 @@ def run_training(args):
         print("[part2] Pokemon MCQ benchmark created.")
 
     algo = args.algo.lower()
-    if algo not in {"dpo", "rmu"}:
-        raise ValueError("Unknown algo: %s" % algo)
+    if algo not in {"ga", "gd"}:
+        raise ValueError("Unknown algo: {}".format(algo))
 
     model_tag = sanitize_filename(args.model)
-    run_tag = "%s_pokemon_%s" % (algo, model_tag)
+    run_tag = "{}_pokemon_{}".format(algo, model_tag)
     run_dir = os.path.join(args.outdir, run_tag)
     ensure_dir(run_dir)
 
-    print("[part2] Running %s unlearning for model=%s" % (algo.upper(), args.model))
-    print("[part2] Forget traits: %s, retain traits: %s" % (FORGET_TRAITS, RETAIN_TRAITS))
-    print("[part2] Output directory: %s" % run_dir)
+    print("[part2] Running {} unlearning for model={}".format(algo.upper(), args.model))
+    print("[part2] Forget traits: {}".format(FORGET_TRAITS))
+    print("[part2] Output directory: {}".format(run_dir))
 
-    if algo == "dpo":
-        adapter_dir = run_dpo_unlearning(
+    if algo == "ga":
+        model_dir = run_ga_unlearning(
             model_id=args.model,
             pokemon_bench_path=bench_path,
             outdir=run_dir,
@@ -48,25 +51,24 @@ def run_training(args):
             lr=args.lr,
             batch_size=args.batch_size,
             num_epochs=args.num_epochs,
-            beta=args.beta,
             local_files_only=args.local_model,
             lora_r=args.lora_r,
             lora_alpha=args.lora_alpha,
             lora_dropout=args.lora_dropout,
         )
     else:
-        adapter_dir = run_rmu_unlearning(
+        model_dir = run_gd_unlearning(
             model_id=args.model,
             pokemon_bench_path=bench_path,
             outdir=run_dir,
             forget_traits=FORGET_TRAITS,
-            retain_traits=RETAIN_TRAITS,
+            retain_dataset_name=args.retain_dataset_name,
+            retain_split=args.retain_split,
+            retain_max_examples=args.retain_max_examples,
             lr=args.lr,
             batch_size=args.batch_size,
             num_epochs=args.num_epochs,
-            layer_index=args.layer_index,
-            c=args.rmu_c,
-            alpha=args.rmu_alpha,
+            lambda_retain=args.lambda_retain,
             local_files_only=args.local_model,
             lora_r=args.lora_r,
             lora_alpha=args.lora_alpha,
@@ -77,33 +79,34 @@ def run_training(args):
         "algo": algo,
         "model": args.model,
         "run_dir": run_dir,
-        "adapter_dir": adapter_dir,
+        "model_dir": model_dir,
         "pokemon_bench": bench_path,
         "forget_traits": FORGET_TRAITS,
-        "retain_traits": RETAIN_TRAITS,
         "lr": args.lr,
         "batch_size": args.batch_size,
         "num_epochs": args.num_epochs,
-        "beta": args.beta if algo == "dpo" else None,
-        "layer_index": args.layer_index if algo == "rmu" else None,
-        "rmu_c": args.rmu_c if algo == "rmu" else None,
-        "rmu_alpha": args.rmu_alpha if algo == "rmu" else None,
         "local_model": bool(args.local_model),
         "lora_r": args.lora_r,
         "lora_alpha": args.lora_alpha,
         "lora_dropout": args.lora_dropout,
     }
+    if algo == "gd":
+        summary["retain_dataset_name"] = args.retain_dataset_name
+        summary["retain_split"] = args.retain_split
+        summary["retain_max_examples"] = args.retain_max_examples
+        summary["lambda_retain"] = args.lambda_retain
+
     summary_path = os.path.join(run_dir, "part2_run_summary.json")
     with open(summary_path, "w") as f:
         json.dump(summary, f, indent=2)
 
-    print("[part2] Run summary saved to %s" % summary_path)
+    print("[part2] Run summary saved to {}".format(summary_path))
     print(
         "[part2] To evaluate this unlearned model with Part 1, "
         "call part_1.py with --model pointing to the model directory "
         "and --local_model."
     )
-    print("[part2] Example model path: %s" % adapter_dir)
+    print("[part2] Example model path: {}".format(model_dir))
 
 def _load_part1_results(part1_dir):
     files = []
@@ -113,7 +116,9 @@ def _load_part1_results(part1_dir):
 
     if not files:
         raise FileNotFoundError(
-            "No model_*.json files found in %s; run part_1.py evaluations first." % part1_dir
+            "No model_*.json files found in {}; run part_1.py evaluations first.".format(
+                part1_dir
+            )
         )
 
     records = []
@@ -126,7 +131,7 @@ def _load_part1_results(part1_dir):
 def run_analysis(args):
     ensure_dir(args.outdir)
 
-    print("[part2] Loading Part 1 results from %s ..." % args.part1_dir)
+    print("[part2] Loading Part 1 results from {} ...".format(args.part1_dir))
     all_results = _load_part1_results(args.part1_dir)
 
     if args.analysis_models:
@@ -135,8 +140,9 @@ def run_analysis(args):
         for m in args.analysis_models:
             if m not in by_model:
                 print(
-                    "[part2] Warning: requested model '%s' not found in Part 1 results."
-                    % m
+                    "[part2] Warning: requested model '{}' not found in Part 1 results.".format(
+                        m
+                    )
                 )
                 continue
             selected.append(by_model[m])
@@ -151,8 +157,7 @@ def run_analysis(args):
     if args.analysis_labels:
         if len(args.analysis_labels) != len(all_results):
             raise ValueError(
-                "Number of --analysis_labels must match number of selected models "
-                "(after any filtering)."
+                "Number of --analysis_labels must match number of selected models."
             )
         labels = list(args.analysis_labels)
     else:
@@ -180,34 +185,29 @@ def run_analysis(args):
     label_width = max(len("Label"), max(len(r["label"]) for r in summary_rows)) + 2
     model_width = max(len("Model"), max(len(r["model"]) for r in summary_rows)) + 2
     header = (
-        "%s %s %s"
-        % (
-            "Label".ljust(label_width),
-            "Model".ljust(model_width),
-            "InstStrict".rjust(12),
+        "{:<{lw}} {:<{mw}} {:>12}".format(
+            "Label", "Model", "InstStrict", lw=label_width, mw=model_width
         )
     )
     print(header)
     print("-" * len(header))
     for row in summary_rows:
         print(
-            "%s %s %s"
-            % (
-                row["label"].ljust(label_width),
-                row["model"].ljust(model_width),
-                ("%.4f" % row["IFEval_inst_strict"]).rjust(12),
+            "{:<{lw}} {:<{mw}} {:>12.4f}".format(
+                row["label"],
+                row["model"],
+                row["IFEval_inst_strict"],
+                lw=label_width,
+                mw=model_width,
             )
         )
 
-    print("\nFull IFEval metrics per model (printed only, not used for Part 2 plots):")
+    print(
+        "\nFull IFEval metrics per model (printed only, not used for Part 2 plots):"
+    )
     header_full = (
-        "%s %s %s %s %s"
-        % (
-            "Label".ljust(label_width),
-            "PromptStrict".rjust(14),
-            "InstStrict".rjust(12),
-            "PromptLoose".rjust(14),
-            "InstLoose".rjust(12),
+        "{:<{lw}} {:>14} {:>12} {:>14} {:>12}".format(
+            "Label", "PromptStrict", "InstStrict", "PromptLoose", "InstLoose", lw=label_width
         )
     )
     print(header_full)
@@ -218,13 +218,8 @@ def run_analysis(args):
         pl = rec.get("IFEval_prompt_loose", 0.0)
         il = rec.get("IFEval_inst_loose", 0.0)
         print(
-            "%s %s %s %s %s"
-            % (
-                label.ljust(label_width),
-                ("%.4f" % ps).rjust(14),
-                ("%.4f" % is_).rjust(12),
-                ("%.4f" % pl).rjust(14),
-                ("%.4f" % il).rjust(12),
+            "{:<{lw}} {:>14.4f} {:>12.4f} {:>14.4f} {:>12.4f}".format(
+                label, ps, is_, pl, il, lw=label_width
             )
         )
 
@@ -234,10 +229,9 @@ def run_analysis(args):
 
     print(
         "\n[part2] Part 2 summary saved to:\n"
-        "  - %s\n"
-        "  - %s\n"
-        "  - %s"
-        % (csv_path, json_path, plot_path)
+        "  - {}\n"
+        "  - {}\n"
+        "  - {}".format(csv_path, json_path, plot_path)
     )
 
 def main():
@@ -249,7 +243,7 @@ def main():
         help="Run analysis using results from part_1 (no training).",
     )
 
-    # Shared
+    # Shared training args
     ap.add_argument(
         "--model",
         type=str,
@@ -262,12 +256,12 @@ def main():
         help="Treat --model as a local directory for loading weights/tokenizer.",
     )
     ap.add_argument("--batch_size", type=int, default=4)
-    ap.add_argument("--num_epochs", type=int, default=1)
-    ap.add_argument("--lr", type=float, default=2e-5)
+    ap.add_argument("--num_epochs", type=int, default=3)
+    ap.add_argument("--lr", type=float, default=5e-5)
 
     # LoRA
-    ap.add_argument("--lora_r", type=int, default=8)
-    ap.add_argument("--lora_alpha", type=int, default=16)
+    ap.add_argument("--lora_r", type=int, default=32)
+    ap.add_argument("--lora_alpha", type=int, default=64)
     ap.add_argument("--lora_dropout", type=float, default=0.0)
 
     # Pokemon benchmark configuration
@@ -276,36 +270,34 @@ def main():
         "--pokemon_bench",
         type=str,
         default="data/pokemon_benchmark_mcq.csv",
-        help="MCQ benchmark CSV used for forget/retain sets.",
+        help="MCQ benchmark CSV used for forget set.",
     )
     ap.add_argument("--min_per_trait", type=int, default=500)
 
-    # DPO/NPO-specific
+    # GD-specific retain set configuration
     ap.add_argument(
-        "--beta",
-        type=float,
-        default=0.1,
-        help="NPO temperature parameter for DPO-style unlearning.",
+        "--retain_dataset_name",
+        type=str,
+        default="tatsu-lab/alpaca",
+        help="HuggingFace dataset name for GD retain set.",
     )
-
-    # RMU-specific
     ap.add_argument(
-        "--layer_index",
+        "--retain_split",
+        type=str,
+        default="train",
+        help="Dataset split for GD retain set.",
+    )
+    ap.add_argument(
+        "--retain_max_examples",
         type=int,
-        default=4,
-        help="Hidden layer index used in RMU representation loss.",
+        default=5000,
+        help="Maximum number of retain examples to use (0 = all).",
     )
     ap.add_argument(
-        "--rmu_c",
+        "--lambda_retain",
         type=float,
-        default=6.5,
-        help="Scaling factor c in the RMU forget loss.",
-    )
-    ap.add_argument(
-        "--rmu_alpha",
-        type=float,
-        default=1200.0,
-        help="Weight on the RMU retain loss.",
+        default=1.0,
+        help="Weight on retain loss term in GD.",
     )
 
     # Analysis settings
@@ -339,8 +331,8 @@ def main():
     ap.add_argument(
         "--algo",
         type=str,
-        default="dpo",
-        choices=["dpo", "rmu"],
+        default="ga",
+        choices=["ga", "gd"],
         help="Unlearning algorithm to run (training mode).",
     )
 
