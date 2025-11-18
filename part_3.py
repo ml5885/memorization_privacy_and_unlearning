@@ -387,7 +387,7 @@ def train_linear_probe(train_features, train_labels, num_epochs, lr):
     if not train_features:
         raise ValueError("No training features for probe.")
 
-    X = torch.stack(train_features)
+    X = torch.stack(train_features).to(torch.float32)
     label_strings = list(train_labels)
     label_names = sorted(set(label_strings))
     label2id = {label: idx for idx, label in enumerate(label_names)}
@@ -434,7 +434,7 @@ def evaluate_probe(probe, label2id, test_features, test_labels):
     if not test_features:
         raise ValueError("No test features for probe evaluation.")
 
-    X_test = torch.stack(test_features)
+    X_test = torch.stack(test_features).to(torch.float32)
     y_true = [label2id[l] for l in test_labels]
     y = torch.tensor(y_true, dtype=torch.long)
 
@@ -528,6 +528,17 @@ def main():
         help="Learning rate for the linear probe.",
     )
 
+    ap.add_argument(
+        "--mode",
+        type=str,
+        default="all",
+        choices=["all", "attacks", "probe"],
+        help="Which parts to run: 'all' (default), 'attacks' (robustness only), or 'probe' (probing only).",
+    )
+
+    args = ap.parse_args()
+
+
     args = ap.parse_args()
 
     ensure_dir(args.outdir)
@@ -559,24 +570,10 @@ def main():
     attack_model_id = args.model
     attack_mid_safe = sanitize_filename(attack_model_id)
 
-    condition_results = {}
+    if args.mode in ("all", "attacks"):
+        condition_results = {}
 
-    baseline_results = evaluate_pokemon_with_transform(
-        tokenizer=tokenizer,
-        model=model,
-        model_id=attack_model_id,
-        bench_path=bench_path,
-        batch_size=args.batch_size,
-        limit=args.limit_pokemon,
-        eval_mode="auto",
-        condition_name="post_unlearn",
-        prompt_transform=_prompt_identity,
-        log_dir=responses_dir,
-    )
-    condition_results["post_unlearn"] = baseline_results
-
-    for condition_name, transform_fn in PROMPT_ATTACKS:
-        results = evaluate_pokemon_with_transform(
+        baseline_results = evaluate_pokemon_with_transform(
             tokenizer=tokenizer,
             model=model,
             model_id=attack_model_id,
@@ -584,151 +581,165 @@ def main():
             batch_size=args.batch_size,
             limit=args.limit_pokemon,
             eval_mode="auto",
-            condition_name=condition_name,
-            prompt_transform=transform_fn,
+            condition_name="post_unlearn",
+            prompt_transform=_prompt_identity,
             log_dir=responses_dir,
         )
-        condition_results[condition_name] = results
+        condition_results["post_unlearn"] = baseline_results
 
-    gcg_config = GCGConfig(
-        num_steps=args.gcg_steps,
-        optim_str_init="! ! ! ! ! ! ! ! ! !",
-        search_width=args.gcg_search_width,
-        batch_size=args.gcg_batch_size,
-        topk=args.gcg_topk,
-        n_replace=args.gcg_n_replace,
-        buffer_size=args.gcg_buffer_size,
-        use_mellowmax=False,
-        mellowmax_alpha=1.0,
-        early_stop=True,
-        use_prefix_cache=False,
-        allow_non_ascii=False,
-        filter_ids=False,
-        add_space_before_target=True,
-        seed=args.gcg_seed,
-        verbosity="INFO",
-        probe_sampling_config=None,
-    )
+        for condition_name, transform_fn in PROMPT_ATTACKS:
+            results = evaluate_pokemon_with_transform(
+                tokenizer=tokenizer,
+                model=model,
+                model_id=attack_model_id,
+                bench_path=bench_path,
+                batch_size=args.batch_size,
+                limit=args.limit_pokemon,
+                eval_mode="auto",
+                condition_name=condition_name,
+                prompt_transform=transform_fn,
+                log_dir=responses_dir,
+            )
+            condition_results[condition_name] = results
 
-    def make_single_suffix_gcg_run(f):
-        cache = {"r": None}
-
-        def wrapped(*a, **kw):
-            if cache["r"] is None:
-                cache["r"] = f(*a, **kw)
-            return cache["r"]
-
-        return wrapped
-    
-    _orig_gcg_run = globals().get("gcg_run")
-    if _orig_gcg_run is not None:
-        globals()["gcg_run"] = make_single_suffix_gcg_run(_orig_gcg_run)
-
-    gcg_limit = args.limit_gcg if args.limit_gcg > 0 else args.limit_pokemon
-
-    gcg_results = evaluate_pokemon_gcg_attack(
-        tokenizer=tokenizer,
-        model=model,
-        model_id=attack_model_id,
-        bench_path=bench_path,
-        limit=gcg_limit,
-        eval_mode="auto",
-        gcg_config=gcg_config,
-        log_dir=responses_dir,
-    )
-    condition_results["gcg_attack"] = gcg_results
-
-    print("\n" + "=" * 80)
-    print("[part3] Robustness results table (Pokemon trait accuracies)")
-    print("=" * 80)
-
-    cond_labels = [
-        ("post_unlearn", "Post-Unlearning"),
-        ("prompt_attack_1", "Prompt Attack 1"),
-        ("prompt_attack_2", "Prompt Attack 2"),
-        ("prompt_attack_3", "Prompt Attack 3"),
-        ("gcg_attack", "GCG Attack"),
-    ]
-
-    trait_keys = list(TRAIT_PLOT_LABELS.keys())
-    summary_rows = []
-    for trait in trait_keys:
-        row = {"trait": trait}
-        for key, label in cond_labels:
-            acc = condition_results.get(key, {}).get(trait, 0.0)
-            row[label] = round(acc, 4)
-        summary_rows.append(row)
-
-    csv_path = os.path.join(args.outdir, f"part3_robustness_{attack_mid_safe}.csv")
-    json_path = os.path.join(args.outdir, f"part3_robustness_{attack_mid_safe}.json")
-    save_table(summary_rows, csv_path, json_path)
-
-    header = f"{'Trait':<12}"
-    for _, label in cond_labels:
-        header += f" {label:<18}"
-    print(header)
-    print("-" * len(header))
-    for row in summary_rows:
-        line = f"{row['trait']:<12}"
-        for _, label in cond_labels:
-            line += f" {row[label]:<18.4f}"
-        print(line)
-
-    print(
-        f"\n[part3] Robustness table saved to:\n"
-        f"  - {csv_path}\n"
-        f"  - {json_path}"
-    )
-
-    probe_model_id = attack_model_id
-    probe_tokenizer, probe_model = tokenizer, model
-
-    print(
-        f"[part3] Probing trait '{args.probe_trait}' on model={probe_model_id}"
-    )
-
-    (train_features, train_labels, test_features, test_labels) = collect_probe_features(
-        tokenizer=probe_tokenizer,
-        model=probe_model,
-        bench_path=bench_path,
-        probe_trait=args.probe_trait,
-        test_size=args.probe_test_size,
-        batch_size=args.probe_batch_size,
-    )
-    probe, label2id = train_linear_probe(
-        train_features=train_features,
-        train_labels=train_labels,
-        num_epochs=args.probe_epochs,
-        lr=args.probe_lr,
-    )
-    probe_acc = evaluate_probe(
-        probe=probe,
-        label2id=label2id,
-        test_features=test_features,
-        test_labels=test_labels,
-    )
-
-    trait_safe = args.probe_trait.lower().replace(" ", "_")
-    probe_path = os.path.join(
-        args.outdir,
-        f"part3_probe_{trait_safe}_{attack_mid_safe}.json",
-    )
-    with open(probe_path, "w") as f:
-        json.dump(
-            {
-                "attack_model": attack_model_id,
-                "probe_model": probe_model_id,
-                "probe_trait": args.probe_trait,
-                "num_train": len(train_labels),
-                "num_test": len(test_labels),
-                "labels": sorted(label2id.keys()),
-                "probe_accuracy": probe_acc,
-            },
-            f,
-            indent=2,
+        gcg_config = GCGConfig(
+            num_steps=args.gcg_steps,
+            optim_str_init="! ! ! ! ! ! ! ! ! !",
+            search_width=args.gcg_search_width,
+            batch_size=args.gcg_batch_size,
+            topk=args.gcg_topk,
+            n_replace=args.gcg_n_replace,
+            buffer_size=args.gcg_buffer_size,
+            use_mellowmax=False,
+            mellowmax_alpha=1.0,
+            early_stop=True,
+            use_prefix_cache=False,
+            allow_non_ascii=False,
+            filter_ids=False,
+            add_space_before_target=True,
+            seed=args.gcg_seed,
+            verbosity="INFO",
+            probe_sampling_config=None,
         )
 
-    print(f"\n[part3] Probe results saved to: {probe_path}")
+        def make_single_suffix_gcg_run(f):
+            cache = {"r": None}
+            def wrapped(*a, **kw):
+                if cache["r"] is None:
+                    cache["r"] = f(*a, **kw)
+                return cache["r"]
+            return wrapped
+
+        _orig_gcg_run = globals().get("gcg_run")
+        if _orig_gcg_run is not None:
+            globals()["gcg_run"] = make_single_suffix_gcg_run(_orig_gcg_run)
+
+        gcg_limit = args.limit_gcg if args.limit_gcg > 0 else args.limit_pokemon
+
+        gcg_results = evaluate_pokemon_gcg_attack(
+            tokenizer=tokenizer,
+            model=model,
+            model_id=attack_model_id,
+            bench_path=bench_path,
+            limit=gcg_limit,
+            eval_mode="auto",
+            gcg_config=gcg_config,
+            log_dir=responses_dir,
+        )
+        condition_results["gcg_attack"] = gcg_results
+
+        print("\n" + "=" * 80)
+        print("[part3] Robustness results table (Pokemon trait accuracies)")
+        print("=" * 80)
+
+        cond_labels = [
+            ("post_unlearn", "Post-Unlearning"),
+            ("prompt_attack_1", "Prompt Attack 1"),
+            ("prompt_attack_2", "Prompt Attack 2"),
+            ("prompt_attack_3", "Prompt Attack 3"),
+            ("gcg_attack", "GCG Attack"),
+        ]
+
+        trait_keys = list(TRAIT_PLOT_LABELS.keys())
+        summary_rows = []
+        for trait in trait_keys:
+            row = {"trait": trait}
+            for key, label in cond_labels:
+                acc = condition_results.get(key, {}).get(trait, 0.0)
+                row[label] = round(acc, 4)
+            summary_rows.append(row)
+
+        csv_path = os.path.join(args.outdir, f"part3_robustness_{attack_mid_safe}.csv")
+        json_path = os.path.join(args.outdir, f"part3_robustness_{attack_mid_safe}.json")
+        save_table(summary_rows, csv_path, json_path)
+
+        header = f"{'Trait':<12}"
+        for _, label in cond_labels:
+            header += f" {label:<18}"
+        print(header)
+        print("-" * len(header))
+        for row in summary_rows:
+            line = f"{row['trait']:<12}"
+            for _, label in cond_labels:
+                line += f" {row[label]:<18.4f}"
+            print(line)
+
+        print(
+            f"\n[part3] Robustness table saved to:\n"
+            f"  - {csv_path}\n"
+            f"  - {json_path}"
+        )
+
+    if args.mode in ("all", "probe"):
+        probe_model_id = attack_model_id
+        probe_tokenizer, probe_model = tokenizer, model
+
+        print(
+            f"[part3] Probing trait '{args.probe_trait}' on model={probe_model_id}"
+        )
+
+        (train_features, train_labels, test_features, test_labels) = collect_probe_features(
+            tokenizer=probe_tokenizer,
+            model=probe_model,
+            bench_path=bench_path,
+            probe_trait=args.probe_trait,
+            test_size=args.probe_test_size,
+            batch_size=args.probe_batch_size,
+        )
+        probe, label2id = train_linear_probe(
+            train_features=train_features,
+            train_labels=train_labels,
+            num_epochs=args.probe_epochs,
+            lr=args.probe_lr,
+        )
+        probe_acc = evaluate_probe(
+            probe=probe,
+            label2id=label2id,
+            test_features=test_features,
+            test_labels=test_labels,
+        )
+
+        trait_safe = args.probe_trait.lower().replace(" ", "_")
+        probe_path = os.path.join(
+            args.outdir,
+            f"part3_probe_{trait_safe}_{attack_mid_safe}.json",
+        )
+        with open(probe_path, "w") as f:
+            json.dump(
+                {
+                    "attack_model": attack_model_id,
+                    "probe_model": probe_model_id,
+                    "probe_trait": args.probe_trait,
+                    "num_train": len(train_labels),
+                    "num_test": len(test_labels),
+                    "labels": sorted(label2id.keys()),
+                    "probe_accuracy": probe_acc,
+                },
+                f,
+                indent=2,
+            )
+
+        print(f"\n[part3] Probe results saved to: {probe_path}")
 
 if __name__ == "__main__":
     main()
