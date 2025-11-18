@@ -6,6 +6,7 @@ from collections import defaultdict
 
 import torch
 from tqdm import tqdm
+import matplotlib.pyplot as plt
 
 from data.pokemon import (
     build_pokemon_benchmark,
@@ -400,6 +401,7 @@ def train_linear_probe(train_features, train_labels, num_epochs, lr):
     optimizer = torch.optim.Adam(probe.parameters(), lr=lr)
 
     probe.train()
+    loss_history = []
     for epoch in range(num_epochs):
         indices = list(range(X.size(0)))
         random.shuffle(indices)
@@ -423,8 +425,9 @@ def train_linear_probe(train_features, train_labels, num_epochs, lr):
 
         avg_loss = total_loss / max(1, num_batches)
         print(f"[part3] Probe epoch {epoch + 1}/{num_epochs} - loss={avg_loss:.4f}")
+        loss_history.append(avg_loss)
 
-    return probe, label2id
+    return probe, label2id, loss_history
 
 def evaluate_probe(probe, label2id, test_features, test_labels):
     print("\n" + "=" * 80)
@@ -448,6 +451,25 @@ def evaluate_probe(probe, label2id, test_features, test_labels):
     acc = correct / max(1, total)
     print(f"[part3] Probe accuracy: {acc:.4f} ({correct}/{total})")
     return acc
+
+def plot_probe_loss(probe_loss_history, probe_trait, probe_model_id, outdir, trait_safe, attack_mid_safe):
+    if not probe_loss_history:
+        return
+    plt.figure()
+    plt.rcParams.update({'font.family': 'serif'})
+    epochs = list(range(1, len(probe_loss_history) + 1))
+    plt.plot(epochs, probe_loss_history, marker="o")
+    plt.xlabel("Epoch")
+    plt.ylabel("Avg Cross-Entropy Loss")
+    plt.title(f"Probe training loss: {probe_trait} ({probe_model_id})")
+    plt.grid(True)
+    loss_fig_path = os.path.join(
+        outdir,
+        f"part3_probe_loss_{trait_safe}_{attack_mid_safe}.png",
+    )
+    plt.savefig(loss_fig_path, bbox_inches="tight")
+    plt.close()
+    print(f"[part3] Probe loss curve saved to: {loss_fig_path}")
 
 def main():
     ap = argparse.ArgumentParser()
@@ -706,7 +728,7 @@ def main():
             test_size=args.probe_test_size,
             batch_size=args.probe_batch_size,
         )
-        probe, label2id = train_linear_probe(
+        probe, label2id, probe_loss_history = train_linear_probe(
             train_features=train_features,
             train_labels=train_labels,
             num_epochs=args.probe_epochs,
@@ -740,6 +762,16 @@ def main():
             )
 
         print(f"\n[part3] Probe results saved to: {probe_path}")
+
+        # call the plotting function
+        plot_probe_loss(
+            probe_loss_history,
+            args.probe_trait,
+            probe_model_id,
+            args.outdir,
+            trait_safe,
+            attack_mid_safe,
+        )
 
 if __name__ == "__main__":
     main()
