@@ -610,6 +610,20 @@ def main():
         probe_sampling_config=None,
     )
 
+    def make_single_suffix_gcg_run(f):
+        cache = {"r": None}
+
+        def wrapped(*a, **kw):
+            if cache["r"] is None:
+                cache["r"] = f(*a, **kw)
+            return cache["r"]
+
+        return wrapped
+    
+    _orig_gcg_run = globals().get("gcg_run")
+    if _orig_gcg_run is not None:
+        globals()["gcg_run"] = make_single_suffix_gcg_run(_orig_gcg_run)
+
     gcg_limit = args.limit_gcg if args.limit_gcg > 0 else args.limit_pokemon
 
     gcg_results = evaluate_pokemon_gcg_attack(

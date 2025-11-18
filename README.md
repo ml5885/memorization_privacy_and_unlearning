@@ -95,28 +95,20 @@ In Part 3, we evaluate the robustness of the unlearning methods from Part 2. For
 - Run an **optimization-based GCG attack** using nanoGCG.
 - Train a **linear probe** on hidden states to test whether forgotten traits remain linearly decodable.
 
-Assuming you have unlearned models from Part 2, run Part 3 as follows:
+We can run Part 3 robustness evaluation on the GD model (best unlearned) using the following command:
 
 ```bash
-# Baseline model
 python part_3.py \
-    --model google/gemma-3-4b-it \
-    --pokemon_bench data/pokemon_benchmark_mcq.csv \
-    --outdir results/part_3
-
-# GA-unlearned model
-python part_3.py \
-    --model results/part_2/ga_pokemon_google__gemma-3-4b-it/ga_google__gemma-3-4b-it \
-    --local_model \
-    --pokemon_bench data/pokemon_benchmark_mcq.csv \
-    --outdir results/part_3
-
-# GD-unlearned model
-python part_3.py \
-    --model results/part_2/gd_pokemon_google__gemma-3-4b-it/gd_google__gemma-3-4b-it \
-    --local_model \
-    --pokemon_bench data/pokemon_benchmark_mcq.csv \
-    --outdir results/part_3
+  --model results/part_2/gd_pokemon_google__gemma-3-4b-it/gd_google__gemma-3-4b-it \
+  --local_model \
+  --batch_size 32 \
+  --limit_pokemon 0 \
+  --limit_gcg 0 \
+  --probe_trait "Type 1" \
+  --probe_test_size 50 \
+  --probe_batch_size 16 \
+  --probe_epochs 20 \
+  --probe_lr 1e-2
 ```
 
 ## Quick Setup
