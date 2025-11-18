@@ -603,7 +603,7 @@ def main():
         early_stop=True,
         use_prefix_cache=False,
         allow_non_ascii=False,
-        filter_ids=True,
+        filter_ids=False,
         add_space_before_target=True,
         seed=args.gcg_seed,
         verbosity="INFO",
