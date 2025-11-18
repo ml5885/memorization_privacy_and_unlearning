@@ -82,26 +82,41 @@ python part_2.py \
     --lora_alpha 64
 ```
 
+Each run creates a subdirectory under `results/part_2` of the form:
+
+- GA: `results/part_2/ga_pokemon_google__gemma-3-4b-it/ga_google__gemma-3-4b-it`
+- GD: `results/part_2/gd_pokemon_google__gemma-3-4b-it/gd_google__gemma-3-4b-it`
+
 ## Part 3: Robustness Evaluation
 
-To evaluate the robustness of the unlearning methods from Part 2, we:
+In Part 3, we evaluate the robustness of the unlearning methods from Part 2. For a given model, we:
 
-- Run prompt-based extraction attacks (three templates).
-- Run an optimization-based GCG attack using nanoGCG.
-- Run a linear probe on hidden states to test whether forgotten traits remain linearly decodable.
+- Run **prompt-based extraction attacks** (three different prompt templates).
+- Run an **optimization-based GCG attack** using nanoGCG.
+- Train a **linear probe** on hidden states to test whether forgotten traits remain linearly decodable.
 
-To run these evaluations on the GA and GD unlearned models, run the following commands:
+Assuming you have unlearned models from Part 2, run Part 3 as follows:
 
 ```bash
+# Baseline model
 python part_3.py \
-  --model results/part_2/ga_pokemon_google__gemma-3-4b-it/ga_google__gemma-3-4b-it \
-  --local_model \
-  --pokemon_bench data/pokemon_benchmark_mcq.csv
+    --model google/gemma-3-4b-it \
+    --pokemon_bench data/pokemon_benchmark_mcq.csv \
+    --outdir results/part_3
 
+# GA-unlearned model
 python part_3.py \
-  --model results/part_2/gd_pokemon_google__gemma-3-4b-it/gd_google__gemma-3-4b-it \
-  --local_model \
-  --pokemon_bench data/pokemon_benchmark_mcq.csv
+    --model results/part_2/ga_pokemon_google__gemma-3-4b-it/ga_google__gemma-3-4b-it \
+    --local_model \
+    --pokemon_bench data/pokemon_benchmark_mcq.csv \
+    --outdir results/part_3
+
+# GD-unlearned model
+python part_3.py \
+    --model results/part_2/gd_pokemon_google__gemma-3-4b-it/gd_google__gemma-3-4b-it \
+    --local_model \
+    --pokemon_bench data/pokemon_benchmark_mcq.csv \
+    --outdir results/part_3
 ```
 
 ## Quick Setup
