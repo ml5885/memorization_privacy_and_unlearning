@@ -380,6 +380,23 @@ def collect_probe_features(
     )
     return train_features, train_labels, test_features, test_labels
 
+def make_control_labels(train_labels, test_labels, seed=0, max_tries=10000):
+    rng = random.Random(seed)
+    all_labels = list(train_labels) + list(test_labels)
+    n_train = len(train_labels)
+
+    for _ in range(max_tries):
+        rng.shuffle(all_labels)
+        ctrl_train = all_labels[:n_train]
+        ctrl_test = all_labels[n_train:]
+
+        if set(ctrl_test).issubset(set(ctrl_train)):
+            return ctrl_train, ctrl_test
+
+    raise RuntimeError(
+        "Failed to sample control labels with full label coverage in train set."
+    )
+
 def train_linear_probe(train_features, train_labels, num_epochs, lr):
     print("\n" + "=" * 80)
     print("[part3] Training linear probe")
@@ -401,7 +418,6 @@ def train_linear_probe(train_features, train_labels, num_epochs, lr):
     optimizer = torch.optim.Adam(probe.parameters(), lr=lr)
 
     probe.train()
-    loss_history = []
     for epoch in range(num_epochs):
         indices = list(range(X.size(0)))
         random.shuffle(indices)
@@ -425,9 +441,8 @@ def train_linear_probe(train_features, train_labels, num_epochs, lr):
 
         avg_loss = total_loss / max(1, num_batches)
         print(f"[part3] Probe epoch {epoch + 1}/{num_epochs} - loss={avg_loss:.4f}")
-        loss_history.append(avg_loss)
 
-    return probe, label2id, loss_history
+    return probe, label2id
 
 def evaluate_probe(probe, label2id, test_features, test_labels):
     print("\n" + "=" * 80)
@@ -451,25 +466,6 @@ def evaluate_probe(probe, label2id, test_features, test_labels):
     acc = correct / max(1, total)
     print(f"[part3] Probe accuracy: {acc:.4f} ({correct}/{total})")
     return acc
-
-def plot_probe_loss(probe_loss_history, probe_trait, probe_model_id, outdir, trait_safe, attack_mid_safe):
-    if not probe_loss_history:
-        return
-    plt.figure()
-    plt.rcParams.update({'font.family': 'serif'})
-    epochs = list(range(1, len(probe_loss_history) + 1))
-    plt.plot(epochs, probe_loss_history, marker="o")
-    plt.xlabel("Epoch")
-    plt.ylabel("Avg Cross-Entropy Loss")
-    plt.title(f"Probe training loss: {probe_trait} ({probe_model_id})")
-    plt.grid(True)
-    loss_fig_path = os.path.join(
-        outdir,
-        f"part3_probe_loss_{trait_safe}_{attack_mid_safe}.png",
-    )
-    plt.savefig(loss_fig_path, bbox_inches="tight")
-    plt.close()
-    print(f"[part3] Probe loss curve saved to: {loss_fig_path}")
 
 def main():
     ap = argparse.ArgumentParser()
@@ -549,6 +545,19 @@ def main():
         default=1e-2,
         help="Learning rate for the linear probe.",
     )
+    
+    ap.add_argument(
+        "--probe_run_control",
+        action="store_true",
+        help="Also train a control-task probe for selectivity.",
+    )
+    ap.add_argument(
+        "--probe_control_seed",
+        type=int,
+        default=0,
+        help="Random seed for control-task label shuffling.",
+    )
+
 
     ap.add_argument(
         "--mode",
@@ -557,9 +566,6 @@ def main():
         choices=["all", "attacks", "probe"],
         help="Which parts to run: 'all' (default), 'attacks' (robustness only), or 'probe' (probing only).",
     )
-
-    args = ap.parse_args()
-
 
     args = ap.parse_args()
 
@@ -728,7 +734,9 @@ def main():
             test_size=args.probe_test_size,
             batch_size=args.probe_batch_size,
         )
-        probe, label2id, probe_loss_history = train_linear_probe(
+
+        # 1) Linguistic (real) task probe
+        probe, label2id = train_linear_probe(
             train_features=train_features,
             train_labels=train_labels,
             num_epochs=args.probe_epochs,
@@ -741,37 +749,66 @@ def main():
             test_labels=test_labels,
         )
 
+        control_probe_acc = None
+        selectivity = None
+
+        # 2) Control-task probe, if requested
+        if args.probe_run_control:
+            ctrl_train_labels, ctrl_test_labels = make_control_labels(
+                train_labels, test_labels, seed=args.probe_control_seed
+            )
+
+            print(
+                "\n" + "=" * 80 +
+                "\n[part3] Training control-task linear probe for selectivity\n" +
+                "=" * 80
+            )
+
+            ctrl_probe, ctrl_label2id = train_linear_probe(
+                train_features=train_features,
+                train_labels=ctrl_train_labels,
+                num_epochs=args.probe_epochs,
+                lr=args.probe_lr,
+            )
+            control_probe_acc = evaluate_probe(
+                probe=ctrl_probe,
+                label2id=ctrl_label2id,
+                test_features=test_features,
+                test_labels=ctrl_test_labels,
+            )
+
+            selectivity = probe_acc - control_probe_acc
+            print(
+                f"\n[part3] Probe selectivity for trait '{args.probe_trait}': "
+                f"{selectivity:.4f} "
+                f"(linguistic={probe_acc:.4f}, control={control_probe_acc:.4f})"
+            )
+
         trait_safe = args.probe_trait.lower().replace(" ", "_")
         probe_path = os.path.join(
             args.outdir,
             f"part3_probe_{trait_safe}_{attack_mid_safe}.json",
         )
+        out_rec = {
+            "attack_model": attack_model_id,
+            "probe_model": probe_model_id,
+            "probe_trait": args.probe_trait,
+            "num_train": len(train_labels),
+            "num_test": len(test_labels),
+            "labels": sorted(label2id.keys()),
+            "probe_accuracy": probe_acc,
+        }
+
+        if control_probe_acc is not None:
+            out_rec["control_probe_accuracy"] = control_probe_acc
+            out_rec["probe_selectivity"] = selectivity
+            out_rec["probe_control_seed"] = args.probe_control_seed
+
         with open(probe_path, "w") as f:
-            json.dump(
-                {
-                    "attack_model": attack_model_id,
-                    "probe_model": probe_model_id,
-                    "probe_trait": args.probe_trait,
-                    "num_train": len(train_labels),
-                    "num_test": len(test_labels),
-                    "labels": sorted(label2id.keys()),
-                    "probe_accuracy": probe_acc,
-                },
-                f,
-                indent=2,
-            )
+            json.dump(out_rec, f, indent=2)
+
 
         print(f"\n[part3] Probe results saved to: {probe_path}")
-
-        # call the plotting function
-        plot_probe_loss(
-            probe_loss_history,
-            args.probe_trait,
-            probe_model_id,
-            args.outdir,
-            trait_safe,
-            attack_mid_safe,
-        )
 
 if __name__ == "__main__":
     main()
