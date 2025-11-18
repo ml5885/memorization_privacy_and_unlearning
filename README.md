@@ -14,8 +14,8 @@ Project code for Programming Assignment 2 for 15-783: Trustworthy AI - Theory & 
   - `data/ifeval.py` – Code to load and evaluate on IFEval
 - `models/gemma.py` – Helper to load Gemma models and batch generate text.
 - `unlearning/`
-  - `unlearning/dpo.py` – DPO-style unlearning
-  - `unlearning/rmu.py` – RMU unlearning
+  - `unlearning/ga.py` – Gradient Ascent unlearning
+  - `unlearning/gd.py` – Gradient Discent unlearning
 - `utils/`
   - `utils/part_1.py` – Utility functions (directory creation, plotting, saving tables, JSONL logging).
 
@@ -50,20 +50,59 @@ python part_1.py --analysis
 
 ## Part 2: Targeted Unlearning
 
-In Part 2, we perform targeted unlearning on **Gemma-3-4b-it** using the Pokémon MCQ benchmark:
+In Part 2, we perform targeted unlearning on **Gemma-3-4b-it** using the Pokémon MCQ benchmark constructed in Part 1.
 
-- **Forget set**: Type 1, HP, Defense
-- **Hold-out (retain) attribute**: Speed
-- **Methods**: DPO-style unlearning (NPO) and RMU, both using LoRA adapters (rank 8)
-
-To run unlearning:
+To run targeted unlearning on google/gemma-3-4b-it with Gradient Ascent (GA) and Gradient Difference (GD) (LoRA r=32, alpha=64), run:
 
 ```bash
-python part_2.py --algo dpo --model google/gemma-3-4b-it
-python part_2.py --algo rmu --model google/gemma-3-4b-it
+# Gradient Ascent (GA)
+python part_2.py \
+    --algo ga \
+    --model google/gemma-3-4b-it \
+    --pokemon_csv "data/pokemon.csv" \
+    --pokemon_bench "data/pokemon_benchmark_mcq.csv" \
+    --outdir "results/part_2/ga" \
+    --num_epochs 3 \
+    --batch_size 4 \
+    --lr 5e-5 \
+    --lora_r 32 \
+    --lora_alpha 64
+
+# Gradient Difference (GD)
+python part_2.py \
+    --algo gd \
+    --model google/gemma-3-4b-it \
+    --pokemon_csv "data/pokemon.csv" \
+    --pokemon_bench "data/pokemon_benchmark_mcq.csv" \
+    --outdir "results/part_2/gd" \
+    --num_epochs 3 \
+    --batch_size 4 \
+    --lr 5e-5 \
+    --lora_r 32 \
+    --lora_alpha 64
 ```
 
 ## Part 3: Robustness Evaluation
+
+To evaluate the robustness of the unlearning methods from Part 2, we:
+
+- Run prompt-based extraction attacks (three templates).
+- Run an optimization-based GCG attack using nanoGCG.
+- Run a linear probe on hidden states to test whether forgotten traits remain linearly decodable.
+
+To run these evaluations on the GA and GD unlearned models, run the following commands:
+
+```bash
+python part_3.py \
+  --model results/part_2/ga_pokemon_google__gemma-3-4b-it/ga_google__gemma-3-4b-it \
+  --local_model \
+  --pokemon_bench data/pokemon_benchmark_mcq.csv
+
+python part_3.py \
+  --model results/part_2/gd_pokemon_google__gemma-3-4b-it/gd_google__gemma-3-4b-it \
+  --local_model \
+  --pokemon_bench data/pokemon_benchmark_mcq.csv
+```
 
 ## Quick Setup
 
