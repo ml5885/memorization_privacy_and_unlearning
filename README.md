@@ -121,6 +121,4 @@ pip install -r requirements.txt
 
 ## References
 
-- [RMU implementation](https://github.com/centerforaisafety/wmdp)
-- [DPO-style unlearning implementation](https://github.com/licong-lin/negative-preference-optimization)
 - [nanogcg](https://github.com/GraySwanAI/nanoGCG)
